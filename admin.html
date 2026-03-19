@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Laporan ZIS & DSKL</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.min.js"></script>
 
     <style>
@@ -15,9 +14,13 @@
         .table-scroll::-webkit-scrollbar { height: 10px; }
         .table-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 8px; }
         .table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+        
+        /* Custom Scrollbar untuk Modal */
+        #isiDetail::-webkit-scrollbar { width: 6px; }
+        #isiDetail::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen font-sans">
+<body class="bg-gray-100 min-h-screen font-sans text-gray-900">
 
     <div id="loginPage" class="flex items-center justify-center min-h-screen bg-gray-900">
         <div class="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md text-center transform transition-all">
@@ -26,7 +29,7 @@
                     <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                 </div>
                 <h2 class="text-3xl font-bold text-gray-800">Administrator</h2>
-                <p class="text-gray-500 mt-2">Sistem Rekapitulasi Laporan UPZ</p>
+                <p class="text-gray-500 mt-2">Sistem Rekapitulasi Laporan UPZ Salatiga</p>
             </div>
             
             <form id="loginForm" onsubmit="prosesLogin(event)">
@@ -45,7 +48,7 @@
                     <span class="bg-green-600 text-white px-3 py-1 rounded-lg font-bold text-xs tracking-wider">PANEL ADMIN</span>
                     <h1 class="text-xl font-bold text-gray-800 hidden sm:block">Rekapitulasi ZIS Salatiga</h1>
                 </div>
-                <button onclick="prosesLogout()" class="text-red-600 hover:bg-red-50 px-4 py-2 rounded-lg font-semibold border border-transparent hover:border-red-200">Keluar</button>
+                <button onclick="prosesLogout()" class="text-red-600 hover:bg-red-50 px-4 py-2 rounded-lg font-semibold border border-transparent hover:border-red-200 transition">Keluar</button>
             </div>
         </nav>
 
@@ -56,13 +59,12 @@
             </div>
 
             <div id="tabUtama" class="tab-content fade-in max-w-7xl mx-auto">
-                
                 <div class="flex flex-col sm:flex-row justify-between items-center mb-6 bg-blue-50 p-4 rounded-lg gap-4">
                     <div class="text-center sm:text-left">
                         <p class="text-sm text-blue-800 font-semibold">Status Data Google Sheets</p>
                         <p id="waktuSync" class="text-xs text-blue-600 mt-1">Sedang mengambil data...</p>
                     </div>
-                    <button onclick="tarikDataGoogleSheets()" class="w-full sm:w-auto bg-blue-600 text-white px-6 py-2 rounded shadow text-sm font-bold transition">&#x21bb; Segarkan Data</button>
+                    <button onclick="tarikDataGoogleSheets()" class="w-full sm:w-auto bg-blue-600 text-white px-6 py-2 rounded shadow text-sm font-bold transition hover:bg-blue-700">&#x21bb; Segarkan Data</button>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -72,7 +74,7 @@
                 </div>
 
                 <div class="bg-white rounded-2xl shadow-sm border overflow-hidden mb-8">
-                    <div class="px-6 py-4 bg-gray-50 flex gap-2"><span class="w-3 h-3 rounded-full bg-yellow-500 mt-1.5"></span><h3 class="text-lg font-bold text-gray-800">Lalu Lintas Zakat Fitrah (Beras)</h3></div>
+                    <div class="px-6 py-4 bg-gray-50 flex gap-2 border-b"><span class="w-3 h-3 rounded-full bg-yellow-500 mt-1.5"></span><h3 class="text-lg font-bold text-gray-800">Aliran Zakat Fitrah (Beras)</h3></div>
                     <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="bg-green-50 p-6 rounded-xl border border-green-100 flex justify-between items-center shadow-sm">
                             <div>
@@ -80,7 +82,6 @@
                                 <div class="text-3xl font-black text-green-700" id="statKumpulBerasKg">0 Kg</div>
                                 <div class="text-md font-bold text-green-600 mt-1" id="statKumpulBerasLtr">0 Liter</div>
                             </div>
-                            <svg class="w-14 h-14 text-green-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
                         </div>
                         <div class="bg-orange-50 p-6 rounded-xl border border-orange-100 flex justify-between items-center shadow-sm">
                             <div>
@@ -88,46 +89,34 @@
                                 <div class="text-3xl font-black text-orange-700" id="statSalurBerasKg">0 Kg</div>
                                 <div class="text-md font-bold text-orange-600 mt-1" id="statSalurBerasLtr">0 Liter</div>
                             </div>
-                            <svg class="w-14 h-14 text-orange-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-white rounded-2xl shadow-sm border overflow-hidden mb-8">
-                    <div class="px-6 py-4 bg-gray-50 flex gap-2"><span class="w-3 h-3 rounded-full bg-blue-500 mt-1.5"></span><h3 class="text-lg font-bold text-gray-800">Sebaran UPZ Melapor per Kecamatan</h3></div>
-                    <div class="p-6 grid grid-cols-2 md:grid-cols-4 gap-6" id="sebaranKecamatan">
-                        <div class="text-center text-gray-400 font-semibold col-span-2 md:col-span-4">Menghitung data...</div>
-                    </div>
+                    <div class="px-6 py-4 bg-gray-50 flex gap-2 border-b"><span class="w-3 h-3 rounded-full bg-blue-500 mt-1.5"></span><h3 class="text-lg font-bold text-gray-800">Sebaran UPZ per Kecamatan</h3></div>
+                    <div class="p-6 grid grid-cols-2 md:grid-cols-4 gap-6" id="sebaranKecamatan"></div>
                 </div>
 
                 <div class="bg-white rounded-2xl shadow-sm border overflow-hidden mb-8">
-                    <div class="px-6 py-4 bg-gray-50 flex gap-2"><span class="w-3 h-3 rounded-full bg-green-500 mt-1.5"></span><h3 class="text-lg font-bold text-gray-800">Rincian PENGUMPULAN Total</h3></div>
+                    <div class="px-6 py-4 bg-gray-50 flex gap-2 border-b"><span class="w-3 h-3 rounded-full bg-green-500 mt-1.5"></span><h3 class="text-lg font-bold text-gray-800">Rincian Rekapitulasi Total</h3></div>
                     <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div><h4 class="font-bold text-green-700 mb-4 border-b-2 inline-block pb-1">Kategori ZIS</h4><ul class="space-y-4" id="rincianKumpulZis"></ul></div>
-                        <div><h4 class="font-bold text-blue-700 mb-4 border-b-2 inline-block pb-1">Kategori DSKL</h4><ul class="space-y-4" id="rincianKumpulDskl"></ul></div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-sm border overflow-hidden mb-8">
-                    <div class="px-6 py-4 bg-gray-50 flex gap-2"><span class="w-3 h-3 rounded-full bg-orange-500 mt-1.5"></span><h3 class="text-lg font-bold text-gray-800">Rincian PENYALURAN Total</h3></div>
-                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div><h4 class="font-bold text-orange-600 mb-4 border-b-2 inline-block pb-1">Kategori ZIS</h4><ul class="space-y-4" id="rincianSalurZis"></ul></div>
-                        <div><h4 class="font-bold text-teal-600 mb-4 border-b-2 inline-block pb-1">Kategori DSKL</h4><ul class="space-y-4" id="rincianSalurDskl"></ul></div>
+                        <div><h4 class="font-bold text-green-700 mb-4 border-b-2 inline-block pb-1">Kumpul ZIS & DSKL</h4><ul class="space-y-4" id="rincianKumpulTotal"></ul></div>
+                        <div><h4 class="font-bold text-orange-700 mb-4 border-b-2 inline-block pb-1">Salur ZIS & DSKL</h4><ul class="space-y-4" id="rincianSalurTotal"></ul></div>
                     </div>
                 </div>
             </div>
 
             <div id="tabLaporan" class="tab-content hidden fade-in w-full">
                 <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
-                    
                     <div class="px-6 py-4 bg-gray-50 flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 border-b border-gray-200">
                         <div>
-                            <h3 class="text-lg font-bold text-gray-800">Rincian Database UPZ</h3>
-                            <p class="text-xs text-gray-500 mt-1">Gunakan filter untuk mencari data spesifik. Tombol Export akan menyesuaikan dengan filter.</p>
+                            <h3 class="text-lg font-bold text-gray-800">Rincian Database Laporan UPZ</h3>
+                            <p class="text-xs text-gray-500 mt-1 italic">*Gunakan tombol <b>Lihat Detail</b> untuk rincian lengkap tiap UPZ.</p>
                         </div>
                         
                         <div class="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
-                            <select id="filterKecamatan" onchange="ubahFilterKecamatan()" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500 font-semibold text-gray-700 outline-none w-full sm:w-auto shadow-sm">
+                            <select id="filterKecamatan" onchange="ubahFilterKecamatan()" class="border border-gray-300 rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 outline-none w-full sm:w-auto shadow-sm">
                                 <option value="SEMUA">-- Semua Kecamatan --</option>
                                 <option value="Argomulyo">Argomulyo</option>
                                 <option value="Sidomukti">Sidomukti</option>
@@ -135,13 +124,12 @@
                                 <option value="Tingkir">Tingkir</option>
                             </select>
                             
-                            <select id="filterKelurahan" onchange="renderTabelFilter()" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500 font-semibold text-gray-700 outline-none bg-gray-100 w-full sm:w-auto shadow-sm" disabled>
+                            <select id="filterKelurahan" onchange="renderTabelFilter()" class="border border-gray-300 rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 outline-none bg-gray-100 w-full sm:w-auto shadow-sm" disabled>
                                 <option value="SEMUA">-- Semua Kelurahan --</option>
                             </select>
 
-                            <button onclick="exportGlobalExcel()" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg font-bold shadow-md transition flex items-center justify-center gap-2 text-sm whitespace-nowrap w-full sm:w-auto">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                Export Data (.xlsx)
+                            <button onclick="exportGlobalExcel()" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg font-bold shadow-md transition flex items-center justify-center gap-2 text-sm">
+                                Export Rekap (.xlsx)
                             </button>
                         </div>
                     </div>
@@ -154,17 +142,16 @@
                                     <th rowspan="2" class="py-3 px-4 bg-gray-100 border-r sticky left-12 z-10 w-64 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">Identitas UPZ</th>
                                     <th rowspan="2" class="py-3 px-4 bg-gray-100 border-r w-48">Penanggung Jawab</th>
                                     <th rowspan="2" class="py-3 px-4 bg-gray-100 border-r w-40">Wilayah</th>
-                                    
                                     <th colspan="4" class="py-2 px-4 bg-green-100 border-r">PENGUMPULAN ZIS</th>
                                     <th colspan="2" class="py-2 px-4 bg-blue-100 border-r">KUMPUL DSKL</th>
                                     <th colspan="4" class="py-2 px-4 bg-orange-100 border-r">PENYALURAN ZIS</th>
                                     <th colspan="2" class="py-2 px-4 bg-teal-100 border-r">SALUR DSKL</th>
-                                    <th rowspan="2" class="py-3 px-4 bg-gray-100 border-l sticky right-0 z-10 shadow-[-2px_0_5px_-2px_rgba(0,0,0,0.1)]">Aksi Data</th>
+                                    <th rowspan="2" class="py-3 px-4 bg-gray-100 border-l sticky right-0 z-20">Aksi</th>
                                 </tr>
                                 <tr class="bg-gray-50">
-                                    <th class="py-2 px-3 border-r font-bold">Mal</th><th class="py-2 px-3 border-r font-bold w-32">Fitrah (Beras)</th><th class="py-2 px-3 border-r font-bold">Fitrah (Uang)</th><th class="py-2 px-3 border-r font-bold">Infak</th>
+                                    <th class="py-2 px-3 border-r font-bold">Mal</th><th class="py-2 px-3 border-r font-bold">Fitrah(B)</th><th class="py-2 px-3 border-r font-bold">Fitrah(U)</th><th class="py-2 px-3 border-r font-bold">Infak</th>
                                     <th class="py-2 px-3 border-r font-bold">Fidyah</th><th class="py-2 px-3 border-r font-bold">Kafarat</th>
-                                    <th class="py-2 px-3 border-r font-bold">Mal</th><th class="py-2 px-3 border-r font-bold w-32">Fitrah (Beras)</th><th class="py-2 px-3 border-r font-bold">Fitrah (Uang)</th><th class="py-2 px-3 border-r font-bold">Infak</th>
+                                    <th class="py-2 px-3 border-r font-bold">Mal</th><th class="py-2 px-3 border-r font-bold">Fitrah(B)</th><th class="py-2 px-3 border-r font-bold">Fitrah(U)</th><th class="py-2 px-3 border-r font-bold">Infak</th>
                                     <th class="py-2 px-3 border-r font-bold">Fidyah</th><th class="py-2 px-3 font-bold">Kafarat</th>
                                 </tr>
                             </thead>
@@ -176,8 +163,27 @@
         </main>
     </div>
 
+    <div id="modalDetail" class="hidden fixed inset-0 z-[100] bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm transition-all">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl transform scale-100 flex flex-col">
+            <div class="bg-green-600 px-6 py-4 flex justify-between items-center text-white">
+                <div>
+                    <h3 class="text-xl font-bold tracking-tight">Detail Rekapitulasi UPZ</h3>
+                    <p class="text-green-100 text-xs mt-0.5" id="detailJudulWaktu"></p>
+                </div>
+                <button onclick="tutupModal()" class="bg-green-500 hover:bg-green-700 w-8 h-8 rounded-full flex items-center justify-center transition">&times;</button>
+            </div>
+            
+            <div id="isiDetail" class="p-6 overflow-y-auto space-y-6 flex-grow bg-gray-50">
+                </div>
+            
+            <div class="p-4 border-t bg-white text-right">
+                <button onclick="tutupModal()" class="bg-gray-800 hover:bg-black text-white px-8 py-2.5 rounded-xl font-bold transition shadow-lg text-sm">Tutup Rincian</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // MASUKKAN URL GOOGLE SCRIPT ANDA DI SINI
+        // KONFIGURASI
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyBldfZnWo8htFbf7DDbqloEnD9NtY8ZQTa1V0lkdS35yJMPqQ-Oqk4m-BvJ4RaMYbu/exec'; 
         const PASSWORD_ADMIN = 'adminzis';
         
@@ -190,6 +196,7 @@
             "Tingkir": ["Kutowinangun Lor", "Kutowinangun Kidul", "Sidorejo Kidul", "Gendongan", "Kalibening", "Tingkir Lor", "Tingkir Tengah"]
         };
 
+        // --- AUTHENTICATION ---
         document.addEventListener('DOMContentLoaded', () => { if (sessionStorage.getItem('adminLoggedIn') === 'true') tampilkanDashboard(); });
         function prosesLogin(e) { e.preventDefault(); if (document.getElementById('password').value === PASSWORD_ADMIN) { sessionStorage.setItem('adminLoggedIn', 'true'); tampilkanDashboard(); } else { document.getElementById('errorMsg').classList.remove('hidden'); } }
         function prosesLogout() { if(confirm('Yakin ingin keluar?')) { sessionStorage.removeItem('adminLoggedIn'); location.reload(); } }
@@ -197,7 +204,6 @@
         function tampilkanDashboard() {
             document.getElementById('loginPage').classList.add('hidden');
             document.getElementById('dashboardPage').classList.remove('hidden');
-            document.getElementById('password').value = '';
             tarikDataGoogleSheets();
         }
 
@@ -208,6 +214,7 @@
             document.getElementById(t==='tabUtama'?'btnTabUtama':'btnTabLaporan').classList.replace('text-gray-500','tab-active');
         }
 
+        // --- DATA FETCHING ---
         function tarikDataGoogleSheets() {
             fetch(SCRIPT_URL)
                 .then(r=>r.json())
@@ -216,20 +223,17 @@
                     kalkulasiStatistikGlobal(data);
                     renderTabelFilter(); 
                 })
-                .catch(e=>alert("Gagal Tarik Data"));
+                .catch(e=>alert("Gagal menarik data. Periksa SCRIPT_URL atau koneksi Anda."));
         }
 
         function ubahFilterKecamatan() {
             const kelSelect = document.getElementById('filterKelurahan');
             const selectedKec = document.getElementById('filterKecamatan').value;
             kelSelect.innerHTML = '<option value="SEMUA">-- Semua Kelurahan --</option>';
-            
             if (selectedKec !== 'SEMUA' && dataWilayahDropdown[selectedKec]) {
                 kelSelect.disabled = false;
                 kelSelect.classList.remove('bg-gray-100');
-                dataWilayahDropdown[selectedKec].forEach(kel => {
-                    kelSelect.innerHTML += `<option value="${kel}">${kel}</option>`;
-                });
+                dataWilayahDropdown[selectedKec].forEach(kel => { kelSelect.innerHTML += `<option value="${kel}">${kel}</option>`; });
             } else {
                 kelSelect.disabled = true;
                 kelSelect.classList.add('bg-gray-100');
@@ -237,159 +241,22 @@
             renderTabelFilter(); 
         }
 
-        function formatDataUntukExcel(rowsToExport, teksJudulTambahan) {
-            const judulLaporan = Array(34).fill("");
-            judulLaporan[0] = "LAPORAN PENGUMPULAN DAN PENYALURAN ZIS & DSKL" + (teksJudulTambahan ? ` - ${teksJudulTambahan}` : "");
-            const barisKosong = Array(34).fill("");
-
-            const headerExcel = [
-                "NO.", "WAKTU LAPOR", "NAMA UPZ / LEMBAGA", "ALAMAT LENGKAP", "NAMA P.I.C", "NO. HP / WA", "KECAMATAN", "KELURAHAN",
-                "PENGUMPULAN ZAKAT MAL\n(Rp)", "PENGUMPULAN ZAKAT MAL\n(Muzaki)",
-                "PENGUMPULAN ZAKAT FITRAH BERAS\n(Kg)", "PENGUMPULAN ZAKAT FITRAH BERAS\n(Liter)", "PENGUMPULAN ZAKAT FITRAH BERAS\n(Muzaki)",
-                "PENGUMPULAN ZAKAT FITRAH UANG\n(Rp)", "PENGUMPULAN ZAKAT FITRAH UANG\n(Muzaki)",
-                "PENGUMPULAN INFAK SEDEKAH\n(Rp)", "PENGUMPULAN INFAK SEDEKAH\n(Munfiq)",
-                "PENGUMPULAN FIDYAH\n(Rp)", "PENGUMPULAN FIDYAH\n(Munfiq)",
-                "PENGUMPULAN KAFARAT\n(Rp)", "PENGUMPULAN KAFARAT\n(Munfiq)",
-                "PENYALURAN ZAKAT MAL\n(Rp)", "PENYALURAN ZAKAT MAL\n(Mustahik)",
-                "PENYALURAN ZAKAT FITRAH BERAS\n(Kg)", "PENYALURAN ZAKAT FITRAH BERAS\n(Liter)", "PENYALURAN ZAKAT FITRAH BERAS\n(Mustahik)",
-                "PENYALURAN ZAKAT FITRAH UANG\n(Rp)", "PENYALURAN ZAKAT FITRAH UANG\n(Mustahik)",
-                "PENYALURAN INFAK SEDEKAH\n(Rp)", "PENYALURAN INFAK SEDEKAH\n(Mustahik)",
-                "PENYALURAN FIDYAH\n(Rp)", "PENYALURAN FIDYAH\n(Mustahik)",
-                "PENYALURAN KAFARAT\n(Rp)", "PENYALURAN KAFARAT\n(Mustahik)"
-            ];
-
-            let dataSiapExport = [judulLaporan, barisKosong, headerExcel];
-            let nomorUrut = 1;
-
-            rowsToExport.forEach(r => {
-                if(!r[1]) return; 
-                let nomorHpAman = String(r[4] || "").trim();
-
-                dataSiapExport.push([
-                    nomorUrut++, 
-                    r[0], r[1], r[2], r[3], nomorHpAman, r[5], r[6], 
-                    Number(r[7])||0, Number(r[8])||0, 
-                    Number(r[9])||0, Number(r[10])||0, Number(r[11])||0, 
-                    Number(r[12])||0, Number(r[13])||0, 
-                    Number(r[14])||0, Number(r[15])||0, 
-                    Number(r[16])||0, Number(r[17])||0, 
-                    Number(r[18])||0, Number(r[19])||0, 
-                    Number(r[20])||0, Number(r[21])||0, 
-                    Number(r[22])||0, Number(r[23])||0, Number(r[24])||0, 
-                    Number(r[25])||0, Number(r[26])||0, 
-                    Number(r[27])||0, Number(r[28])||0, 
-                    Number(r[29])||0, Number(r[30])||0, 
-                    Number(r[31])||0, Number(r[32])||0  
-                ]);
-            });
-
-            return dataSiapExport;
-        }
-
-        function berikanDesainKeExcel(ws) {
-            const wscols = [{wch: 6}, {wch: 18}, {wch: 28}, {wch: 35}, {wch: 20}, {wch: 18}, {wch: 15}, {wch: 15}];
-            for(let i=0; i<26; i++) wscols.push({wch: 18}); 
-            ws['!cols'] = wscols;
-
-            ws['!rows'] = [{hpt: 40}, {hpt: 15}, {hpt: 55}];
-            ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 33 } }];
-
-            for (let i in ws) {
-                if (i[0] === '!') continue; 
-                const barisSel = parseInt(i.replace(/\D/g, ''));
-                const kolomSel = i.replace(/[0-9]/g, ''); 
-
-                if(barisSel > 3 && kolomSel === 'F') { if(ws[i].v) ws[i].t = 's'; }
-
-                if (!ws[i].s) ws[i].s = {};
-                ws[i].s.alignment = { wrapText: true, vertical: "center", horizontal: "left" };
-
-                if (barisSel === 1) {
-                    ws[i].s.font = { bold: true, sz: 16, color: { rgb: "000000" } };
-                    ws[i].s.alignment = { vertical: "center", horizontal: "center" };
-                } else if (barisSel === 3) {
-                    ws[i].s.font = { bold: true, color: { rgb: "FFFFFF" } };
-                    ws[i].s.fill = { fgColor: { rgb: "16A34A" } };
-                    ws[i].s.alignment = { wrapText: true, vertical: "center", horizontal: "center" };
-                }
-            }
-        }
-
-        function exportGlobalExcel() {
-            if (!globalDataSheets || globalDataSheets.length <= 1) return alert('Belum ada data untuk diunduh!');
-            
-            let kecFilter = document.getElementById('filterKecamatan').value;
-            let kelFilter = document.getElementById('filterKelurahan').value;
-
-            const dataMentahFilter = [];
-            for (let i = 1; i < globalDataSheets.length; i++) {
-                const r = globalDataSheets[i];
-                if (!r[1]) continue;
-                
-                let kecAsli = r[5] ? r[5].trim() : "";
-                let kelAsli = r[6] ? r[6].trim() : "";
-                
-                if (kecFilter !== 'SEMUA' && kecAsli !== kecFilter) continue;
-                if (kelFilter !== 'SEMUA' && kelAsli !== kelFilter) continue;
-
-                dataMentahFilter.push(r);
-            }
-
-            if (dataMentahFilter.length === 0) return alert('Tidak ada data pada wilayah ini!');
-
-            let teksTambahan = "KESELURUHAN";
-            if (kecFilter !== 'SEMUA') teksTambahan = `KECAMATAN ${kecFilter.toUpperCase()}`;
-            if (kelFilter !== 'SEMUA') teksTambahan = `KECAMATAN ${kecFilter.toUpperCase()} - KELURAHAN ${kelFilter.toUpperCase()}`;
-
-            const dataFinal = formatDataUntukExcel(dataMentahFilter, teksTambahan);
-            const ws = XLSX.utils.aoa_to_sheet(dataFinal);
-            berikanDesainKeExcel(ws); 
-            
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Rekap_Data");
-            
-            let fileNam = kecFilter !== 'SEMUA' ? `Laporan_${kecFilter}_${kelFilter !== 'SEMUA' ? kelFilter : 'All'}` : "Laporan_ZIS_Global";
-            const tgl = new Date().toLocaleDateString('id-ID').replace(/\//g, '-');
-            XLSX.writeFile(wb, `${fileNam}_${tgl}.xlsx`);
-        }
-
-        function exportSatuanExcel(index) {
-            if (!globalDataSheets || !globalDataSheets[index]) return;
-            const namaUPZ = globalDataSheets[index][1];
-            const dataFinal = formatDataUntukExcel([globalDataSheets[index]], namaUPZ.toUpperCase());
-            const ws = XLSX.utils.aoa_to_sheet(dataFinal);
-            berikanDesainKeExcel(ws); 
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Laporan_UPZ");
-            const fileNam = namaUPZ.replace(/[^a-zA-Z0-9]/g, '_');
-            XLSX.writeFile(wb, `Laporan_${fileNam}.xlsx`);
-        }
-
-        // ========================================================
-        // FORMATTER TAMPILAN WEB (DENGAN DESIMAL INDONESIA)
-        // ========================================================
+        // --- FORMATTERS ---
         const formatRp = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka || 0);
-        // Format desimal menggunakan standar Indonesia (koma untuk desimal)
         const formatDesimal = (angka) => new Intl.NumberFormat('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(angka || 0);
-        
-        const selUang = (nilai, org, label) => `<div class="text-right"><span class="block font-bold">${formatRp(nilai)}</span><span class="block text-[10px] text-gray-500 bg-gray-100 rounded px-1 mt-1 inline-block">${Number(org)||0} ${label}</span></div>`;
-        
-        // Memakai formatDesimal agar koma dan titik ribuan terlihat
-        const selBeras = (kg, ltr, org, label) => `<div class="text-right"><span class="block font-bold text-green-700">${formatDesimal(kg)} Kg</span><span class="block font-bold text-blue-600">${formatDesimal(ltr)} Ltr</span><span class="block text-[10px] text-gray-500 bg-gray-100 rounded px-1 mt-1 inline-block">${Number(org)||0} ${label}</span></div>`;
+        const selUang = (nilai, org, label) => `<div class="text-right"><span class="block font-bold text-gray-800">${formatRp(nilai)}</span><span class="block text-[10px] text-gray-400 bg-gray-50 rounded px-1 inline-block mt-0.5">${Number(org)||0} ${label}</span></div>`;
+        const selBeras = (kg, ltr, org, label) => `<div class="text-right"><span class="block font-bold text-green-700">${formatDesimal(kg)} Kg</span><span class="block font-bold text-blue-600">${formatDesimal(ltr)} Ltr</span><span class="block text-[10px] text-gray-400 bg-gray-50 rounded px-1 inline-block">${Number(org)||0} ${label}</span></div>`;
 
         function kalkulasiStatistikGlobal(data) {
-            let jmlUpz = data.length > 1 ? data.length - 1 : 0;
-            let tkMal=0, tkFitKg=0, tkFitLtr=0, tkFitUang=0, tkInfak=0, tkFidyah=0, tkKafarat=0;
+            let jmlUpz=0, tkMal=0, tkFitKg=0, tkFitLtr=0, tkFitUang=0, tkInfak=0, tkFidyah=0, tkKafarat=0;
             let tsMal=0, tsFitKg=0, tsFitLtr=0, tsFitUang=0, tsInfak=0, tsFidyah=0, tsKafarat=0;
             let rekapKecamatan = { "Argomulyo": 0, "Sidomukti": 0, "Sidorejo": 0, "Tingkir": 0 };
 
             for (let i = 1; i < data.length; i++) {
                 const r = data[i]; if (!r[1]) continue; 
-
+                jmlUpz++;
                 let kec = r[5] ? r[5].trim() : "";
-                if (rekapKecamatan[kec] !== undefined) { rekapKecamatan[kec]++; } 
-                else if (kec !== "") { rekapKecamatan[kec] = 1; }
-
+                if (rekapKecamatan[kec] !== undefined) rekapKecamatan[kec]++;
                 tkMal+=Number(r[7])||0; tkFitKg+=Number(r[9])||0; tkFitLtr+=Number(r[10])||0; tkFitUang+=Number(r[12])||0; tkInfak+=Number(r[14])||0; tkFidyah+=Number(r[16])||0; tkKafarat+=Number(r[18])||0;
                 tsMal+=Number(r[20])||0; tsFitKg+=Number(r[22])||0; tsFitLtr+=Number(r[23])||0; tsFitUang+=Number(r[25])||0; tsInfak+=Number(r[27])||0; tsFidyah+=Number(r[29])||0; tsKafarat+=Number(r[31])||0;
             }
@@ -397,108 +264,241 @@
             document.getElementById('statUpz').textContent = jmlUpz;
             document.getElementById('statZisUang').textContent = formatRp(tkMal + tkFitUang + tkInfak);
             document.getElementById('statSalurUang').textContent = formatRp(tsMal + tsFitUang + tsInfak);
-            
-            // Format angka Beras menjadi desimal yang rapi
             document.getElementById('statKumpulBerasKg').textContent = formatDesimal(tkFitKg) + " Kg";
             document.getElementById('statKumpulBerasLtr').textContent = formatDesimal(tkFitLtr) + " Liter";
             document.getElementById('statSalurBerasKg').textContent = formatDesimal(tsFitKg) + " Kg";
             document.getElementById('statSalurBerasLtr').textContent = formatDesimal(tsFitLtr) + " Liter";
 
-            let htmlKecamatan = '';
-            const iconKec = `<svg class="w-6 h-6 mx-auto mb-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>`;
+            let htmlKec = '';
             for (let k in rekapKecamatan) {
-                htmlKecamatan += `
-                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 text-center shadow-sm">
-                        ${iconKec}
-                        <div class="text-xs font-bold text-gray-500 uppercase tracking-wider">${k}</div>
-                        <div class="text-3xl font-black text-blue-700 mt-1">${rekapKecamatan[k]}</div>
-                        <div class="text-[10px] text-blue-500 font-semibold uppercase mt-1">Lembaga</div>
-                    </div>`;
+                htmlKec += `<div class="bg-white p-4 rounded-xl border border-blue-100 text-center shadow-sm">
+                    <div class="text-xs font-bold text-gray-500 uppercase">${k}</div>
+                    <div class="text-3xl font-black text-blue-600">${rekapKecamatan[k]}</div>
+                    <div class="text-[10px] text-blue-400 font-bold">Lembaga</div>
+                </div>`;
             }
-            document.getElementById('sebaranKecamatan').innerHTML = htmlKecamatan;
+            document.getElementById('sebaranKecamatan').innerHTML = htmlKec;
             document.getElementById('waktuSync').textContent = 'Pembaruan terakhir: ' + new Date().toLocaleTimeString();
 
-            const tmplList = (arr) => arr.map(i => `<li class="flex justify-between border-b border-dashed pb-2"><span class="text-gray-600">${i.l}</span><span class="font-bold text-gray-800">${i.v}</span></li>`).join('');
-            document.getElementById('rincianKumpulZis').innerHTML = tmplList([{l:'Zakat Mal', v:formatRp(tkMal)}, {l:'Fitrah (Uang)', v:formatRp(tkFitUang)}, {l:'Infak Sedekah', v:formatRp(tkInfak)}]);
-            document.getElementById('rincianKumpulDskl').innerHTML = tmplList([{l:'Fidyah', v:formatRp(tkFidyah)}, {l:'Kafarat', v:formatRp(tkKafarat)}]);
-            document.getElementById('rincianSalurZis').innerHTML = tmplList([{l:'Zakat Mal', v:formatRp(tsMal)}, {l:'Fitrah (Uang)', v:formatRp(tsFitUang)}, {l:'Infak Sedekah', v:formatRp(tsInfak)}]);
-            document.getElementById('rincianSalurDskl').innerHTML = tmplList([{l:'Fidyah', v:formatRp(tsFidyah)}, {l:'Kafarat', v:formatRp(tsKafarat)}]);
+            const tmplL = (arr) => arr.map(i => `<li class="flex justify-between border-b border-dashed pb-1 text-sm"><span class="text-gray-500">${i.l}</span><span class="font-bold text-gray-800">${i.v}</span></li>`).join('');
+            document.getElementById('rincianKumpulTotal').innerHTML = tmplL([{l:'Zakat Mal', v:formatRp(tkMal)}, {l:'Fitrah (Uang)', v:formatRp(tkFitUang)}, {l:'Infak Sedekah', v:formatRp(tkInfak)}, {l:'Fidyah', v:formatRp(tkFidyah)}, {l:'Kafarat', v:formatRp(tkKafarat)}]);
+            document.getElementById('rincianSalurTotal').innerHTML = tmplL([{l:'Zakat Mal', v:formatRp(tsMal)}, {l:'Fitrah (Uang)', v:formatRp(tsFitUang)}, {l:'Infak Sedekah', v:formatRp(tsInfak)}, {l:'Fidyah', v:formatRp(tsFidyah)}, {l:'Kafarat', v:formatRp(tsKafarat)}]);
         }
 
+        // --- CORE TABLE RENDERER ---
         function renderTabelFilter() {
             const tbody = document.getElementById('tabelData'); 
             tbody.innerHTML = '';
-
-            let kecFilter = document.getElementById('filterKecamatan').value;
-            let kelFilter = document.getElementById('filterKelurahan').value;
-
+            let kecF = document.getElementById('filterKecamatan').value;
+            let kelF = document.getElementById('filterKelurahan').value;
             let nomorUrut = 1;
-            let adaDataTampil = false;
+            let adaData = false;
 
             for (let i = globalDataSheets.length - 1; i >= 1; i--) {
-                const r = globalDataSheets[i]; 
-                if (!r[1]) continue; 
+                const r = globalDataSheets[i]; if (!r[1]) continue;
+                let kcA = r[5] ? String(r[5]).trim() : "";
+                let klA = r[6] ? String(r[6]).trim() : "";
+                if (kecF !== 'SEMUA' && kcA !== kecF) continue;
+                if (kelF !== 'SEMUA' && klA !== kelF) continue;
+                adaData = true;
 
-                let kecAsli = r[5] ? r[5].trim() : "";
-                let kelAsli = r[6] ? r[6].trim() : "";
+                let fWaktu = "Data Kosong";
+                if (r[0]) {
+                    let d = new Date(r[0]);
+                    fWaktu = isNaN(d.getTime()) ? r[0] : d.toLocaleDateString('id-ID') + ' ' + d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+                }
 
-                if (kecFilter !== 'SEMUA' && kecAsli !== kecFilter) continue;
-                if (kelFilter !== 'SEMUA' && kelAsli !== kelFilter) continue;
-
-                adaDataTampil = true;
-
-                const tgl = new Date(r[0]);
-                const formatWaktu = tgl.toLocaleDateString('id-ID') + ' ' + tgl.getHours().toString().padStart(2,'0') + ':' + tgl.getMinutes().toString().padStart(2,'0');
+                let hpRaw = r[4] ? String(r[4]).trim() : "";
+                let hpLink = hpRaw.replace(/[^0-9]/g, ''); 
+                if (hpLink.startsWith('0')) hpLink = '62' + hpLink.slice(1);
+                else if (hpLink.startsWith('8')) hpLink = '62' + hpLink;
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-blue-50 border-b group">
-                        <td class="py-3 px-2 border-r bg-white sticky left-0 z-10 group-hover:bg-blue-50 text-center font-bold text-gray-700" title="Waktu Lapor: ${formatWaktu}">
-                            ${nomorUrut++}
+                        <td class="py-4 px-2 border-r bg-white sticky left-0 z-10 group-hover:bg-blue-50 text-center font-bold text-gray-500">${nomorUrut++}</td>
+                        <td class="py-4 px-4 border-r bg-white sticky left-12 z-10 group-hover:bg-blue-50 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)]">
+                            <span class="block font-bold text-gray-800 uppercase leading-tight">${r[1]}</span>
+                            <span class="block text-[10px] text-gray-400 mt-1 uppercase">${r[2] || '-'}</span>
+                            <span class="block text-[9px] text-blue-500 font-bold mt-1">Lapor: ${fWaktu}</span>
                         </td>
-                        
-                        <td class="py-3 px-4 border-r bg-white sticky left-12 z-10 group-hover:bg-blue-50 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
-                            <span class="block font-bold text-gray-800 uppercase">${r[1]}</span>
-                            <span class="block text-xs text-gray-500 mt-1">${r[2]}</span>
-                            <span class="block text-[10px] text-gray-400 mt-1 bg-gray-50 p-1 rounded inline-block">Lapor: ${formatWaktu}</span>
+                        <td class="py-4 px-4 border-r">
+                            <span class="block font-bold text-gray-700">${r[3] || '-'}</span>
+                            <a href="https://wa.me/${hpLink}" target="_blank" class="inline-flex items-center gap-1.5 text-xs text-green-600 mt-1.5 font-bold hover:underline">
+                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.558 0 11.897-5.335 11.9-11.894a11.83 11.83 0 00-3.489-8.413z"/></svg>
+                                <span>+${hpLink}</span>
+                            </a>
                         </td>
-
-                        <td class="py-3 px-4 border-r">
-                            <span class="block font-bold text-gray-700">${r[3]}</span>
-                            <span class="block text-xs text-blue-600 mt-1 font-semibold">📞 ${r[4]}</span>
+                        <td class="py-4 px-4 border-r">
+                            <span class="block font-bold text-gray-700 text-xs">${r[5] || '-'}</span>
+                            <span class="block text-[10px] text-gray-400 uppercase">${r[6] || '-'}</span>
                         </td>
-
-                        <td class="py-3 px-4 border-r">
-                            <span class="block font-bold text-gray-700">${r[5]}</span>
-                            <span class="block text-xs text-gray-500 mt-1">${r[6]}</span>
-                        </td>
+                        <td class="py-4 px-3 border-r bg-green-50/20">${selUang(r[7], r[8], 'Muzaki')}</td>
+                        <td class="py-4 px-3 border-r bg-green-50/20">${selBeras(r[9], r[10], r[11], 'Muzaki')}</td>
+                        <td class="py-4 px-3 border-r bg-green-50/20">${selUang(r[12], r[13], 'Muzaki')}</td>
+                        <td class="py-4 px-3 border-r bg-green-50/20">${selUang(r[14], r[15], 'Munfiq')}</td>
+                        <td class="py-4 px-3 border-r bg-blue-50/20">${selUang(r[16], r[17], 'Munfiq')}</td>
+                        <td class="py-4 px-3 border-r bg-blue-50/20">${selUang(r[18], r[19], 'Munfiq')}</td>
+                        <td class="py-4 px-3 border-r bg-orange-50/20">${selUang(r[20], r[21], 'Mustahik')}</td>
+                        <td class="py-4 px-3 border-r bg-orange-50/20">${selBeras(r[22], r[23], r[24], 'Mustahik')}</td>
+                        <td class="py-4 px-3 border-r bg-orange-50/20">${selUang(r[25], r[26], 'Mustahik')}</td>
+                        <td class="py-4 px-3 border-r bg-orange-50/20">${selUang(r[27], r[28], 'Mustahik')}</td>
+                        <td class="py-4 px-3 border-r bg-teal-50/20">${selUang(r[29], r[30], 'Mustahik')}</td>
+                        <td class="py-4 px-3 border-r bg-teal-50/20">${selUang(r[31], r[32], 'Mustahik')}</td>
                         
-                        <td class="py-3 px-3 border-r bg-green-50/20">${selUang(r[7], r[8], 'Muzaki')}</td>
-                        <td class="py-3 px-3 border-r bg-green-50/20">${selBeras(r[9], r[10], r[11], 'Muzaki')}</td>
-                        <td class="py-3 px-3 border-r bg-green-50/20">${selUang(r[12], r[13], 'Muzaki')}</td>
-                        <td class="py-3 px-3 border-r bg-green-50/20">${selUang(r[14], r[15], 'Munfiq')}</td>
-                        
-                        <td class="py-3 px-3 border-r bg-blue-50/20">${selUang(r[16], r[17], 'Munfiq')}</td>
-                        <td class="py-3 px-3 border-r bg-blue-50/20">${selUang(r[18], r[19], 'Munfiq')}</td>
-                        
-                        <td class="py-3 px-3 border-r bg-orange-50/20">${selUang(r[20], r[21], 'Mustahik')}</td>
-                        <td class="py-3 px-3 border-r bg-orange-50/20">${selBeras(r[22], r[23], r[24], 'Mustahik')}</td>
-                        <td class="py-3 px-3 border-r bg-orange-50/20">${selUang(r[25], r[26], 'Mustahik')}</td>
-                        <td class="py-3 px-3 border-r bg-orange-50/20">${selUang(r[27], r[28], 'Mustahik')}</td>
-                        
-                        <td class="py-3 px-3 border-r bg-teal-50/20">${selUang(r[29], r[30], 'Mustahik')}</td>
-                        <td class="py-3 px-3 border-r bg-teal-50/20">${selUang(r[31], r[32], 'Mustahik')}</td>
-
-                        <td class="py-3 px-4 bg-white sticky right-0 z-10 group-hover:bg-blue-50 text-center shadow-[-2px_0_5px_-2px_rgba(0,0,0,0.1)]">
-                            <button onclick="exportSatuanExcel(${i})" title="Download Laporan ${r[1]}" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-3 rounded shadow transition w-full text-xs">
-                                📥 .xlsx
-                            </button>
+                        <td class="py-4 px-4 bg-white sticky right-0 z-20 group-hover:bg-blue-50 text-center">
+                            <div class="flex gap-1.5 justify-center">
+                                <button onclick="bukaDetail(${i})" class="bg-blue-600 text-white p-2 rounded shadow hover:bg-blue-700 transition" title="Lihat Detail">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                </button>
+                                <button onclick="exportSatuanExcel(${i})" class="bg-green-600 text-white p-2 rounded shadow hover:bg-green-700 transition" title="Export excel UPZ ini">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                </button>
+                            </div>
                         </td>
                     </tr>`;
             }
+            if(!adaData) tbody.innerHTML = `<tr><td colspan="18" class="text-center py-24 text-gray-400 italic">Data tidak ditemukan untuk filter ini.</td></tr>`;
+        }
 
-            if(!adaDataTampil) {
-                tbody.innerHTML = `<tr><td colspan="17" class="text-center py-10 text-gray-500 font-medium">Tidak ada data untuk wilayah tersebut.</td></tr>`;
+        // --- FUNGSI MODAL DETAIL ---
+        function bukaDetail(index) {
+            const r = globalDataSheets[index];
+            const container = document.getElementById('isiDetail');
+            
+            // Format Tanggal untuk Header Modal
+            let tgl = "Data Kosong";
+            if(r[0]) {
+                let d = new Date(r[0]);
+                tgl = isNaN(d.getTime()) ? r[0] : d.toLocaleDateString('id-ID', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) + ' Jam ' + d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
             }
+            document.getElementById('detailJudulWaktu').innerText = "Dilaporkan pada: " + tgl;
+
+            const section = (judul, colorClass, dataHtml) => `
+                <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+                    <div class="${colorClass} px-4 py-2 text-white font-bold text-xs uppercase tracking-widest">${judul}</div>
+                    <div class="p-4 space-y-3">${dataHtml}</div>
+                </div>
+            `;
+
+            const item = (label, val, sub = "") => `
+                <div class="flex justify-between items-start border-b border-gray-50 pb-2 last:border-0">
+                    <span class="text-gray-500 text-xs font-semibold uppercase">${label}</span>
+                    <div class="text-right">
+                        <span class="block font-bold text-gray-800">${val || '-'}</span>
+                        ${sub ? `<span class="block text-[10px] text-gray-400 font-bold">${sub}</span>` : ''}
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    ${section('Profil UPZ', 'bg-blue-600', 
+                        item('Nama Lembaga', r[1]) + 
+                        item('Kecamatan', r[5]) + 
+                        item('Kelurahan', r[6]) + 
+                        item('Alamat', r[2])
+                    )}
+                    ${section('Kontak Person', 'bg-purple-600', 
+                        item('Nama PJB', r[3]) + 
+                        item('No. WhatsApp', r[4])
+                    )}
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    ${section('Pengumpulan Zakat & Infaq', 'bg-green-600', 
+                        item('Zakat Mal', formatRp(r[7]), r[8] + ' Muzaki') +
+                        item('Fitrah Beras', formatDesimal(r[9]) + ' Kg / ' + formatDesimal(r[10]) + ' Ltr', r[11] + ' Muzaki') +
+                        item('Fitrah Uang', formatRp(r[12]), r[13] + ' Muzaki') +
+                        item('Infaq Sedekah', formatRp(r[14]), r[15] + ' Munfiq') +
+                        item('Fidyah', formatRp(r[16]), r[17] + ' Munfiq') +
+                        item('Kafarat', formatRp(r[18]), r[19] + ' Munfiq')
+                    )}
+                    ${section('Penyaluran ZIS', 'bg-orange-600', 
+                        item('Salur Mal', formatRp(r[20]), r[21] + ' Mustahik') +
+                        item('Salur Fitrah (B)', formatDesimal(r[22]) + ' Kg / ' + formatDesimal(r[23]) + ' Ltr', r[24] + ' Mustahik') +
+                        item('Salur Fitrah (U)', formatRp(r[25]), r[26] + ' Mustahik') +
+                        item('Salur Infaq', formatRp(r[27]), r[28] + ' Mustahik') +
+                        item('Salur Fidyah', formatRp(r[29]), r[30] + ' Mustahik') +
+                        item('Salur Kafarat', formatRp(r[31]), r[32] + ' Mustahik')
+                    )}
+                </div>
+            `;
+            
+            document.getElementById('modalDetail').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function tutupModal() {
+            document.getElementById('modalDetail').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // --- EXPORT LOGIC ---
+        function berikanDesainKeExcel(ws) {
+            const wscols = [{wch: 6}, {wch: 28}, {wch: 35}, {wch: 30}, {wch: 22}, {wch: 20}, {wch: 18}, {wch: 18}];
+            for(let i=0; i<30; i++) wscols.push({wch: 15});
+            ws['!cols'] = wscols;
+            ws['!rows'] = [{hpt: 40}, {hpt: 15}, {hpt: 60}];
+            ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 33 } }];
+
+            for (let i in ws) {
+                if (i[0] === '!') continue;
+                const baris = parseInt(i.replace(/\D/g, ''));
+                const kolom = i.replace(/[0-9]/g, '');
+                if (baris > 3 && kolom === 'F') { if (ws[i].v) { ws[i].t = 's'; ws[i].v = String(ws[i].v); } }
+                if (!ws[i].s) ws[i].s = {};
+                ws[i].s.alignment = { vertical: "center", horizontal: "left", wrapText: true };
+                if (baris === 1) { ws[i].s.font = { bold: true, sz: 16 }; ws[i].s.alignment = { horizontal: "center", vertical: "center" }; }
+                else if (baris === 3) { ws[i].s.font = { bold: true, color: { rgb: "FFFFFF" } }; ws[i].s.fill = { fgColor: { rgb: "16A34A" } }; ws[i].s.alignment = { horizontal: "center", vertical: "center", wrapText: true }; }
+            }
+        }
+
+        function formatDataUntukExcel(rowsToExport, teksJudul) {
+            const header = [
+                "NO.", "WAKTU LAPOR", "NAMA UPZ", "ALAMAT LENGKAP", "PENANGGUNG JAWAB", "NO. HP/WA", "KECAMATAN", "KELURAHAN",
+                "KUMPUL MAL (Rp)", "KUMPUL MAL (Muzaki)", "KUMPUL FITRAH B (Kg)", "KUMPUL FITRAH B (Ltr)", "KUMPUL FITRAH B (Muzaki)",
+                "KUMPUL FITRAH U (Rp)", "KUMPUL FITRAH U (Muzaki)", "KUMPUL INFAK (Rp)", "KUMPUL INFAK (Munfiq)",
+                "KUMPUL FIDYAH (Rp)", "KUMPUL FIDYAH (Munfiq)", "KUMPUL KAFARAT (Rp)", "KUMPUL KAFARAT (Munfiq)",
+                "SALUR MAL (Rp)", "SALUR MAL (Mustahik)", "SALUR FITRAH B (Kg)", "SALUR FITRAH B (Ltr)", "SALUR FITRAH B (Mustahik)",
+                "SALUR FITRAH U (Rp)", "SALUR FITRAH U (Mustahik)", "SALUR INFAK (Rp)", "SALUR INFAK (Mustahik)",
+                "SALUR FIDYAH (Rp)", "SALUR FIDYAH (Mustahik)", "SALUR KAFARAT (Rp)", "SALUR KAFARAT (Mustahik)"
+            ];
+            let res = [[teksJudul], [], header];
+            let n = 1;
+            rowsToExport.forEach(r => {
+                if(!r[1]) return;
+                let hp = String(r[4] || "").trim();
+                let row = [n++, r[0], r[1], r[2], r[3], hp, r[5], r[6]];
+                for(let k=7; k<=32; k++) row.push(Number(r[k])||0);
+                res.push(row);
+            });
+            return res;
+        }
+
+        function exportGlobalExcel() {
+            if (globalDataSheets.length <= 1) return alert("Data belum tersedia.");
+            let kF = document.getElementById('filterKecamatan').value;
+            let klF = document.getElementById('filterKelurahan').value;
+            const filtered = globalDataSheets.slice(1).filter(r => {
+                let kcA = r[5] ? String(r[5]).trim() : "";
+                let klA = r[6] ? String(r[6]).trim() : "";
+                return (kF === 'SEMUA' || kcA === kF) && (klF === 'SEMUA' || klA === klF);
+            });
+            if (filtered.length === 0) return alert("Tidak ada data untuk filter ini.");
+            const ws = XLSX.utils.aoa_to_sheet(formatDataUntukExcel(filtered, "LAPORAN REKAPITULASI ZIS KOTA SALATIGA"));
+            berikanDesainKeExcel(ws);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Rekap_Global");
+            XLSX.writeFile(wb, `Rekap_ZIS_Salatiga_${new Date().toLocaleDateString('id-ID').replace(/\//g,'-')}.xlsx`);
+        }
+
+        function exportSatuanExcel(index) {
+            const r = globalDataSheets[index];
+            const ws = XLSX.utils.aoa_to_sheet(formatDataUntukExcel([r], `LAPORAN ZIS UPZ: ${r[1].toUpperCase()}`));
+            berikanDesainKeExcel(ws);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Laporan_UPZ");
+            XLSX.writeFile(wb, `Laporan_${r[1].replace(/[^a-z0-9]/gi, '_')}.xlsx`);
         }
     </script>
 </body>
