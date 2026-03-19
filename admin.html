@@ -65,20 +65,20 @@
                         <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest">Status Sinkronisasi</p>
                         <p id="waktuSync" class="text-sm text-slate-700 font-bold italic">Memuat data...</p>
                     </div>
-                    <button onclick="tarikDataGoogleSheets()" class="w-full md:w-auto bg-slate-900 text-white px-8 py-3.5 rounded-2xl font-bold text-sm hover:bg-slate-800 transition shadow-lg active:scale-95">Segarkan Database</button>
+                    <button onclick="tarikDataGoogleSheets()" class="w-full md:w-auto bg-slate-900 text-white px-8 py-3.5 rounded-2xl font-bold text-sm hover:bg-slate-800 transition shadow-lg active:scale-95">Refresh Database</button>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
                     <div class="stat-card bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100">
-                        <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Lembaga Melapor</div>
+                        <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Total Yang Melapor</div>
                         <div class="text-5xl font-black text-slate-800" id="statUpz">0</div>
                     </div>
                     <div class="stat-card bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 border-l-4 border-l-green-500">
-                        <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 text-green-600">Total Kumpul Uang</div>
+                        <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 text-green-600">Total Pengumpulan ZIS</div>
                         <div class="text-3xl font-black text-green-600" id="statZisUang">Rp 0</div>
                     </div>
                     <div class="stat-card bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 border-l-4 border-l-orange-500">
-                        <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 text-orange-600">Total Salur Uang</div>
+                        <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 text-orange-600">Total Penyaluran ZIS</div>
                         <div class="text-3xl font-black text-orange-500" id="statSalurUang">Rp 0</div>
                     </div>
                 </div>
@@ -91,12 +91,12 @@
                         </div>
                         <div class="p-8 grid grid-cols-2 gap-6">
                             <div class="bg-green-50/50 p-5 rounded-2xl border border-green-100">
-                                <div class="text-[9px] font-black text-green-600 uppercase mb-1 tracking-wider">Kumpul Beras</div>
+                                <div class="text-[9px] font-black text-green-600 uppercase mb-1 tracking-wider">Pengumpulan Beras</div>
                                 <div class="text-2xl font-black text-green-700" id="statKumpulBerasKg">0 Kg</div>
                                 <div class="text-xs font-bold text-green-500/80" id="statKumpulBerasLtr">0 Ltr</div>
                             </div>
                             <div class="bg-orange-50/50 p-5 rounded-2xl border border-orange-100">
-                                <div class="text-[9px] font-black text-orange-600 uppercase mb-1 tracking-wider">Salur Beras</div>
+                                <div class="text-[9px] font-black text-orange-600 uppercase mb-1 tracking-wider">Penyaluran Beras</div>
                                 <div class="text-2xl font-black text-orange-700" id="statSalurBerasKg">0 Kg</div>
                                 <div class="text-xs font-bold text-orange-500/80" id="statSalurBerasLtr">0 Ltr</div>
                             </div>
@@ -109,11 +109,11 @@
                         </div>
                         <div class="p-8 grid grid-cols-2 gap-6">
                             <div class="bg-green-50/50 p-5 rounded-2xl border border-green-100">
-                                <div class="text-[9px] font-black text-green-600 uppercase mb-1 tracking-wider">Kumpul Uang</div>
+                                <div class="text-[9px] font-black text-green-600 uppercase mb-1 tracking-wider">Pengumpulan Uang</div>
                                 <div class="text-xl font-black text-green-700" id="statKumpulFitrahUang">Rp 0</div>
                             </div>
                             <div class="bg-orange-50/50 p-5 rounded-2xl border border-orange-100">
-                                <div class="text-[9px] font-black text-orange-600 uppercase mb-1 tracking-wider">Salur Uang</div>
+                                <div class="text-[9px] font-black text-orange-600 uppercase mb-1 tracking-wider">Penyaluran Uang</div>
                                 <div class="text-xl font-black text-orange-700" id="statSalurFitrahUang">Rp 0</div>
                             </div>
                         </div>
@@ -155,25 +155,27 @@
                                 <tr>
                                     <th rowspan="2" class="py-5 px-4 border-b border-r text-center sticky left-0 z-10 bg-slate-50">No</th>
                                     <th rowspan="2" class="py-5 px-6 border-b border-r sticky left-12 z-10 bg-slate-50 shadow-md">Identitas Lembaga UPZ</th>
-                                    <th rowspan="2" class="py-5 px-6 border-b border-r text-center">Kontak Person</th>
-                                    <th rowspan="2" class="py-5 px-6 border-b border-r text-center">Wilayah Kerja</th>
-                                    <th colspan="4" class="py-3 bg-green-50 text-green-700 border-b border-r text-center">Pengumpulan Zakat & Infaq</th>
+                                    <th rowspan="2" class="py-5 px-6 border-b border-r text-center">PIC</th>
+                                    <th rowspan="2" class="py-5 px-6 border-b border-r text-center">Wilayah</th>
+                                    <th colspan="5" class="py-3 bg-green-50 text-green-700 border-b border-r text-center">Pengumpulan Zakat & Infaq</th>
                                     <th colspan="2" class="py-3 bg-blue-50 text-blue-700 border-b border-r text-center">Pengumpulan DSKL</th>
-                                    <th colspan="4" class="py-3 bg-orange-50 text-orange-700 border-b border-r text-center">Penyaluran Zakat & Infaq</th>
+                                    <th colspan="5" class="py-3 bg-orange-50 text-orange-700 border-b border-r text-center">Penyaluran Zakat & Infaq</th>
                                     <th colspan="2" class="py-3 bg-teal-50 text-teal-700 border-b border-r text-center">Penyaluran DSKL</th>
                                     <th rowspan="2" class="py-5 px-6 border-b sticky right-0 z-30 bg-slate-50 shadow-md text-center">Aksi</th>
                                 </tr>
                                 <tr class="text-[8px] tracking-tight">
                                     <th class="py-2 border-b border-r text-center">Zakat Mal</th>
-                                    <th class="py-2 border-b border-r text-center">Fitrah Beras</th>
+                                    <th class="py-2 border-b border-r text-center">Fitrah (KG)</th>
+                                    <th class="py-2 border-b border-r text-center">Fitrah (LTR)</th>
                                     <th class="py-2 border-b border-r text-center">Fitrah Uang</th>
-                                    <th class="py-2 border-b border-r text-center">Infaq Sedekah</th>
+                                    <th class="py-2 border-b border-r text-center">Infaq</th>
                                     <th class="py-2 border-b border-r text-center">Fidyah</th>
                                     <th class="py-2 border-b border-r text-center">Kafarat</th>
                                     <th class="py-2 border-b border-r text-center">Zakat Mal</th>
-                                    <th class="py-2 border-b border-r text-center">Fitrah Beras</th>
+                                    <th class="py-2 border-b border-r text-center">Fitrah (KG)</th>
+                                    <th class="py-2 border-b border-r text-center">Fitrah (LTR)</th>
                                     <th class="py-2 border-b border-r text-center">Fitrah Uang</th>
-                                    <th class="py-2 border-b border-r text-center">Infaq Sedekah</th>
+                                    <th class="py-2 border-b border-r text-center">Infaq</th>
                                     <th class="py-2 border-b border-r text-center">Fidyah</th>
                                     <th class="py-2 border-b text-center">Kafarat</th>
                                 </tr>
@@ -213,7 +215,6 @@
             return hp ? '+' + hp : '-';
         };
 
-        // Helper untuk render data tabel dengan label lengkap
         const selData = (v, o, label) => `
             <div class="text-right leading-tight">
                 <span class="block font-black text-slate-800 text-[10px]">${v}</span>
@@ -279,24 +280,25 @@
                             <span class="text-green-600 font-black text-[11px]">${hpWA}</span>
                         </td>
                         <td class="py-5 px-6 border-r text-[9px] font-black text-slate-500 uppercase text-center">${r[5]}<br><span class="text-blue-500 text-[8px]">${r[6]}</span></td>
+                        
                         <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(r[7]), r[8], 'Muzaki')}</td>
-                        <td class="py-5 px-4 border-r bg-green-50/20 text-right leading-tight">
-                            <span class="block font-black text-green-700 text-[10px]">${formatDesimal(r[9])} Kg</span>
-                            <span class="block text-[8px] text-blue-500 font-bold uppercase">${r[11]} Muzaki</span>
-                        </td>
+                        <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatDesimal(r[9])+' Kg', r[11], 'Muzaki')}</td>
+                        <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatDesimal(r[10])+' Ltr', r[11], 'Muzaki')}</td>
                         <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(r[12]), r[13], 'Muzaki')}</td>
                         <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(r[14]), r[15], 'Munfiq')}</td>
+                        
                         <td class="py-5 px-4 border-r bg-blue-50/20">${selData(formatRp(r[16]), r[17], 'Munfiq')}</td>
                         <td class="py-5 px-4 border-r bg-blue-50/20">${selData(formatRp(r[18]), r[19], 'Munfiq')}</td>
+                        
                         <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(r[20]), r[21], 'Mustahik')}</td>
-                        <td class="py-5 px-4 border-r bg-orange-50/20 text-right leading-tight">
-                            <span class="block font-black text-orange-700 text-[10px]">${formatDesimal(r[22])} Kg</span>
-                            <span class="block text-[8px] text-blue-500 font-bold uppercase">${r[24]} Mustahik</span>
-                        </td>
+                        <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatDesimal(r[22])+' Kg', r[24], 'Mustahik')}</td>
+                        <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatDesimal(r[23])+' Ltr', r[24], 'Mustahik')}</td>
                         <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(r[25]), r[26], 'Mustahik')}</td>
                         <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(r[27]), r[28], 'Mustahik')}</td>
+                        
                         <td class="py-5 px-4 border-r bg-teal-50/20">${selData(formatRp(r[29]), r[30], 'Mustahik')}</td>
                         <td class="py-5 px-4 border-r bg-teal-50/20">${selData(formatRp(r[31]), r[32], 'Mustahik')}</td>
+                        
                         <td class="py-5 px-6 bg-white sticky right-0 z-30 shadow-md text-center">
                             <div class="flex gap-2 justify-center">
                                 <button onclick="bukaDetail(${i})" class="bg-blue-600 text-white p-2 rounded-xl shadow hover:bg-blue-700 transition active:scale-90"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
@@ -319,25 +321,38 @@
                 return `<div class="flex justify-between items-start border-b border-slate-50 pb-3"><span class="text-slate-400 font-bold uppercase text-[9px] mt-1 tracking-wider">${l}</span><div class="text-right">${isWA && hp !== '-' ? `<a href="https://wa.me/${hp.replace('+', '')}" target="_blank" class="text-green-600 font-black hover:underline tracking-tight">${hp}</a>` : `<span class="font-extrabold text-slate-800 tracking-tight">${v||'-'}</span>`}${s ? `<div class="text-[9px] text-slate-400 font-bold mt-0.5">${s}</div>` : ''}</div></div>`;
             }
             c.innerHTML = `
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Identitas', 'bg-blue-600', it('Nama UPZ', r[1]) + it('Wilayah', r[5]+' - '+r[6]) + it('Alamat', r[2]))}${card('Kontak Person', 'bg-indigo-600', it('Nama PJB', r[3]) + it('No WhatsApp', r[4], "Konfirmasi Laporan", true))}</div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Pengumpulan ZIS', 'bg-green-600', it('Zakat Mal', formatRp(r[7]), r[8]+' Muzaki') + it('Fitrah Beras', formatDesimal(r[9])+'Kg / '+formatDesimal(r[10])+'Ltr', r[11]+' Muzaki') + it('Fitrah Uang', formatRp(r[12]), r[13]+' Muzaki') + it('Infaq Sedekah', formatRp(r[14]), r[15]+' Munfiq'))}${card('Pengumpulan DSKL', 'bg-teal-600', it('Fidyah', formatRp(r[16]), r[17]+' Munfiq') + it('Kafarat', formatRp(r[18]), r[19]+' Munfiq'))}</div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Penyaluran ZIS', 'bg-orange-600', it('Salur Mal', formatRp(r[20]), r[21]+' Mustahik') + it('Salur Fitrah (B)', formatDesimal(r[22])+'Kg / '+formatDesimal(r[23])+'Ltr', r[24]+' Mustahik') + it('Salur Fitrah (U)', formatRp(r[25]), r[26]+' Mustahik') + it('Salur Infaq', formatRp(r[27]), r[28]+' Mustahik'))}${card('Penyaluran DSKL', 'bg-rose-600', it('Salur Fidyah', formatRp(r[29]), r[30]+' Mustahik') + it('Salur Kafarat', formatRp(r[31]), r[32]+' Mustahik'))}</div>`;
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Identitas', 'bg-blue-600', it('Nama UPZ', r[1]) + it('Wilayah', r[5]+' - '+r[6]) + it('Alamat', r[2]))}${card('PIC', 'bg-indigo-600', it('Nama PIC', r[3]) + it('No WhatsApp', r[4], "Konfirmasi Laporan", true))}</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Pengumpulan ZIS', 'bg-green-600', it('Zakat Mal', formatRp(r[7]), r[8]+' Muzaki') + it('Fitrah Beras', formatDesimal(r[9])+' Kg / '+formatDesimal(r[10])+' Ltr', r[11]+' Muzaki') + it('Fitrah Uang', formatRp(r[12]), r[13]+' Muzaki') + it('Infaq Sedekah', formatRp(r[14]), r[15]+' Munfiq'))}${card('Pengumpulan DSKL', 'bg-teal-600', it('Fidyah', formatRp(r[16]), r[17]+' Munfiq') + it('Kafarat', formatRp(r[18]), r[19]+' Munfiq'))}</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Penyaluran ZIS', 'bg-orange-600', it('Zakat Mal', formatRp(r[20]), r[21]+' Mustahik') + it('Zakat Fitrah (B)', formatDesimal(r[22])+' Kg / '+formatDesimal(r[23])+' Ltr', r[24]+' Mustahik') + it('Zakat Fitrah (U)', formatRp(r[25]), r[26]+' Mustahik') + it('Infaq Sedekah', formatRp(r[27]), r[28]+' Mustahik'))}${card('Penyaluran DSKL', 'bg-rose-600', it('Fidyah', formatRp(r[29]), r[30]+' Mustahik') + it('Kafarat', formatRp(r[31]), r[32]+' Mustahik'))}</div>`;
             document.getElementById('modalDetail').classList.remove('hidden'); 
             document.body.style.overflow = 'hidden';
         }
 
         // --- EXPORT RAPI ---
-        function exportGlobalExcel() { generateRapiExcel(globalDataSheets.slice(1), "REKAP_GLOBAL_ZIS_SALATIGA_2026", "LAPORAN REKAPITULASI ZIS & DSKL KOTA SALATIGA - RAMADAN 2026"); }
-        function exportSingleExcel(index) { const r = globalDataSheets[index]; generateRapiExcel([r], `LAPORAN_UPZ_${r[1].replace(/\W/g,'_')}`, `LAPORAN ZIS & DSKL UPZ: ${r[1].toUpperCase()}`); }
+        function exportGlobalExcel() { 
+            generateRapiExcel(globalDataSheets.slice(1), "REKAP_GLOBAL_ZIS_SALATIGA_2026", "LAPORAN REKAPITULASI ZIS & DSKL KOTA SALATIGA - RAMADAN 2026"); 
+        }
+
+        function exportSingleExcel(index) { 
+            const r = globalDataSheets[index]; 
+            generateRapiExcel([r], `LAPORAN_UPZ_${r[1].replace(/\W/g,'_')}`, `LAPORAN ZIS & DSKL UPZ: ${r[1].toUpperCase()}`); 
+        }
 
         function generateRapiExcel(rows, filename, judulBesar) {
             const rowJudul = [judulBesar];
-            const header1 = ["NO", "WAKTU LAPOR", "IDENTITAS UPZ", "", "", "", "WILAYAH", "", "PENGUMPULAN ZIS", "", "", "", "PENGUMPULAN DSKL", "", "PENYALURAN ZIS", "", "", "", "PENYALURAN DSKL", ""];
-            const header2 = ["", "", "NAMA UPZ", "ALAMAT", "PJB", "WHATSAPP", "KECAMATAN", "KELURAHAN", "MAL (RP)", "FITRAH (B)", "FITRAH (U)", "INFAK", "FIDYAH", "KAFARAT", "MAL (RP)", "FITRAH (B)", "FITRAH (U)", "INFAK", "FIDYAH", "KAFARAT"];
-            const dataBody = rows.map((r, idx) => [idx + 1, r[0], r[1], r[2], r[3], formatWA(r[4]), r[5], r[6], Number(r[7]), Number(r[9]), Number(r[12]), Number(r[14]), Number(r[16]), Number(r[18]), Number(r[20]), Number(r[22]), Number(r[25]), Number(r[27]), Number(r[29]), Number(r[31])]);
+            const header1 = ["NO", "WAKTU LAPOR", "IDENTITAS UPZ", "", "", "", "WILAYAH", "", "PENGUMPULAN ZAKAT & INFAQ", "", "", "", "", "PENGUMPULAN DSKL", "", "PENYALURAN ZAKAT & INFAQ", "", "", "", "", "PENYALURAN DSKL", ""];
+            const header2 = ["", "", "NAMA UPZ", "ALAMAT", "PJB", "WHATSAPP", "KECAMATAN", "KELURAHAN", "MAL (RP)", "FITRAH (KG)", "FITRAH (LTR)", "FITRAH (RP)", "INFAK (RP)", "FIDYAH (RP)", "KAFARAT (RP)", "MAL (RP)", "FITRAH (KG)", "FITRAH (LTR)", "FITRAH (RP)", "INFAK (RP)", "FIDYAH (RP)", "KAFARAT (RP)"];
+            
+            const dataBody = rows.map((r, idx) => [
+                idx + 1, r[0], r[1], r[2], r[3], formatWA(r[4]), r[5], r[6], 
+                Number(r[7]), Number(r[9]), Number(r[10]), Number(r[12]), Number(r[14]), Number(r[16]), Number(r[18]), 
+                Number(r[20]), Number(r[22]), Number(r[23]), Number(r[25]), Number(r[27]), Number(r[29]), Number(r[31])
+            ]);
+
             const ws = XLSX.utils.aoa_to_sheet([rowJudul, header1, header2, ...dataBody]);
             const range = XLSX.utils.decode_range(ws['!ref']);
-            ws['!cols'] = [{wch:5}, {wch:20}, {wch:30}, {wch:30}, {wch:15}, {wch:15}, {wch:15}, {wch:15}, {wch:12}, {wch:10}, {wch:12}, {wch:12}, {wch:12}, {wch:12}, {wch:12}, {wch:10}, {wch:12}, {wch:12}, {wch:12}, {wch:12}];
+            ws['!cols'] = [{wch:5}, {wch:20}, {wch:30}, {wch:30}, {wch:15}, {wch:15}, {wch:15}, {wch:15}, {wch:12}, {wch:11}, {wch:11}, {wch:12}, {wch:12}, {wch:12}, {wch:12}, {wch:12}, {wch:11}, {wch:11}, {wch:12}, {wch:12}, {wch:12}, {wch:12}];
+            
             for (let R = range.s.r; R <= range.e.r; ++R) {
                 for (let C = range.s.c; C <= range.e.c; ++C) {
                     const ref = XLSX.utils.encode_cell({c: C, r: R}); if (!ws[ref]) continue;
@@ -348,7 +363,8 @@
                     else { if (C >= 2 && C <= 7) ws[ref].s.alignment.horizontal = "left"; if (C >= 8) ws[ref].s.numFmt = "#,##0"; }
                 }
             }
-            ws['!merges'] = [{s:{r:0,c:0},e:{r:0,c:19}}, {s:{r:1,c:0},e:{r:2,c:0}}, {s:{r:1,c:1},e:{r:2,c:1}}, {s:{r:1,c:2},e:{r:1,c:5}}, {s:{r:1,c:6},e:{r:1,c:7}}, {s:{r:1,c:8},e:{r:1,c:11}}, {s:{r:1,c:12},e:{r:1,c:13}}, {s:{r:1,c:14},e:{r:1,c:17}}, {s:{r:1,c:18},e:{r:1,c:19}}];
+            ws['!merges'] = [{s:{r:0,c:0},e:{r:0,c:21}}, {s:{r:1,c:0},e:{r:2,c:0}}, {s:{r:1,c:1},e:{r:2,c:1}}, {s:{r:1,c:2},e:{r:1,c:5}}, {s:{r:1,c:6},e:{r:1,c:7}}, {s:{r:1,c:8},e:{r:1,c:12}}, {s:{r:1,c:13},e:{r:1,c:14}}, {s:{r:1,c:15},e:{r:1,c:19}}, {s:{r:1,c:20},e:{r:1,c:21}}];
+            
             const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Laporan");
             XLSX.writeFile(wb, `${filename}.xlsx`);
         }
