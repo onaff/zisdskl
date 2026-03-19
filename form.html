@@ -200,7 +200,36 @@
         document.querySelectorAll('.format-ribuan').forEach(i => i.addEventListener('input', function() {let v = this.value.replace(/[^0-9]/g, '');this.value = v ? parseInt(v).toLocaleString('id-ID') : '';}));
         document.querySelectorAll('.format-desimal').forEach(i => i.addEventListener('input', function() {let v = this.value.replace(/[^0-9,]/g, ''), p = v.split(',');if(p[0]) p[0] = parseInt(p[0].replace(/\./g, '')).toLocaleString('id-ID');this.value = p.join(',');}));
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyBldfZnWo8htFbf7DDbqloEnD9NtY8ZQTa1V0lkdS35yJMPqQ-Oqk4m-BvJ4RaMYbu/exec';
-        document.getElementById('zakatForm').addEventListener('submit', e => {e.preventDefault();const btn = document.getElementById('submitBtn');btn.disabled = true; btn.textContent = 'MENGIRIM...';const formData = new FormData(e.target);document.querySelectorAll('.format-ribuan').forEach(i => formData.set(i.name, i.value.replace(/\./g, '')));document.querySelectorAll('.format-desimal').forEach(i => formData.set(i.name, i.value.replace(/\./g, '').replace(/,/g, '.')));fetch(scriptURL, { method: 'POST', body: formData }).then(() => { alert('Alhamdulillah, Laporan Berhasil Terkirim!'); window.location.reload(); }).catch(() => { alert('Gagal mengirim laporan!'); btn.disabled = false; btn.textContent = 'KIRIM LAPORAN KE BAZNAS'; });});
+        document.getElementById('zakatForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; 
+    btn.textContent = 'MENGIRIM...';
+    
+    const formData = new FormData(e.target);
+
+    // --- BAGIAN YANG DIUBAH/DITAMBAHKAN ---
+    // Menambahkan tanda petik tunggal agar 0 di depan tidak hilang di Google Sheets
+    const nomorHp = formData.get('nomor_hp');
+    if (nomorHp) {
+        formData.set('nomor_hp', "'" + nomorHp); 
+    }
+    // --------------------------------------
+
+    document.querySelectorAll('.format-ribuan').forEach(i => formData.set(i.name, i.value.replace(/\./g, '')));
+    document.querySelectorAll('.format-desimal').forEach(i => formData.set(i.name, i.value.replace(/\./g, '').replace(/,/g, '.')));
+
+    fetch(scriptURL, { method: 'POST', body: formData })
+    .then(() => { 
+        alert('Alhamdulillah, Laporan Berhasil Terkirim!'); 
+        window.location.reload(); 
+    })
+    .catch(() => { 
+        alert('Gagal mengirim laporan!'); 
+        btn.disabled = false; 
+        btn.textContent = 'KIRIM LAPORAN KE BAZNAS'; 
+    });
+});
     </script>
 </body>
 </html>
