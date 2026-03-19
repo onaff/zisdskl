@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Laporan Zakat Ramadhan Kota</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* CSS RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f3; /* Abu-abu kehijauan sangat muda */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        /* HEADER SECTION */
+        header {
+            margin-bottom: 40px;
+        }
+
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            font-size: 2.5rem;
+            color: #2e7d32; /* Hijau Khas Kemenag/Zakat */
+        }
+
+        header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1b5e20;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        /* MENU SECTION */
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .menu-card {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 16px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+            border-color: #2e7d32;
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.3rem;
+            margin-right: 18px;
+            transition: 0.3s;
+        }
+
+        /* Warna khusus per kartu */
+        .upz-card .icon-box {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .admin-card .icon-box {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .text-content {
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .text-content h3 {
+            font-size: 1.05rem;
+            color: #222;
+            margin-bottom: 2px;
+        }
+
+        .text-content p {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .chevron {
+            color: #ddd;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .menu-card:hover .chevron {
+            color: #2e7d32;
+            transform: translateX(5px);
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 60px;
+            font-size: 0.75rem;
+            color: #999;
+            letter-spacing: 0.5px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 400px) {
+            header h1 { font-size: 1.4rem; }
+            .menu-card { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <header>
+            <div class="logo-circle">
+                <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <h1>Sistem Laporan Zakat<br>Ramadhan 1447 H / 2026 M</h1>
+            <p>BAZNAS Kota Salatiga</p>
+        </header>
+
+        <div class="container">
+            <a href="upz/form.html" class="menu-card upz-card">
+                <div class="icon-box">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <div class="text-content">
+                    <h3>Input Laporan UPZ</h3>
+                    <p>Formulir pelaporan</p>
+                </div>
+                <i class="fas fa-chevron-right chevron"></i>
+            </a>
+
+            <a href="admin.html" class="menu-card admin-card">
+                <div class="icon-box">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="text-content">
+                    <h3>Dashboard Admin</h3>
+                    <p>Rekapitulasi dan manajemen data</p>
+                </div>
+                <i class="fas fa-chevron-right chevron"></i>
+            </a>
+        </div>
+
+        <footer>
+            <p>BAZNAS KOTA SALATIGA </p>
+        </footer>
+    </div>
+
+</body>
+</html>
