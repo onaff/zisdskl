@@ -8,326 +8,199 @@
     <style>
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        input:focus, select:focus { outline: none; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2); }
+        label { display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem; }
+        input::placeholder { color: #9ca3af; font-size: 0.8rem; font-weight: 400; }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen py-10">
+<body class="bg-gray-100 min-h-screen py-10 px-4">
 
-    <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+    <div class="max-w-3xl mx-auto bg-white p-6 md:p-10 rounded-2xl shadow-xl">
+        
         <div class="text-center mb-10">
-            <h1 class="text-3xl font-bold text-green-700">Laporan ZIS & DSKL</h1>
-            <p class="text-gray-500">Formulir Laporan Pengumpulan dan Penyaluran UPZ</p>
-            <p class="text-xs text-red-500 mt-2 font-semibold">*Penting: Seluruh kolom wajib diisi. Masukkan angka 0 jika tidak ada data.</p>
+            <h1 class="text-3xl font-extrabold text-green-800">Laporan ZIS & DSKL</h1>
+            <p class="text-gray-500 mt-1 italic text-sm">Formulir Laporan Pengumpulan dan Penyaluran UPZ</p>
+            <div class="mt-4 inline-block bg-red-50 px-4 py-2 rounded-lg border border-red-100">
+                <p class="text-xs text-red-600 font-bold uppercase tracking-wide">* Wajib diisi. Masukkan angka 0 jika data nihil.</p>
+            </div>
         </div>
 
         <form id="zakatForm" class="space-y-8">
             
-            <div id="sec-1" class="bg-gray-50 p-6 rounded-lg border border-gray-200 fade-in">
-                <h2 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">1. Identitas UPZ / Lembaga</h2>
-                <div class="grid grid-cols-1 gap-6">
+            <div id="sec-1" class="bg-gray-50 p-6 rounded-xl border border-gray-200 fade-in">
+                <h2 class="text-lg font-bold text-gray-800 mb-5 flex items-center">
+                    <span class="bg-green-700 text-white w-7 h-7 rounded-full flex items-center justify-center mr-3 text-sm">1</span>
+                    Identitas UPZ / Lembaga
+                </h2>
+                <div class="grid grid-cols-1 gap-5">
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700">Nama UPZ Masjid/Mushola/Lembaga</label>
-                        <input type="text" id="nama_upz" name="nama_upz" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500" placeholder="Contoh: Masjid Al-Ikhlas">
+                        <label>Nama UPZ Masjid/Mushola</label>
+                        <input type="text" name="nama_upz" required class="w-full p-3 border rounded-lg" placeholder="Contoh: Masjid Agung Al-Atiq">
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700">Alamat Lengkap</label>
-                        <input type="text" id="alamat" name="alamat" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500" placeholder="Jl. Merdeka No. 12">
+                        <label>Alamat Lengkap</label>
+                        <input type="text" name="alamat" required class="w-full p-3 border rounded-lg" placeholder="Contoh: Jl. Sukowati No. 1, Kalicacing">
                     </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700">Nama PIC (Penanggung Jawab)</label>
-                        <input type="text" id="nama_pic" name="nama_pic" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500" placeholder="Contoh: Ahmad Abdullah">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label>Nama PIC (Penanggung Jawab)</label>
+                            <input type="text" name="nama_pic" required class="w-full p-3 border rounded-lg" placeholder="Contoh: H. Ahmad Fauzi">
+                        </div>
+                        <div>
+                            <label>Nomor HP/WA</label>
+                            <input type="tel" name="nomor_hp" required class="w-full p-3 border rounded-lg" placeholder="Contoh: 081234567890">
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700">Nomor HP / WhatsApp PIC</label>
-                        <input type="tel" id="nomor_hp" name="nomor_hp" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500" placeholder="Contoh: 081234567890">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700">Kecamatan</label>
-                        <select id="kecamatan" name="kecamatan" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500">
-                            <option value="">-- Pilih Kecamatan --</option>
-                            <option value="Argomulyo">Argomulyo</option>
-                            <option value="Sidomukti">Sidomukti</option>
-                            <option value="Sidorejo">Sidorejo</option>
-                            <option value="Tingkir">Tingkir</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700">Kelurahan</label>
-                        <select id="kelurahan" name="kelurahan" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md bg-gray-100 focus:ring-green-500 focus:border-green-500" disabled>
-                            <option value="">-- Pilih Kelurahan --</option>
-                        </select>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label>Kecamatan</label>
+                            <select id="kecamatan" name="kecamatan" required class="w-full p-3 border rounded-lg">
+                                <option value="">-- Pilih Kecamatan --</option>
+                                <option value="Argomulyo">Argomulyo</option>
+                                <option value="Sidomukti">Sidomukti</option>
+                                <option value="Sidorejo">Sidorejo</option>
+                                <option value="Tingkir">Tingkir</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Kelurahan</label>
+                            <select id="kelurahan" name="kelurahan" required disabled class="w-full p-3 border rounded-lg bg-gray-100">
+                                <option value="">-- Pilih Kelurahan --</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <button type="button" id="btnNext1" onclick="showNext(2)" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition duration-300">Lanjut: Data Pengumpulan ZIS &rarr;</button>
+                <button type="button" onclick="showNext(2)" class="mt-8 w-full bg-green-700 hover:bg-green-800 text-white font-bold py-3.5 rounded-lg shadow-md transition-all">Lanjut ke Pengumpulan &rarr;</button>
             </div>
 
             <div id="sec-2" class="hidden fade-in">
-                <h2 class="text-xl font-bold text-white bg-green-600 px-4 py-3 rounded-t-lg">2. DATA PENGUMPULAN ZIS</h2>
-                <div class="grid grid-cols-1 gap-6 p-6 border border-green-600 rounded-b-lg bg-green-50/30">
-                    <div class="bg-white p-5 border rounded-lg shadow-sm">
-                        <label class="block text-base font-bold text-gray-800 mb-3 border-b pb-2">Zakat Mal</label>
-                        <input type="text" inputmode="numeric" name="mal_rp" required class="format-ribuan w-full p-3 mb-3 border rounded focus:ring-green-500" placeholder="Besaran (Rp)">
-                        <input type="text" inputmode="numeric" name="mal_muzaki" required class="format-ribuan w-full p-3 border rounded focus:ring-green-500" placeholder="Jumlah Muzaki">
+                <h2 class="text-xl font-bold text-white bg-green-700 px-5 py-4 rounded-t-xl">2. Data Pengumpulan ZIS</h2>
+                <div class="grid grid-cols-1 gap-6 p-6 border-x border-b border-green-200 rounded-b-xl bg-green-50/20">
+                    <div class="bg-white p-5 border rounded-xl shadow-sm">
+                        <label class="text-green-800 border-b mb-3 pb-1">Zakat Mal</label>
+                        <div class="space-y-3">
+                            <div><label>Total Perolehan (Rp)</label><input type="text" inputmode="numeric" name="mal_rp" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 1.500.000"></div>
+                            <div><label>Jumlah Muzaki (Jiwa)</label><input type="text" inputmode="numeric" name="mal_muzaki" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 10"></div>
+                        </div>
                     </div>
-                    
-                    <div class="bg-white p-5 border rounded-lg shadow-sm">
-                        <label class="block text-base font-bold text-gray-800 mb-3 border-b pb-2">Zakat Fitrah (Beras)</label>
-                        <input type="text" inputmode="decimal" name="fitrah_beras_kg" required class="format-desimal w-full p-3 mb-3 border rounded focus:ring-green-500" placeholder="Total Beras (Kg) - Gunakan Koma untuk Desimal">
-                        <input type="text" inputmode="decimal" name="fitrah_beras_ltr" required class="format-desimal w-full p-3 mb-3 border rounded focus:ring-green-500" placeholder="Total Beras (Liter) - Gunakan Koma untuk Desimal">
-                        <input type="text" inputmode="numeric" name="fitrah_beras_muzaki" required class="format-ribuan w-full p-3 border rounded focus:ring-green-500" placeholder="Jumlah Muzaki">
+                    <div class="bg-white p-5 border rounded-xl shadow-sm">
+                        <label class="text-green-800 border-b mb-3 pb-1">Zakat Fitrah (Beras)</label>
+                        <div class="grid grid-cols-2 gap-3 mb-3">
+                            <div><label>Total (Kg)</label><input type="text" inputmode="decimal" name="fitrah_beras_kg" required class="format-desimal w-full p-3 border rounded" placeholder="Contoh: 250,5"></div>
+                            <div><label>Total (Liter)</label><input type="text" inputmode="decimal" name="fitrah_beras_ltr" required class="format-desimal w-full p-3 border rounded" placeholder="Contoh: 300"></div>
+                        </div>
+                        <div><label>Jumlah Muzaki (Jiwa)</label><input type="text" inputmode="numeric" name="fitrah_beras_muzaki" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 100"></div>
                     </div>
-
-                    <div class="bg-white p-5 border rounded-lg shadow-sm">
-                        <label class="block text-base font-bold text-gray-800 mb-3 border-b pb-2">Zakat Fitrah (Uang)</label>
-                        <input type="text" inputmode="numeric" name="fitrah_uang_rp" required class="format-ribuan w-full p-3 mb-3 border rounded focus:ring-green-500" placeholder="Total Uang (Rp)">
-                        <input type="text" inputmode="numeric" name="fitrah_uang_muzaki" required class="format-ribuan w-full p-3 border rounded focus:ring-green-500" placeholder="Jumlah Muzaki">
+                    <div class="bg-white p-5 border rounded-xl shadow-sm">
+                        <label class="text-green-800 border-b mb-3 pb-1">Zakat Fitrah (Uang)</label>
+                        <div class="space-y-3">
+                            <div><label>Total Perolehan (Rp)</label><input type="text" inputmode="numeric" name="fitrah_uang_rp" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 3.500.000"></div>
+                            <div><label>Jumlah Muzaki (Jiwa)</label><input type="text" inputmode="numeric" name="fitrah_uang_muzaki" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 80"></div>
+                        </div>
                     </div>
-                    <div class="bg-white p-5 border rounded-lg shadow-sm">
-                        <label class="block text-base font-bold text-gray-800 mb-3 border-b pb-2">Infak Sedekah</label>
-                        <input type="text" inputmode="numeric" name="infak_rp" required class="format-ribuan w-full p-3 mb-3 border rounded focus:ring-green-500" placeholder="Besaran Infak (Rp)">
-                        <input type="text" inputmode="numeric" name="infak_munfiq" required class="format-ribuan w-full p-3 border rounded focus:ring-green-500" placeholder="Jumlah Munfiq">
+                    <div class="bg-white p-5 border rounded-xl shadow-sm">
+                        <label class="text-green-800 border-b mb-3 pb-1">Infak Sedekah</label>
+                        <div class="space-y-3">
+                            <div><label>Total Perolehan (Rp)</label><input type="text" inputmode="numeric" name="infak_rp" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 500.000"></div>
+                            <div><label>Jumlah Munfiq (Jiwa)</label><input type="text" inputmode="numeric" name="infak_munfiq" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 50"></div>
+                        </div>
                     </div>
-                    <button type="button" id="btnNext2" onclick="showNext(3)" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition duration-300">Lanjut: Data Pengumpulan DSKL &rarr;</button>
+                    <button type="button" onclick="showNext(3)" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-lg shadow transition-all">Lanjut ke Pengumpulan DSKL &rarr;</button>
                 </div>
             </div>
 
             <div id="sec-3" class="hidden fade-in">
-                <h2 class="text-xl font-bold text-white bg-blue-600 px-4 py-3 rounded-t-lg">3. DATA PENGUMPULAN DSKL</h2>
-                <div class="grid grid-cols-1 gap-6 p-6 border border-blue-600 rounded-b-lg bg-blue-50/30">
-                    <div class="bg-white p-5 border rounded-lg shadow-sm">
-                        <label class="block text-base font-bold text-gray-800 mb-3 border-b pb-2">Fidyah</label>
-                        <input type="text" inputmode="numeric" name="fidyah_rp" required class="format-ribuan w-full p-3 mb-3 border rounded focus:ring-blue-500" placeholder="Besaran Fidyah (Rp)">
-                        <input type="text" inputmode="numeric" name="fidyah_munfiq" required class="format-ribuan w-full p-3 border rounded focus:ring-blue-500" placeholder="Jumlah Munfiq">
+                <h2 class="text-xl font-bold text-white bg-blue-700 px-5 py-4 rounded-t-xl">3. Data Pengumpulan DSKL</h2>
+                <div class="grid grid-cols-1 gap-6 p-6 border-x border-b border-blue-200 rounded-b-xl bg-blue-50/20">
+                    <div class="bg-white p-5 border rounded-xl shadow-sm">
+                        <label class="text-blue-800 border-b mb-3 pb-1">Fidyah</label>
+                        <div class="space-y-3">
+                            <div><label>Total Perolehan (Rp)</label><input type="text" inputmode="numeric" name="fidyah_rp" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 450.000"></div>
+                            <div><label>Jumlah Munfiq (Jiwa)</label><input type="text" inputmode="numeric" name="fidyah_munfiq" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 15"></div>
+                        </div>
                     </div>
-                    <div class="bg-white p-5 border rounded-lg shadow-sm">
-                        <label class="block text-base font-bold text-gray-800 mb-3 border-b pb-2">Kafarat</label>
-                        <input type="text" inputmode="numeric" name="kafarat_rp" required class="format-ribuan w-full p-3 mb-3 border rounded focus:ring-blue-500" placeholder="Besaran Kafarat (Rp)">
-                        <input type="text" inputmode="numeric" name="kafarat_munfiq" required class="format-ribuan w-full p-3 border rounded focus:ring-blue-500" placeholder="Jumlah Munfiq">
+                    <div class="bg-white p-5 border rounded-xl shadow-sm">
+                        <label class="text-blue-800 border-b mb-3 pb-1">Kafarat</label>
+                        <div class="space-y-3">
+                            <div><label>Total Perolehan (Rp)</label><input type="text" inputmode="numeric" name="kafarat_rp" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 600.000"></div>
+                            <div><label>Jumlah Munfiq (Jiwa)</label><input type="text" inputmode="numeric" name="kafarat_munfiq" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 5"></div>
+                        </div>
                     </div>
-                    <button type="button" id="btnNext3" onclick="showNext(4)" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition duration-300">Lanjut: Data Penyaluran ZIS &rarr;</button>
+                    <button type="button" onclick="showNext(4)" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3.5 rounded-lg shadow transition-all">Lanjut ke Penyaluran ZIS &rarr;</button>
                 </div>
             </div>
 
             <div id="sec-4" class="hidden fade-in">
-                <h2 class="text-xl font-bold text-white bg-orange-600 px-4 py-3 rounded-t-lg">4. DATA PENYALURAN ZIS</h2>
-                <div class="grid grid-cols-1 gap-6 p-6 border border-orange-600 rounded-b-lg bg-orange-50/30">
-                    <div class="bg-white p-5 border rounded-lg shadow-sm">
-                        <label class="block text-base font-bold text-gray-800 mb-3 border-b pb-2">Zakat Mal</label>
-                        <input type="text" inputmode="numeric" name="salur_mal_rp" required class="format-ribuan w-full p-3 mb-3 border rounded focus:ring-orange-500" placeholder="Besaran Disalurkan (Rp)">
-                        <input type="text" inputmode="numeric" name="salur_mal_mustahik" required class="format-ribuan w-full p-3 border rounded focus:ring-orange-500" placeholder="Jumlah Mustahik">
+                <h2 class="text-xl font-bold text-white bg-orange-700 px-5 py-4 rounded-t-xl">4. Data Penyaluran ZIS</h2>
+                <div class="grid grid-cols-1 gap-6 p-6 border-x border-b border-orange-200 rounded-b-xl bg-orange-50/20">
+                    <div class="bg-white p-5 border rounded-xl shadow-sm">
+                        <label class="text-orange-800 border-b mb-3 pb-1">Penyaluran Zakat Mal</label>
+                        <div class="space-y-3">
+                            <div><label>Total Disalurkan (Rp)</label><input type="text" inputmode="numeric" name="salur_mal_rp" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 1.500.000"></div>
+                            <div><label>Jumlah Mustahik (Jiwa)</label><input type="text" inputmode="numeric" name="salur_mal_mustahik" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 20"></div>
+                        </div>
                     </div>
-                    
-                    <div class="bg-white p-5 border rounded-lg shadow-sm">
-                        <label class="block text-base font-bold text-gray-800 mb-3 border-b pb-2">Zakat Fitrah (Beras)</label>
-                        <input type="text" inputmode="decimal" name="salur_fitrah_beras_kg" required class="format-desimal w-full p-3 mb-3 border rounded focus:ring-orange-500" placeholder="Disalurkan (Kg) - Gunakan Koma untuk Desimal">
-                        <input type="text" inputmode="decimal" name="salur_fitrah_beras_ltr" required class="format-desimal w-full p-3 mb-3 border rounded focus:ring-orange-500" placeholder="Disalurkan (Liter) - Gunakan Koma untuk Desimal">
-                        <input type="text" inputmode="numeric" name="salur_fitrah_beras_mustahik" required class="format-ribuan w-full p-3 border rounded focus:ring-orange-500" placeholder="Jumlah Mustahik">
+                    <div class="bg-white p-5 border rounded-xl shadow-sm">
+                        <label class="text-orange-800 border-b mb-3 pb-1">Penyaluran Zakat Fitrah (Beras)</label>
+                        <div class="grid grid-cols-2 gap-3 mb-3">
+                            <div><label>Disalurkan (Kg)</label><input type="text" inputmode="decimal" name="salur_fitrah_beras_kg" required class="format-desimal w-full p-3 border rounded" placeholder="Contoh: 250,5"></div>
+                            <div><label>Disalurkan (Ltr)</label><input type="text" inputmode="decimal" name="salur_fitrah_beras_ltr" required class="format-desimal w-full p-3 border rounded" placeholder="Contoh: 300"></div>
+                        </div>
+                        <div><label>Jumlah Mustahik (Jiwa)</label><input type="text" inputmode="numeric" name="salur_fitrah_beras_mustahik" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 150"></div>
                     </div>
-
-                    <div class="bg-white p-5 border rounded-lg shadow-sm">
-                        <label class="block text-base font-bold text-gray-800 mb-3 border-b pb-2">Zakat Fitrah (Uang)</label>
-                        <input type="text" inputmode="numeric" name="salur_fitrah_uang_rp" required class="format-ribuan w-full p-3 mb-3 border rounded focus:ring-orange-500" placeholder="Disalurkan (Rp)">
-                        <input type="text" inputmode="numeric" name="salur_fitrah_uang_mustahik" required class="format-ribuan w-full p-3 border rounded focus:ring-orange-500" placeholder="Jumlah Mustahik">
+                    <div class="bg-white p-5 border rounded-xl shadow-sm">
+                        <label class="text-orange-800 border-b mb-3 pb-1">Penyaluran Zakat Fitrah (Uang)</label>
+                        <div class="space-y-3">
+                            <div><label>Total Disalurkan (Rp)</label><input type="text" inputmode="numeric" name="salur_fitrah_uang_rp" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 3.500.000"></div>
+                            <div><label>Jumlah Mustahik (Jiwa)</label><input type="text" inputmode="numeric" name="salur_fitrah_uang_mustahik" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 100"></div>
+                        </div>
                     </div>
-                    <div class="bg-white p-5 border rounded-lg shadow-sm">
-                        <label class="block text-base font-bold text-gray-800 mb-3 border-b pb-2">Infak Sedekah</label>
-                        <input type="text" inputmode="numeric" name="salur_infak_rp" required class="format-ribuan w-full p-3 mb-3 border rounded focus:ring-orange-500" placeholder="Disalurkan (Rp)">
-                        <input type="text" inputmode="numeric" name="salur_infak_mustahik" required class="format-ribuan w-full p-3 border rounded focus:ring-orange-500" placeholder="Jumlah Mustahik">
+                    <div class="bg-white p-5 border rounded-xl shadow-sm">
+                        <label class="text-orange-800 border-b mb-3 pb-1">Penyaluran Infak Sedekah</label>
+                        <div class="space-y-3">
+                            <div><label>Total Disalurkan (Rp)</label><input type="text" inputmode="numeric" name="salur_infak_rp" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 500.000"></div>
+                            <div><label>Jumlah Mustahik (Jiwa)</label><input type="text" inputmode="numeric" name="salur_infak_mustahik" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 40"></div>
+                        </div>
                     </div>
-                    <button type="button" id="btnNext4" onclick="showNext(5)" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition duration-300">Lanjut: Data Penyaluran DSKL &rarr;</button>
+                    <button type="button" onclick="showNext(5)" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3.5 rounded-lg shadow transition-all">Lanjut ke Penyaluran DSKL &rarr;</button>
                 </div>
             </div>
 
             <div id="sec-5" class="hidden fade-in">
-                <h2 class="text-xl font-bold text-white bg-teal-600 px-4 py-3 rounded-t-lg">5. DATA PENYALURAN DSKL</h2>
-                <div class="grid grid-cols-1 gap-6 p-6 border border-teal-600 rounded-b-lg bg-teal-50/30">
-                    <div class="bg-white p-5 border rounded-lg shadow-sm">
-                        <label class="block text-base font-bold text-gray-800 mb-3 border-b pb-2">Fidyah</label>
-                        <input type="text" inputmode="numeric" name="salur_fidyah_rp" required class="format-ribuan w-full p-3 mb-3 border rounded focus:ring-teal-500" placeholder="Disalurkan (Rp)">
-                        <input type="text" inputmode="numeric" name="salur_fidyah_mustahik" required class="format-ribuan w-full p-3 border rounded focus:ring-teal-500" placeholder="Jumlah Mustahik">
+                <h2 class="text-xl font-bold text-white bg-teal-700 px-5 py-4 rounded-t-xl">5. Penyaluran DSKL & Selesai</h2>
+                <div class="grid grid-cols-1 gap-6 p-6 border-x border-b border-teal-200 rounded-b-xl bg-teal-50/20">
+                    <div class="bg-white p-5 border rounded-xl shadow-sm">
+                        <label class="text-teal-800 border-b mb-3 pb-1">Penyaluran Fidyah</label>
+                        <div class="space-y-3">
+                            <div><label>Total Disalurkan (Rp)</label><input type="text" inputmode="numeric" name="salur_fidyah_rp" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 450.000"></div>
+                            <div><label>Jumlah Mustahik (Jiwa)</label><input type="text" inputmode="numeric" name="salur_fidyah_mustahik" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 30"></div>
+                        </div>
                     </div>
-                    <div class="bg-white p-5 border rounded-lg shadow-sm">
-                        <label class="block text-base font-bold text-gray-800 mb-3 border-b pb-2">Kafarat</label>
-                        <input type="text" inputmode="numeric" name="salur_kafarat_rp" required class="format-ribuan w-full p-3 mb-3 border rounded focus:ring-teal-500" placeholder="Disalurkan (Rp)">
-                        <input type="text" inputmode="numeric" name="salur_kafarat_mustahik" required class="format-ribuan w-full p-3 border rounded focus:ring-teal-500" placeholder="Jumlah Mustahik">
+                    <div class="bg-white p-5 border rounded-xl shadow-sm">
+                        <label class="text-teal-800 border-b mb-3 pb-1">Penyaluran Kafarat</label>
+                        <div class="space-y-3">
+                            <div><label>Total Disalurkan (Rp)</label><input type="text" inputmode="numeric" name="salur_kafarat_rp" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 600.000"></div>
+                            <div><label>Jumlah Mustahik (Jiwa)</label><input type="text" inputmode="numeric" name="salur_kafarat_mustahik" required class="format-ribuan w-full p-3 border rounded" placeholder="Contoh: 10"></div>
+                        </div>
                     </div>
-                    
-                    <button type="submit" id="submitBtn" class="mt-4 w-full bg-gray-800 hover:bg-black text-white font-bold py-4 rounded-lg transition duration-300 shadow-lg text-xl tracking-wide">
-                        Simpan & Kirim Laporan
-                    </button>
+                    <button type="submit" id="submitBtn" class="mt-4 w-full bg-gray-900 hover:bg-black text-white font-bold py-4 rounded-xl shadow-lg text-lg uppercase tracking-wider">Kirim Laporan Ke BAZNAS</button>
                 </div>
             </div>
-
         </form>
+
+        <footer class="mt-12 pt-8 border-t border-gray-100 text-center text-gray-400 text-xs font-bold tracking-widest uppercase">
+            BAZNAS KOTA SALATIGA &copy; 2026
+        </footer>
     </div>
 
     <script>
-        // --- LOGIKA PROGRESSIVE DISCLOSURE & VALIDASI KETAT PER KARTU ---
-        function showNext(step) {
-            const currentSecId = 'sec-' + (step - 1);
-            const currentSec = document.getElementById(currentSecId);
-            const inputs = currentSec.querySelectorAll('input[required], select[required]');
-            let isAllValid = true;
-            let firstInvalidInput = null;
-
-            inputs.forEach(input => { input.classList.remove('border-red-500', 'bg-red-50', 'ring-red-500'); });
-
-            for (let i = 0; i < inputs.length; i++) {
-                if (!inputs[i].value.trim()) { 
-                    inputs[i].classList.add('border-red-500', 'bg-red-50', 'ring-red-500');
-                    isAllValid = false;
-                    if(!firstInvalidInput) { firstInvalidInput = inputs[i]; }
-                }
-            }
-
-            if (!isAllValid) {
-                alert('⚠️ Mohon lengkapi semua kolom pada kartu ini terlebih dahulu sebelum melanjutkan.\n\n(Isi dengan angka 0 jika memang tidak ada data).');
-                firstInvalidInput.focus();
-                return;
-            }
-
-            const nextSec = document.getElementById('sec-' + step);
-            if(nextSec) {
-                nextSec.classList.remove('hidden');
-                const btnLanjutPrev = document.getElementById('btnNext' + (step - 1));
-                if(btnLanjutPrev) { btnLanjutPrev.classList.add('hidden'); }
-                nextSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        document.addEventListener('input', function(e) {
-            if(e.target.hasAttribute('required')) {
-                e.target.classList.remove('border-red-500', 'bg-red-50', 'ring-red-500');
-            }
-        });
-
-        // --- LOGIKA FORMAT RIBUAN (UANG & JIWA) ---
-        const inputRibuan = document.querySelectorAll('.format-ribuan');
-        inputRibuan.forEach(input => {
-            input.addEventListener('input', function(e) {
-                let angka = this.value.replace(/[^0-9]/g, '');
-                if (angka !== '') {
-                    angka = parseInt(angka, 10).toString();
-                    this.value = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                } else {
-                    this.value = '';
-                }
-            });
-        });
-
-        // --- LOGIKA FORMAT DESIMAL (BERAS KG & LITER) ---
-        const inputDesimal = document.querySelectorAll('.format-desimal');
-        inputDesimal.forEach(input => {
-            input.addEventListener('input', function(e) {
-                // Hanya izinkan angka dan koma
-                let val = this.value.replace(/[^0-9,]/g, '');
-                
-                // Pastikan hanya ada maksimal 1 buah koma
-                let parts = val.split(',');
-                if (parts.length > 2) {
-                    parts = [parts[0], parts.slice(1).join('')];
-                }
-                
-                // Berikan titik ribuan pada bagian angka utuh (sebelum koma)
-                if (parts[0] !== '') {
-                    parts[0] = parseInt(parts[0], 10).toString();
-                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                }
-                
-                // Gabungkan kembali dengan koma jika ada desimalnya
-                this.value = parts.join(',');
-            });
-        });
-
-        // --- LOGIKA DROPDOWN KELURAHAN ---
-        const dataWilayah = {
-            "Argomulyo": ["Noborejo", "Tegalrejo", "Kumpulrejo", "Cebongan", "Ledok", "Randuacir"],
-            "Sidomukti": ["Mangunsari", "Dukuh", "Kalicacing", "Kecandran"],
-            "Sidorejo": ["Blotongan", "Salatiga", "Pulutan", "Sidorejo Lor", "Bugel", "Kauman Kidul"],
-            "Tingkir": ["Kutowinangun Lor", "Kutowinangun Kidul", "Sidorejo Kidul", "Gendongan", "Kalibening", "Tingkir Lor", "Tingkir Tengah"]
-        };
-
-        const kecSelect = document.getElementById('kecamatan');
-        const kelSelect = document.getElementById('kelurahan');
-
-        if(kecSelect && kelSelect) {
-            kecSelect.addEventListener('change', function() {
-                const selectedKec = this.value.trim();
-                kelSelect.innerHTML = '<option value="">-- Pilih Kelurahan --</option>';
-                if (selectedKec && dataWilayah[selectedKec]) {
-                    kelSelect.disabled = false;
-                    kelSelect.classList.remove('bg-gray-100');
-                    dataWilayah[selectedKec].forEach(kel => {
-                        const option = document.createElement('option');
-                        option.value = kel;
-                        option.textContent = kel;
-                        kelSelect.appendChild(option);
-                    });
-                } else {
-                    kelSelect.disabled = true;
-                    kelSelect.classList.add('bg-gray-100');
-                }
-            });
-        }
-
-        // --- LOGIKA PENGIRIMAN DATA ---
-        // MASUKKAN URL GOOGLE SCRIPT ANDA DI SINI
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyBldfZnWo8htFbf7DDbqloEnD9NtY8ZQTa1V0lkdS35yJMPqQ-Oqk4m-BvJ4RaMYbu/exec'; 
-        const form = document.getElementById('zakatForm');
-        const submitBtn = document.getElementById('submitBtn');
-
-        if(form) {
-            form.addEventListener('submit', e => {
-                e.preventDefault();
-                submitBtn.textContent = 'Mengirim Data...';
-                submitBtn.disabled = true;
-                submitBtn.classList.add('opacity-50');
-
-                const formData = new FormData(form);
-
-                // SEBELUM DIKIRIM: Bersihkan titik ribuan pada Uang/Jiwa
-                inputRibuan.forEach(input => {
-                    if (formData.has(input.name)) {
-                        let cleanValue = input.value.replace(/\./g, '');
-                        formData.set(input.name, cleanValue);
-                    }
-                });
-
-                // SEBELUM DIKIRIM: Bersihkan titik ribuan dan ubah koma jadi titik pada Beras (agar masuk sebagai desimal sistem Excel)
-                inputDesimal.forEach(input => {
-                    if (formData.has(input.name)) {
-                        let cleanValue = input.value.replace(/\./g, ''); // buang titik ribuan
-                        cleanValue = cleanValue.replace(/,/g, '.'); // ubah koma indonesia ke titik standar
-                        formData.set(input.name, cleanValue);
-                    }
-                });
-
-                fetch(scriptURL, { method: 'POST', body: formData })
-                    .then(response => {
-                        alert('Alhamdulillah, Laporan berhasil terkirim dan masuk ke Google Sheets!');
-                        form.reset(); 
-                        if(kelSelect) { kelSelect.disabled = true; kelSelect.classList.add('bg-gray-100'); }
-                        [2, 3, 4, 5].forEach(step => document.getElementById('sec-' + step).classList.add('hidden'));
-                        [1, 2, 3, 4].forEach(step => {
-                            const btn = document.getElementById('btnNext' + step);
-                            if(btn) btn.classList.remove('hidden');
-                        });
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                        submitBtn.textContent = 'Simpan & Kirim Laporan';
-                        submitBtn.disabled = false;
-                        submitBtn.classList.remove('opacity-50');
-                    })
-                    .catch(error => {
-                        alert('Maaf, terjadi kesalahan saat mengirim laporan.');
-                        console.error('Error!', error.message);
-                        submitBtn.textContent = 'Coba Lagi';
-                        submitBtn.disabled = false;
-                        submitBtn.classList.remove('opacity-50');
-                    });
-            });
-        }
+        const dataWilayah = {"Argomulyo": ["Noborejo", "Tegalrejo", "Kumpulrejo", "Cebongan", "Ledok", "Randuacir"],"Sidomukti": ["Mangunsari", "Dukuh", "Kalicacing", "Kecandran"],"Sidorejo": ["Blotongan", "Salatiga", "Pulutan", "Sidorejo Lor", "Bugel", "Kauman Kidul"],"Tingkir": ["Kutowinangun Lor", "Kutowinangun Kidul", "Sidorejo Kidul", "Gendongan", "Kalibening", "Tingkir Lor", "Tingkir Tengah"]};
+        document.getElementById('kecamatan').addEventListener('change', function() {const kelSelect = document.getElementById('kelurahan');kelSelect.innerHTML = '<option value="">-- Pilih Kelurahan --</option>';if (this.value) {kelSelect.disabled = false;kelSelect.classList.remove('bg-gray-100');dataWilayah[this.value].forEach(kel => {let opt = document.createElement('option'); opt.value = opt.textContent = kel; kelSelect.appendChild(opt);});}});
+        function showNext(step) {const currentSec = document.getElementById('sec-' + (step - 1));const inputs = currentSec.querySelectorAll('input[required], select[required]');let valid = true;inputs.forEach(i => { if(!i.value.trim()){ i.classList.add('border-red-500'); valid = false; } else { i.classList.remove('border-red-500'); } });if (!valid) { alert('Lengkapi data yang kosong!'); return; }document.getElementById('sec-' + step).classList.remove('hidden');event.target.classList.add('hidden');document.getElementById('sec-' + step).scrollIntoView({ behavior: 'smooth' });}
+        document.querySelectorAll('.format-ribuan').forEach(i => i.addEventListener('input', function() {let v = this.value.replace(/[^0-9]/g, '');this.value = v ? parseInt(v).toLocaleString('id-ID') : '';}));
+        document.querySelectorAll('.format-desimal').forEach(i => i.addEventListener('input', function() {let v = this.value.replace(/[^0-9,]/g, ''), p = v.split(',');if(p[0]) p[0] = parseInt(p[0].replace(/\./g, '')).toLocaleString('id-ID');this.value = p.join(',');}));
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyBldfZnWo8htFbf7DDbqloEnD9NtY8ZQTa1V0lkdS35yJMPqQ-Oqk4m-BvJ4RaMYbu/exec';
+        document.getElementById('zakatForm').addEventListener('submit', e => {e.preventDefault();const btn = document.getElementById('submitBtn');btn.disabled = true; btn.textContent = 'MENGIRIM...';const formData = new FormData(e.target);document.querySelectorAll('.format-ribuan').forEach(i => formData.set(i.name, i.value.replace(/\./g, '')));document.querySelectorAll('.format-desimal').forEach(i => formData.set(i.name, i.value.replace(/\./g, '').replace(/,/g, '.')));fetch(scriptURL, { method: 'POST', body: formData }).then(() => { alert('Alhamdulillah, Laporan Berhasil Terkirim!'); window.location.reload(); }).catch(() => { alert('Gagal mengirim laporan!'); btn.disabled = false; btn.textContent = 'KIRIM LAPORAN KE BAZNAS'; });});
     </script>
-        <footer>
-            <p>BAZNAS KOTA SALATIGA © 2026</p>
-        </footer>
 </body>
 </html>
