@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Laporan ZIS & DSKL UPZ Masjid se-Kota Salatiga</title>
+    <title>Admin Panel - Laporan ZIS & DSKL Salatiga</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -48,7 +48,7 @@
                     <div class="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-600/30">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
-                    <h1 class="text-lg font-extrabold text-slate-800">Rekap ZIS UPZ Masjid se-Kota Salatiga</h1>
+                    <h1 class="text-lg font-extrabold text-slate-800">Rekap ZIS Salatiga</h1>
                 </div>
                 <button onclick="prosesLogout()" class="text-red-600 font-bold text-sm px-4 py-2 hover:bg-red-50 rounded-xl transition">Keluar</button>
             </div>
@@ -93,13 +93,13 @@
                         <div class="p-8 grid grid-cols-2 gap-6">
                             <div class="bg-green-50/50 p-5 rounded-2xl border border-green-100">
                                 <div class="text-[9px] font-black text-green-600 uppercase mb-1 tracking-wider">Pengumpulan Beras</div>
-                                <div class="text-2xl font-black text-green-700" id="statKumpulBerasKg">0 Kg</div>
-                                <div class="text-xs font-bold text-green-500/80" id="statKumpulBerasLtr">0 Ltr</div>
+                                <div class="text-2xl font-black text-green-700" id="statKumpulBerasKg">0.00 Kg</div>
+                                <div class="text-xs font-bold text-green-500/80" id="statKumpulBerasLtr">0.00 Ltr</div>
                             </div>
                             <div class="bg-orange-50/50 p-5 rounded-2xl border border-orange-100">
                                 <div class="text-[9px] font-black text-orange-600 uppercase mb-1 tracking-wider">Penyaluran Beras</div>
-                                <div class="text-2xl font-black text-orange-700" id="statSalurBerasKg">0 Kg</div>
-                                <div class="text-xs font-bold text-orange-500/80" id="statSalurBerasLtr">0 Ltr</div>
+                                <div class="text-2xl font-black text-orange-700" id="statSalurBerasKg">0.00 Kg</div>
+                                <div class="text-xs font-bold text-orange-500/80" id="statSalurBerasLtr">0.00 Ltr</div>
                             </div>
                         </div>
                     </div>
@@ -125,14 +125,20 @@
                     <h3 class="font-extrabold text-slate-700 uppercase text-xs tracking-widest ml-2 mb-6">Sebaran UPZ per Kecamatan</h3>
                     <div id="sebaranKecamatan" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
                 </div>
-                
+
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm mb-16">
                     <div>
-                        <h4 class="font-black text-slate-800 uppercase text-xs tracking-widest mb-6 border-b pb-2">Rincian Pengumpulan</h4>
+                        <h4 class="font-black text-green-600 uppercase text-xs tracking-widest mb-6 border-b-2 border-green-100 pb-2 flex items-center gap-2">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                            Rincian Pengumpulan Total
+                        </h4>
                         <ul id="rincianKumpulTotal" class="space-y-4"></ul>
                     </div>
                     <div>
-                        <h4 class="font-black text-slate-800 uppercase text-xs tracking-widest mb-6 border-b pb-2">Rincian Penyaluran</h4>
+                        <h4 class="font-black text-orange-600 uppercase text-xs tracking-widest mb-6 border-b-2 border-orange-100 pb-2 flex items-center gap-2">
+                            <span class="w-2 h-2 bg-orange-500 rounded-full"></span>
+                            Rincian Penyaluran Total
+                        </h4>
                         <ul id="rincianSalurTotal" class="space-y-4"></ul>
                     </div>
                 </div>
@@ -166,16 +172,16 @@
                                 </tr>
                                 <tr class="text-[8px] tracking-tight">
                                     <th class="py-2 border-b border-r text-center">Zakat Mal</th>
-                                    <th class="py-2 border-b border-r text-center">Fitrah (KG)</th>
-                                    <th class="py-2 border-b border-r text-center">Fitrah (LTR)</th>
-                                    <th class="py-2 border-b border-r text-center">Fitrah Uang</th>
+                                    <th class="py-2 border-b border-r text-center">Zakat Fitrah (KG)</th>
+                                    <th class="py-2 border-b border-r text-center">Zakat Fitrah (LTR)</th>
+                                    <th class="py-2 border-b border-r text-center">Zakat Fitrah Uang</th>
                                     <th class="py-2 border-b border-r text-center">Infaq</th>
                                     <th class="py-2 border-b border-r text-center">Fidyah</th>
                                     <th class="py-2 border-b border-r text-center">Kafarat</th>
                                     <th class="py-2 border-b border-r text-center">Zakat Mal</th>
-                                    <th class="py-2 border-b border-r text-center">Fitrah (KG)</th>
-                                    <th class="py-2 border-b border-r text-center">Fitrah (LTR)</th>
-                                    <th class="py-2 border-b border-r text-center">Fitrah Uang</th>
+                                    <th class="py-2 border-b border-r text-center">Zakat Fitrah (KG)</th>
+                                    <th class="py-2 border-b border-r text-center">Zakat Fitrah (LTR)</th>
+                                    <th class="py-2 border-b border-r text-center">Zakat Fitrah Uang</th>
                                     <th class="py-2 border-b border-r text-center">Infaq</th>
                                     <th class="py-2 border-b border-r text-center">Fidyah</th>
                                     <th class="py-2 border-b text-center">Kafarat</th>
@@ -184,8 +190,20 @@
                             <tbody id="tabelData" class="divide-y divide-slate-100 bg-white text-slate-700"></tbody>
                         </table>
                     </div>
+                    
+                    <div class="px-8 py-4 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <span id="infoHalaman" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Menampilkan data ...</span>
+                        <div class="flex gap-2">
+                            <button onclick="halamanPrev()" id="btnPrev" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all">Sebelumnya</button>
+                            <button onclick="halamanNext()" id="btnNext" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all">Berikutnya</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <footer class="mt-12 pt-8 border-t border-gray-100 text-center text-gray-400 text-xs font-bold tracking-widest uppercase mb-6">
+                BAZNAS KOTA SALATIGA &copy; 2026
+            </footer>
         </main>
     </div>
 
@@ -196,24 +214,31 @@
                 <button onclick="tutupModal()" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all text-xl">&times;</button>
             </div>
             <div id="isiDetail" class="p-8 overflow-y-auto flex-grow bg-slate-50 space-y-8"></div>
-            <div class="p-6 border-t bg-white text-right"><button onclick="tutupModal()" class="bg-slate-900 text-white px-10 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-slate-800">Tutup Laporan</button></div>
+            <div class="p-6 border-t bg-white flex justify-end gap-3">
+                <button id="btnKonfirmasiWA" class="bg-emerald-600 text-white px-6 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-emerald-700 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Konfirmasi WhatsApp
+                </button>
+                <button onclick="tutupModal()" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-slate-800">Tutup</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- KONFIGURASI ---
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxKIBbG3sEHRIK2xYcMX72fovbtsFxmd1nww4gE9Xa7NRUfzZ5x4fICkhmA2u3GDdEb/exec';
         let globalDataSheets = [];
         let dataAuthSheet = { user: '', pass: '' };
+        let halamanSaatIni = 1;
+        const itemPerHalaman = 10;
+        let dataTersaring = [];
 
-        // --- UTILS ---
         const formatRp = (a) => new Intl.NumberFormat('id-ID', { style:'currency', currency:'IDR', minimumFractionDigits:0 }).format(a||0);
-        const formatDesimal = (a) => new Intl.NumberFormat('id-ID', { minimumFractionDigits:2 }).format(a||0);
+        const formatDesimal = (a) => new Intl.NumberFormat('id-ID', { minimumFractionDigits:2, maximumFractionDigits:2 }).format(a||0);
         const formatWA = (v) => {
             let hp = String(v || "").replace(/[^0-9]/g, '');
             if(hp.startsWith('0')) hp = '62' + hp.slice(1);
             else if(hp.startsWith('8')) hp = '62' + hp;
-            return hp ? '+' + hp : '-';
+            return hp ? hp : '';
         };
 
         const selData = (v, o, label) => `
@@ -222,14 +247,13 @@
                 <span class="block text-[8px] text-slate-400 font-bold uppercase tracking-tighter">${o || 0} ${label}</span>
             </div>`;
 
-        // --- CORE FUNCTIONS ---
         function tarikDataGoogleSheets() {
             document.getElementById('waktuSync').textContent = 'Sinkronisasi Database...';
             fetch(SCRIPT_URL).then(r=>r.json()).then(res => {
                 globalDataSheets = res.laporan;
                 dataAuthSheet = { user: res.auth.user, pass: res.auth.pass };
                 kalkulasiStatistik(globalDataSheets);
-                renderTabelFilter();
+                ubahFilterKecamatan();
                 document.getElementById('waktuSync').textContent = 'Sinkron: ' + new Date().toLocaleTimeString();
             }).catch(e=>alert("Gagal Sinkronisasi."));
         }
@@ -259,29 +283,43 @@
             document.getElementById('sebaranKecamatan').innerHTML = hK;
 
             const li = (l, v) => `<li class="flex justify-between items-center border-b border-slate-50 pb-3 text-xs"><span class="text-slate-500 font-bold uppercase text-[10px] tracking-wider">${l}</span><span class="font-extrabold text-slate-800">${v}</span></li>`;
-            document.getElementById('rincianKumpulTotal').innerHTML = li('Zakat Mal', formatRp(tm)) + li('Fitrah Uang', formatRp(tu)) + li('Infaq Sedekah', formatRp(ti)) + li('Fidyah', formatRp(tf)) + li('Kafarat', formatRp(tka));
-            document.getElementById('rincianSalurTotal').innerHTML = li('Zakat Mal', formatRp(sm)) + li('Fitrah Uang', formatRp(su)) + li('Infaq Sedekah', formatRp(si)) + li('Fidyah', formatRp(sf)) + li('Kafarat', formatRp(ska));
+            
+            document.getElementById('rincianKumpulTotal').innerHTML = 
+                li('Zakat Mal', formatRp(tm)) + 
+                li('Fitrah (Beras Kg)', formatDesimal(tk) + ' Kg') + 
+                li('Fitrah (Beras Ltr)', formatDesimal(tl) + ' Ltr') + 
+                li('Fitrah (Uang)', formatRp(tu)) + 
+                li('Infaq Sedekah', formatRp(ti)) + 
+                li('Fidyah', formatRp(tf)) + 
+                li('Kafarat', formatRp(tka));
+
+            document.getElementById('rincianSalurTotal').innerHTML = 
+                li('Zakat Mal', formatRp(sm)) + 
+                li('Fitrah (Beras Kg)', formatDesimal(sk) + ' Kg') + 
+                li('Fitrah (Beras Ltr)', formatDesimal(sl) + ' Ltr') + 
+                li('Fitrah (Uang)', formatRp(su)) + 
+                li('Infaq Sedekah', formatRp(si)) + 
+                li('Fidyah', formatRp(sf)) + 
+                li('Kafarat', formatRp(ska));
         }
 
-        function renderTabelFilter() {
-            const tbody = document.getElementById('tabelData'); tbody.innerHTML = '';
-            let kF = document.getElementById('filterKecamatan').value;
-            let n = 1;
-            for(let i=globalDataSheets.length-1; i>=1; i--){
-                const r = globalDataSheets[i]; if(!r[1]) continue;
-                if(kF!=='SEMUA' && r[5]!==kF) continue;
-                let hpWA = formatWA(r[4]);
+        function renderTabelPaginasi() {
+            const tbody = document.getElementById('tabelData');
+            tbody.innerHTML = '';
+            const totalData = dataTersaring.length;
+            const totalHalaman = Math.ceil(totalData / itemPerHalaman);
+            const indexAwal = (halamanSaatIni - 1) * itemPerHalaman;
+            const indexAkhir = Math.min(indexAwal + itemPerHalaman, totalData);
+            const dataHalamanIni = dataTersaring.slice(indexAwal, indexAkhir);
+            
+            dataHalamanIni.forEach((item, idx) => {
+                const r = item.data;
+                const indexAsli = item.originalIndex;
                 tbody.innerHTML += `
                     <tr class="row-hover">
-                        <td class="py-5 px-4 text-center font-bold text-slate-300 border-r bg-white sticky left-0 z-10">${n++}</td>
-                        <td class="py-5 px-6 border-r bg-white sticky left-12 z-10 shadow-sm">
-                            <span class="block font-black text-slate-800 uppercase tracking-tight">${r[1]}</span>
-                            <span class="block text-[8px] text-slate-400 font-bold mt-1">${r[2]||'-'}</span>
-                        </td>
-                        <td class="py-5 px-6 border-r text-center">
-                            <span class="block font-bold text-slate-700 text-[10px]">${r[3]||'-'}</span>
-                            <span class="text-green-600 font-black text-[11px]">${hpWA}</span>
-                        </td>
+                        <td class="py-5 px-4 text-center font-bold text-slate-300 border-r bg-white sticky left-0 z-10">${indexAwal + idx + 1}</td>
+                        <td class="py-5 px-6 border-r bg-white sticky left-12 z-10 shadow-sm"><span class="block font-black text-slate-800 uppercase tracking-tight">${r[1]}</span><span class="block text-[8px] text-slate-400 font-bold mt-1">${r[2]||'-'}</span></td>
+                        <td class="py-5 px-6 border-r text-center"><span class="block font-bold text-slate-700 text-[10px]">${r[3]||'-'}</span><span class="text-green-600 font-black text-[11px]">+${formatWA(r[4])}</span></td>
                         <td class="py-5 px-6 border-r text-[9px] font-black text-slate-500 uppercase text-center">${r[5]}<br><span class="text-blue-500 text-[8px]">${r[6]}</span></td>
                         <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(Number(r[7])||0), r[8], 'Muzaki')}</td>
                         <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatDesimal(Number(r[9])||0)+' Kg', r[11], 'Muzaki')}</td>
@@ -299,13 +337,29 @@
                         <td class="py-5 px-4 border-r bg-teal-50/20">${selData(formatRp(Number(r[31])||0), r[32], 'Mustahik')}</td>
                         <td class="py-5 px-6 bg-white sticky right-0 z-30 shadow-md text-center">
                             <div class="flex gap-2 justify-center">
-                                <button onclick="bukaDetail(${i})" title="Detail" class="bg-blue-600 text-white p-2 rounded-xl shadow hover:bg-blue-700 transition active:scale-90"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
-                                <button onclick="downloadGambarDetail(${i})" title="Download JPG" class="bg-rose-600 text-white p-2 rounded-xl shadow hover:bg-rose-700 transition active:scale-90"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></button>
-                                <button onclick="exportSingleExcel(${i})" title="Download Excel" class="bg-green-600 text-white p-2 rounded-xl shadow hover:bg-green-700 transition active:scale-90"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></button>
+                                <button onclick="bukaDetail(${indexAsli})" title="Detail" class="bg-blue-600 text-white p-2 rounded-xl shadow hover:bg-blue-700 transition active:scale-90"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                                <button onclick="downloadGambarDetail(${indexAsli})" title="Download Gambar" class="bg-rose-600 text-white p-2 rounded-xl shadow hover:bg-rose-700 transition active:scale-90"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></button>
+                                <button onclick="exportSingleExcel(${indexAsli})" title="Download Excel" class="bg-green-600 text-white p-2 rounded-xl shadow hover:bg-green-700 transition active:scale-90"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></button>
                             </div>
                         </td>
                     </tr>`;
+            });
+            document.getElementById('infoHalaman').innerText = `Halaman ${halamanSaatIni} dari ${totalHalaman || 1} (${totalData} Total Laporan)`;
+            document.getElementById('btnPrev').disabled = (halamanSaatIni === 1);
+            document.getElementById('btnNext').disabled = (halamanSaatIni >= totalHalaman);
+        }
+
+        function halamanNext() { halamanSaatIni++; renderTabelPaginasi(); }
+        function halamanPrev() { halamanSaatIni--; renderTabelPaginasi(); }
+        function ubahFilterKecamatan() {
+            let kF = document.getElementById('filterKecamatan').value;
+            dataTersaring = [];
+            for(let i = globalDataSheets.length - 1; i >= 1; i--) {
+                const r = globalDataSheets[i]; if(!r[1]) continue;
+                if(kF !== 'SEMUA' && r[5] !== kF) continue;
+                dataTersaring.push({ data: r, originalIndex: i });
             }
+            halamanSaatIni = 1; renderTabelPaginasi();
         }
 
         function bukaDetail(index) {
@@ -317,96 +371,90 @@
             const card = (j, cl, html) => `<div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden"><div class="${cl} px-6 py-3 text-white font-black text-[10px] uppercase tracking-widest">${j}</div><div class="p-6 space-y-3 text-xs">${html}</div></div>`;
             const it = (l, v, s="", isWA=false) => {
                 let hp = formatWA(v);
-                return `<div class="flex justify-between items-start border-b border-slate-50 pb-3"><span class="text-slate-400 font-bold uppercase text-[9px] mt-1 tracking-wider">${l}</span><div class="text-right">${isWA && hp !== '-' ? `<a href="https://wa.me/${hp.replace('+', '')}" target="_blank" class="text-green-600 font-black hover:underline tracking-tight">${hp}</a>` : `<span class="font-extrabold text-slate-800 tracking-tight">${v||'-'}</span>`}${s ? `<div class="text-[9px] text-slate-400 font-bold mt-0.5">${s}</div>` : ''}</div></div>`;
+                return `<div class="flex justify-between items-start border-b border-slate-50 pb-3"><span class="text-slate-400 font-bold uppercase text-[9px] mt-1 tracking-wider">${l}</span><div class="text-right">${isWA && hp !== '' ? `<a href="https://wa.me/${hp}" target="_blank" class="text-green-600 font-black hover:underline tracking-tight">+${hp}</a>` : `<span class="font-extrabold text-slate-800 tracking-tight">${v||'-'}</span>`}${s ? `<div class="text-[9px] text-slate-400 font-bold mt-0.5">${s}</div>` : ''}</div></div>`;
             }
             c.innerHTML = `
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Identitas', 'bg-blue-600', it('Nama UPZ', r[1]) + it('Wilayah', r[5]+' - '+r[6]) + it('Alamat', r[2]))}${card('PIC', 'bg-indigo-600', it('Nama PIC', r[3]) + it('No WhatsApp', r[4], "Konfirmasi Laporan", true))}</div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Pengumpulan ZIS', 'bg-green-600', it('Zakat Mal', formatRp(Number(r[7])||0), (r[8]||0)+' Muzaki') + it('Fitrah Beras', formatDesimal(Number(r[9])||0)+' Kg / '+formatDesimal(Number(r[10])||0)+' Ltr', (r[11]||0)+' Muzaki') + it('Fitrah Uang', formatRp(Number(r[12])||0), (r[13]||0)+' Muzaki') + it('Infaq Sedekah', formatRp(Number(r[14])||0), (r[15]||0)+' Munfiq'))}${card('Pengumpulan DSKL', 'bg-teal-600', it('Fidyah', formatRp(Number(r[16])||0), (r[17]||0)+' Munfiq') + it('Kafarat', formatRp(Number(r[18])||0), (r[19]||0)+' Munfiq'))}</div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Penyaluran ZIS', 'bg-orange-600', it('Zakat Mal', formatRp(Number(r[20])||0), (r[21]||0)+' Mustahik') + it('Zakat Fitrah (B)', formatDesimal(Number(r[22])||0)+' Kg / '+formatDesimal(Number(r[23])||0)+' Ltr', (r[24]||0)+' Mustahik') + it('Zakat Fitrah (U)', formatRp(Number(r[25])||0), (r[26]||0)+' Mustahik') + it('Infaq Sedekah', formatRp(Number(r[27])||0), (r[28]||0)+' Mustahik'))}${card('Penyaluran DSKL', 'bg-rose-600', it('Fidyah', formatRp(Number(r[29])||0), (r[30]||0)+' Mustahik') + it('Kafarat', formatRp(Number(r[31])||0), (r[32]||0)+' Mustahik'))}</div>`;
+            document.getElementById('btnKonfirmasiWA').onclick = () => kirimPesanKonfirmasi(index);
             document.getElementById('modalDetail').classList.remove('hidden'); 
             document.body.style.overflow = 'hidden';
         }
 
-        // --- FITUR DOWNLOAD GAMBAR (VERSI PERBAIKAN FULL CONTENT) ---
-		function downloadGambarDetail(index) {
-			bukaDetail(index); // Isi data ke modal
-			
-			const r = globalDataSheets[index];
-			const target = document.getElementById('canvasArea'); // Area modal
-			const isiDetail = document.getElementById('isiDetail'); // Area yang bisa di-scroll
-			const namaFile = `LAPORAN_UPZ_${r[1].replace(/\W/g,'_')}.png`;
-
-			// Simpan gaya asli agar bisa dikembalikan setelah screenshot
-			const originalMaxHeight = target.style.maxHeight;
-			const originalOverflow = isiDetail.style.overflowY;
-
-			// MODIFIKASI: Matikan scroll & paksa tinggi mengikuti konten agar tidak terpotong
-			target.style.maxHeight = 'none';
-			isiDetail.style.overflowY = 'visible';
-			isiDetail.style.height = 'auto';
-
-			setTimeout(() => {
-				html2canvas(target, { 
-					scale: 2, 
-					useCORS: true, 
-					backgroundColor: "#ffffff",
-					scrollY: -window.scrollY, // Pastikan posisi scroll tidak mengganggu
-					windowHeight: target.scrollHeight // Ambil tinggi keseluruhan konten
-				}).then(canvas => {
-					const link = document.createElement('a');
-					link.download = namaFile;
-					link.href = canvas.toDataURL("image/png");
-					link.click();
-
-					// Kembalikan gaya asli modal agar user tetap bisa scroll manual
-					target.style.maxHeight = originalMaxHeight;
-					isiDetail.style.overflowY = originalOverflow;
-					
-					tutupModal();
-				});
-			}, 400); // Berikan sedikit jeda untuk kalkulasi tinggi
-		}
-
-        // --- EXPORT EXCEL ---
-        function exportGlobalExcel() { 
-            generateRapiExcel(globalDataSheets.slice(1), "REKAP_GLOBAL_ZIS_SALATIGA_2026", "LAPORAN REKAPITULASI ZIS & DSKL KOTA SALATIGA - RAMADAN 2026"); 
+        function kirimPesanKonfirmasi(index) {
+            const r = globalDataSheets[index];
+            const waPic = formatWA(r[4]); if (!waPic) return alert("WhatsApp PIC tidak ditemukan!");
+            const msg = `*KONFIRMASI LAPORAN ZIS - BAZNAS SALATIGA*%0A%0AAssalamu'alaikum wr. wb. *${r[3]||'Bapak/Ibu'}*, terima kasih kepada *${r[1]}* atas laporannya. %0A%0AMohon konfirmasi rincian: %0A%0A*PENGUMPULAN*%0A- Mal: ${formatRp(r[7])}%0A- Fitrah: ${formatDesimal(r[9])} Kg / ${formatDesimal(r[10])} Ltr / ${formatRp(r[12])}%0A- Infaq: ${formatRp(r[14])}%0A- Fidyah: ${formatRp(r[16])}%0A- Kafarat: ${formatRp(r[18])}%0A%0A*PENYALURAN*%0A- Mal: ${formatRp(r[20])}%0A- Fitrah: ${formatDesimal(r[22])} Kg / ${formatDesimal(r[23])} Ltr / ${formatRp(r[25])}%0A- Infaq: ${formatRp(r[27])}%0A- Fidyah: ${formatRp(r[29])}%0A- Kafarat: ${formatRp(r[31])}%0A%0A_Syukron Katsiran._%0A*BAZNAS KOTA SALATIGA*`;
+            window.open(`https://wa.me/${waPic}?text=${msg}`, '_blank');
         }
+
+        function downloadGambarDetail(index) {
+            bukaDetail(index);
+            const r = globalDataSheets[index];
+            const target = document.getElementById('canvasArea'), isiDetail = document.getElementById('isiDetail');
+            const originalMaxHeight = target.style.maxHeight, originalOverflow = isiDetail.style.overflowY;
+            target.style.maxHeight = 'none'; isiDetail.style.overflowY = 'visible'; isiDetail.style.height = 'auto';
+            setTimeout(() => {
+                html2canvas(target, { scale: 2, useCORS: true, backgroundColor: "#ffffff", scrollY: -window.scrollY, windowHeight: target.scrollHeight }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `LAPORAN_UPZ_${r[1].replace(/\W/g,'_')}.png`;
+                    link.href = canvas.toDataURL("image/png");
+                    link.click();
+                    target.style.maxHeight = originalMaxHeight; isiDetail.style.overflowY = originalOverflow;
+                    tutupModal();
+                });
+            }, 400);
+        }
+
+        function exportGlobalExcel() { 
+            let kF = document.getElementById('filterKecamatan').value;
+            let label = kF === 'SEMUA' ? 'KOTA SALATIGA' : 'KECAMATAN ' + kF.toUpperCase();
+            let fileName = kF === 'SEMUA' ? 'REKAP_GLOBAL_ZIS_SALATIGA_2026' : `REKAP_ZIS_${kF.toUpperCase()}_2026`;
+            generateRapiExcel(dataTersaring.map(x=>x.data), fileName, `LAPORAN REKAPITULASI ZIS & DSKL ${label} - RAMADAN 2026`); 
+        }
+        
         function exportSingleExcel(index) { 
             const r = globalDataSheets[index]; 
             generateRapiExcel([r], `LAPORAN_UPZ_${r[1].replace(/\W/g,'_')}`, `LAPORAN ZIS & DSKL UPZ: ${r[1].toUpperCase()}`); 
         }
+
         function generateRapiExcel(rows, filename, judulBesar) {
-            const rowJudul = [judulBesar];
             const header1 = ["NO", "WAKTU LAPOR", "IDENTITAS UPZ", "", "", "", "WILAYAH", "", "PENGUMPULAN ZAKAT & INFAQ", "", "", "", "", "PENGUMPULAN DSKL", "", "PENYALURAN ZAKAT & INFAQ", "", "", "", "", "PENYALURAN DSKL", ""];
-            const header2 = ["", "", "NAMA UPZ", "ALAMAT", "PJB", "WHATSAPP", "KECAMATAN", "KELURAHAN", "MAL (RP)", "FITRAH (KG)", "FITRAH (LTR)", "FITRAH (RP)", "INFAK (RP)", "FIDYAH (RP)", "KAFARAT (RP)", "MAL (RP)", "FITRAH (KG)", "FITRAH (LTR)", "FITRAH (RP)", "INFAK (RP)", "FIDYAH (RP)", "KAFARAT (RP)"];
+            const header2 = ["", "", "NAMA UPZ", "ALAMAT", "PIC", "WA", "KECAMATAN", "KELURAHAN", "MAL (RP)", "FITRAH (KG)", "FITRAH (LTR)", "FITRAH (RP)", "INFAK (RP)", "FIDYAH (RP)", "KAFARAT (RP)", "MAL (RP)", "FITRAH (KG)", "FITRAH (LTR)", "FITRAH (RP)", "INFAK (RP)", "FIDYAH (RP)", "KAFARAT (RP)"];
             const dataBody = rows.map((r, idx) => [
-                idx + 1, r[0], r[1], r[2], r[3], formatWA(r[4]), r[5], r[6], 
-                Number(r[7])||0, Number(r[9])||0, Number(r[10])||0, Number(r[12])||0, Number(r[14])||0, Number(r[16])||0, Number(r[18])||0, 
+                idx + 1, r[0], r[1], r[2], r[3], formatWA(r[4]), r[5], r[6],
+                Number(r[7])||0, Number(r[9])||0, Number(r[10])||0, Number(r[12])||0, Number(r[14])||0, Number(r[16])||0, Number(r[18])||0,
                 Number(r[20])||0, Number(r[22])||0, Number(r[23])||0, Number(r[25])||0, Number(r[27])||0, Number(r[29])||0, Number(r[31])||0
             ]);
-            const ws = XLSX.utils.aoa_to_sheet([rowJudul, header1, header2, ...dataBody]);
+            const ws = XLSX.utils.aoa_to_sheet([[judulBesar], header1, header2, ...dataBody]);
             const range = XLSX.utils.decode_range(ws['!ref']);
-            ws['!cols'] = [{wch:5}, {wch:20}, {wch:30}, {wch:30}, {wch:15}, {wch:15}, {wch:15}, {wch:15}, {wch:12}, {wch:11}, {wch:11}, {wch:12}, {wch:12}, {wch:12}, {wch:12}, {wch:12}, {wch:11}, {wch:11}, {wch:12}, {wch:12}, {wch:12}, {wch:12}];
+            ws['!cols'] = [{wch:5},{wch:20},{wch:30},{wch:30},{wch:15},{wch:15},{wch:12},{wch:12},{wch:12},{wch:10},{wch:10},{wch:12},{wch:12},{wch:12},{wch:12},{wch:12},{wch:10},{wch:10},{wch:12},{wch:12},{wch:12},{wch:12}];
             for (let R = range.s.r; R <= range.e.r; ++R) {
                 for (let C = range.s.c; C <= range.e.c; ++C) {
                     const ref = XLSX.utils.encode_cell({c: C, r: R}); if (!ws[ref]) continue;
                     ws[ref].s = { border: { top:{style:"thin"}, bottom:{style:"thin"}, left:{style:"thin"}, right:{style:"thin"} }, alignment: { vertical:"center", horizontal:"center", wrapText:true }, font: { size:10 } };
-                    if (R === 0) { ws[ref].s.font = { bold:true, size:14, color:{rgb:"16A34A"} }; ws[ref].s.border = {}; }
-                    else if (R === 1) { ws[ref].s.fill = { fgColor:{rgb:"16A34A"} }; ws[ref].s.font = { bold:true, color:{rgb:"FFFFFF"} }; }
-                    else if (R === 2) { ws[ref].s.fill = { fgColor:{rgb:"F3F4F6"} }; ws[ref].s.font = { bold:true }; }
-                    else { if (C >= 2 && C <= 7) ws[ref].s.alignment.horizontal = "left"; if (C >= 8) ws[ref].s.numFmt = "#,##0"; }
+                    if (R === 0) { ws[ref].s = { font:{bold:true, size:14}, alignment:{horizontal:"center"} }; }
+                    else if (R === 1) { 
+                        ws[ref].s.font = {bold:true, color:{rgb:"FFFFFF"}};
+                        if (C >= 8 && C <= 12) ws[ref].s.fill = {fgColor:{rgb:"166534"}};
+                        else if (C >= 13 && C <= 14) ws[ref].s.fill = {fgColor:{rgb:"1E40AF"}};
+                        else if (C >= 15 && C <= 19) ws[ref].s.fill = {fgColor:{rgb:"C2410C"}};
+                        else if (C >= 20) ws[ref].s.fill = {fgColor:{rgb:"0F766E"}};
+                        else ws[ref].s.fill = {fgColor:{rgb:"334155"}};
+                    }
+                    else if (R === 2) { ws[ref].s.fill = {fgColor:{rgb:"F1F5F9"}}; ws[ref].s.font = {bold:true}; }
+                    else { if (C >= 2 && C <= 7) ws[ref].s.alignment.horizontal = "left"; if (C === 9 || C === 10 || C === 16 || C === 17) ws[ref].s.numFmt = "#,##0.00"; else if (C >= 8) ws[ref].s.numFmt = "#,##0"; }
                 }
             }
             ws['!merges'] = [{s:{r:0,c:0},e:{r:0,c:21}}, {s:{r:1,c:0},e:{r:2,c:0}}, {s:{r:1,c:1},e:{r:2,c:1}}, {s:{r:1,c:2},e:{r:1,c:5}}, {s:{r:1,c:6},e:{r:1,c:7}}, {s:{r:1,c:8},e:{r:1,c:12}}, {s:{r:1,c:13},e:{r:1,c:14}}, {s:{r:1,c:15},e:{r:1,c:19}}, {s:{r:1,c:20},e:{r:1,c:21}}];
-            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Laporan");
+            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Data");
             XLSX.writeFile(wb, `${filename}.xlsx`);
         }
 
-        // --- AUTH & UI ---
         function prosesLogin(e) { 
             e.preventDefault(); 
-            const u = document.getElementById('userInput').value;
-            const p = document.getElementById('passInput').value;
+            const u = document.getElementById('userInput').value, p = document.getElementById('passInput').value;
             if (u === String(dataAuthSheet.user) && p === String(dataAuthSheet.pass)) { sessionStorage.setItem('adminLoggedIn', 'true'); tampilkanDashboard(); }
             else { document.getElementById('errorMsg').classList.remove('hidden'); }
         }
@@ -419,7 +467,6 @@
         }
         function tutupModal() { document.getElementById('modalDetail').classList.add('hidden'); document.body.style.overflow = 'auto'; }
         function prosesLogout() { sessionStorage.removeItem('adminLoggedIn'); location.reload(); }
-        function ubahFilterKecamatan() { renderTabelFilter(); }
 
         document.addEventListener('DOMContentLoaded', () => {
             tarikDataGoogleSheets();
