@@ -172,16 +172,16 @@
                                 </tr>
                                 <tr class="text-[8px] tracking-tight">
                                     <th class="py-2 border-b border-r text-center">Zakat Mal</th>
-                                    <th class="py-2 border-b border-r text-center">Zakat Fitrah (KG)</th>
-                                    <th class="py-2 border-b border-r text-center">Zakat Fitrah (LTR)</th>
-                                    <th class="py-2 border-b border-r text-center">Zakat Fitrah Uang</th>
+                                    <th class="py-2 border-b border-r text-center">Fitrah (KG)</th>
+                                    <th class="py-2 border-b border-r text-center">Fitrah (LTR)</th>
+                                    <th class="py-2 border-b border-r text-center">Fitrah Uang</th>
                                     <th class="py-2 border-b border-r text-center">Infaq</th>
                                     <th class="py-2 border-b border-r text-center">Fidyah</th>
                                     <th class="py-2 border-b border-r text-center">Kafarat</th>
                                     <th class="py-2 border-b border-r text-center">Zakat Mal</th>
-                                    <th class="py-2 border-b border-r text-center">Zakat Fitrah (KG)</th>
-                                    <th class="py-2 border-b border-r text-center">Zakat Fitrah (LTR)</th>
-                                    <th class="py-2 border-b border-r text-center">Zakat Fitrah Uang</th>
+                                    <th class="py-2 border-b border-r text-center">Fitrah (KG)</th>
+                                    <th class="py-2 border-b border-r text-center">Fitrah (LTR)</th>
+                                    <th class="py-2 border-b border-r text-center">Fitrah Uang</th>
                                     <th class="py-2 border-b border-r text-center">Infaq</th>
                                     <th class="py-2 border-b border-r text-center">Fidyah</th>
                                     <th class="py-2 border-b text-center">Kafarat</th>
@@ -260,15 +260,28 @@
 
         function kalkulasiStatistik(data) {
             let ju=0, tm=0, tk=0, tl=0, tu=0, ti=0, tf=0, tka=0, sm=0, sk=0, sl=0, su=0, si=0, sf=0, ska=0;
+            let totMuzaki=0, totMunfiq=0, totMustahik=0;
             let rec = { "Argomulyo": 0, "Sidomukti": 0, "Sidorejo": 0, "Tingkir": 0 };
+            
             for(let i=1;i<data.length;i++){
                 const r = data[i]; if(!r[1]) continue; ju++;
                 let k = (r[5]||"").trim(); if(rec[k]!==undefined) rec[k]++;
-                tm+=Number(r[7]) || 0; tk+=Number(r[9]) || 0; tl+=Number(r[10]) || 0; 
-                tu+=Number(r[12]) || 0; ti+=Number(r[14]) || 0; tf+=Number(r[16]) || 0; tka+=Number(r[18]) || 0;
-                sm+=Number(r[20]) || 0; sk+=Number(r[22]) || 0; sl+=Number(r[23]) || 0; 
-                su+=Number(r[25]) || 0; si+=Number(r[27]) || 0; sf+=Number(r[29]) || 0; ska+=Number(r[31]) || 0;
+                
+                tm+=Number(r[7]) || 0; totMuzaki+=Number(r[8]) || 0;
+                tk+=Number(r[9]) || 0; tl+=Number(r[10]) || 0; totMuzaki+=Number(r[11]) || 0;
+                tu+=Number(r[12]) || 0; totMuzaki+=Number(r[13]) || 0;
+                ti+=Number(r[14]) || 0; totMunfiq+=Number(r[15]) || 0;
+                tf+=Number(r[16]) || 0; totMunfiq+=Number(r[17]) || 0;
+                tka+=Number(r[18])|| 0; totMunfiq+=Number(r[19]) || 0;
+
+                sm+=Number(r[20]) || 0; totMustahik+=Number(r[21]) || 0;
+                sk+=Number(r[22]) || 0; sl+=Number(r[23]) || 0; totMustahik+=Number(r[24]) || 0;
+                su+=Number(r[25]) || 0; totMustahik+=Number(r[26]) || 0;
+                si+=Number(r[27]) || 0; totMustahik+=Number(r[28]) || 0;
+                sf+=Number(r[29]) || 0; totMustahik+=Number(r[30]) || 0;
+                ska+=Number(r[31])|| 0; totMustahik+=Number(r[32]) || 0;
             }
+            
             document.getElementById('statUpz').innerText = ju;
             document.getElementById('statZisUang').innerText = formatRp(tm+tu+ti+tf+tka);
             document.getElementById('statSalurUang').innerText = formatRp(sm+su+si+sf+ska);
@@ -283,24 +296,35 @@
             document.getElementById('sebaranKecamatan').innerHTML = hK;
 
             const li = (l, v) => `<li class="flex justify-between items-center border-b border-slate-50 pb-3 text-xs"><span class="text-slate-500 font-bold uppercase text-[10px] tracking-wider">${l}</span><span class="font-extrabold text-slate-800">${v}</span></li>`;
+            const liTotal = (l, v, c) => `<li class="flex justify-between items-center pt-3 mt-1 text-xs"><span class="font-black ${c} uppercase text-[10px] tracking-widest">${l}</span><span class="font-black ${c} text-base">${v}</span></li>`;
             
             document.getElementById('rincianKumpulTotal').innerHTML = 
                 li('Zakat Mal', formatRp(tm)) + 
-                li('Fitrah (Beras Kg)', formatDesimal(tk) + ' Kg') + 
-                li('Fitrah (Beras Ltr)', formatDesimal(tl) + ' Ltr') + 
-                li('Fitrah (Uang)', formatRp(tu)) + 
+                li('Zakat Fitrah (Beras Kg)', formatDesimal(tk) + ' Kg') + 
+                li('Zakat Fitrah (Beras Ltr)', formatDesimal(tl) + ' Ltr') + 
+                li('Zakat Fitrah (Uang)', formatRp(tu)) + 
                 li('Infaq Sedekah', formatRp(ti)) + 
                 li('Fidyah', formatRp(tf)) + 
-                li('Kafarat', formatRp(tka));
+                li('Kafarat', formatRp(tka)) +
+                `<div class="mt-4 pt-2 border-t-2 border-dashed border-slate-200">` +
+                liTotal('TOTAL BERAS', formatDesimal(tk) + ' Kg / ' + formatDesimal(tl) + ' Ltr', 'text-slate-700') +
+                liTotal('TOTAL RUPIAH', formatRp(tm+tu+ti+tf+tka), 'text-green-700') +
+                liTotal('TOTAL MUZAKI/MUNFIQ', (totMuzaki+totMunfiq) + ' Jiwa', 'text-slate-700') +
+                `</div>`;
 
             document.getElementById('rincianSalurTotal').innerHTML = 
                 li('Zakat Mal', formatRp(sm)) + 
-                li('Fitrah (Beras Kg)', formatDesimal(sk) + ' Kg') + 
-                li('Fitrah (Beras Ltr)', formatDesimal(sl) + ' Ltr') + 
-                li('Fitrah (Uang)', formatRp(su)) + 
+                li('Zakat Fitrah (Beras Kg)', formatDesimal(sk) + ' Kg') + 
+                li('Zakat Fitrah (Beras Ltr)', formatDesimal(sl) + ' Ltr') + 
+                li('Zakat Fitrah (Uang)', formatRp(su)) + 
                 li('Infaq Sedekah', formatRp(si)) + 
                 li('Fidyah', formatRp(sf)) + 
-                li('Kafarat', formatRp(ska));
+                li('Kafarat', formatRp(ska)) +
+                `<div class="mt-4 pt-2 border-t-2 border-dashed border-slate-200">` +
+                liTotal('TOTAL BERAS', formatDesimal(sk) + ' Kg / ' + formatDesimal(sl) + ' Ltr', 'text-slate-700') +
+                liTotal('TOTAL RUPIAH', formatRp(sm+su+si+sf+ska), 'text-orange-700') +
+                liTotal('TOTAL MUSTAHIK', totMustahik + ' Jiwa', 'text-slate-700') +
+                `</div>`;
         }
 
         function renderTabelPaginasi() {
@@ -351,15 +375,21 @@
 
         function halamanNext() { halamanSaatIni++; renderTabelPaginasi(); }
         function halamanPrev() { halamanSaatIni--; renderTabelPaginasi(); }
+        
         function ubahFilterKecamatan() {
             let kF = document.getElementById('filterKecamatan').value;
             dataTersaring = [];
-            for(let i = globalDataSheets.length - 1; i >= 1; i--) {
+            for(let i = 1; i < globalDataSheets.length; i++) {
                 const r = globalDataSheets[i]; if(!r[1]) continue;
                 if(kF !== 'SEMUA' && r[5] !== kF) continue;
                 dataTersaring.push({ data: r, originalIndex: i });
             }
-            halamanSaatIni = 1; renderTabelPaginasi();
+            
+            // Tampilan di DATABASE: Urutkan agar data terakhir masuk berada di paling atas
+            dataTersaring.reverse();
+
+            halamanSaatIni = 1; 
+            renderTabelPaginasi();
         }
 
         function bukaDetail(index) {
@@ -411,7 +441,10 @@
             let kF = document.getElementById('filterKecamatan').value;
             let label = kF === 'SEMUA' ? 'KOTA SALATIGA' : 'KECAMATAN ' + kF.toUpperCase();
             let fileName = kF === 'SEMUA' ? 'REKAP_GLOBAL_ZIS_SALATIGA_2026' : `REKAP_ZIS_${kF.toUpperCase()}_2026`;
-            generateRapiExcel(dataTersaring.map(x=>x.data), fileName, `LAPORAN REKAPITULASI ZIS & DSKL ${label} - RAMADAN 2026`); 
+            
+            // Mengambil baris data mentah saja untuk diurutkan ulang
+            let rowsToExport = dataTersaring.map(x => x.data);
+            generateRapiExcel(rowsToExport, fileName, `LAPORAN REKAPITULASI ZIS & DSKL ${label} - RAMADAN 2026`); 
         }
         
         function exportSingleExcel(index) { 
@@ -422,14 +455,32 @@
         function generateRapiExcel(rows, filename, judulBesar) {
             const header1 = ["NO", "WAKTU LAPOR", "IDENTITAS UPZ", "", "", "", "WILAYAH", "", "PENGUMPULAN ZAKAT & INFAQ", "", "", "", "", "PENGUMPULAN DSKL", "", "PENYALURAN ZAKAT & INFAQ", "", "", "", "", "PENYALURAN DSKL", ""];
             const header2 = ["", "", "NAMA UPZ", "ALAMAT", "PIC", "WA", "KECAMATAN", "KELURAHAN", "MAL (RP)", "FITRAH (KG)", "FITRAH (LTR)", "FITRAH (RP)", "INFAK (RP)", "FIDYAH (RP)", "KAFARAT (RP)", "MAL (RP)", "FITRAH (KG)", "FITRAH (LTR)", "FITRAH (RP)", "INFAK (RP)", "FIDYAH (RP)", "KAFARAT (RP)"];
-            const dataBody = rows.map((r, idx) => [
-                idx + 1, r[0], r[1], r[2], r[3], formatWA(r[4]), r[5], r[6],
-                Number(r[7])||0, Number(r[9])||0, Number(r[10])||0, Number(r[12])||0, Number(r[14])||0, Number(r[16])||0, Number(r[18])||0,
-                Number(r[20])||0, Number(r[22])||0, Number(r[23])||0, Number(r[25])||0, Number(r[27])||0, Number(r[29])||0, Number(r[31])||0
-            ]);
+            
+            // EXPORT EXCEL: Pastikan data diurutkan dari yang PERTAMA MASUK (kronologis)
+            // Karena dataTersaring sudah di-reverse (terbaru di atas), kita balik lagi ke aslinya.
+            const dataUrutInput = rows.slice().reverse();
+
+            const dataBody = dataUrutInput.map((r, idx) => {
+                let tglFormal = r[0];
+                let dateObj = new Date(r[0]);
+                if(!isNaN(dateObj.getTime())) {
+                    let d = String(dateObj.getDate()).padStart(2, '0');
+                    let m = String(dateObj.getMonth() + 1).padStart(2, '0');
+                    let y = dateObj.getFullYear();
+                    tglFormal = `${d}-${m}-${y}`;
+                }
+
+                return [
+                    idx + 1, tglFormal, r[1], r[2], r[3], formatWA(r[4]), r[5], r[6],
+                    Number(r[7])||0, Number(r[9])||0, Number(r[10])||0, Number(r[12])||0, Number(r[14])||0, Number(r[16])||0, Number(r[18])||0,
+                    Number(r[20])||0, Number(r[22])||0, Number(r[23])||0, Number(r[25])||0, Number(r[27])||0, Number(r[29])||0, Number(r[31])||0
+                ];
+            });
+
             const ws = XLSX.utils.aoa_to_sheet([[judulBesar], header1, header2, ...dataBody]);
             const range = XLSX.utils.decode_range(ws['!ref']);
-            ws['!cols'] = [{wch:5},{wch:20},{wch:30},{wch:30},{wch:15},{wch:15},{wch:12},{wch:12},{wch:12},{wch:10},{wch:10},{wch:12},{wch:12},{wch:12},{wch:12},{wch:12},{wch:10},{wch:10},{wch:12},{wch:12},{wch:12},{wch:12}];
+            ws['!cols'] = [{wch:5},{wch:15},{wch:30},{wch:30},{wch:15},{wch:15},{wch:12},{wch:12},{wch:12},{wch:10},{wch:10},{wch:12},{wch:12},{wch:12},{wch:12},{wch:12},{wch:10},{wch:10},{wch:12},{wch:12},{wch:12},{wch:12}];
+            
             for (let R = range.s.r; R <= range.e.r; ++R) {
                 for (let C = range.s.c; C <= range.e.c; ++C) {
                     const ref = XLSX.utils.encode_cell({c: C, r: R}); if (!ws[ref]) continue;
