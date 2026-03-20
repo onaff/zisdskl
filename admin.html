@@ -218,7 +218,7 @@
         const selData = (v, o, label) => `
             <div class="text-right leading-tight">
                 <span class="block font-black text-slate-800 text-[10px]">${v}</span>
-                <span class="block text-[8px] text-slate-400 font-bold uppercase tracking-tighter">${o} ${label}</span>
+                <span class="block text-[8px] text-slate-400 font-bold uppercase tracking-tighter">${o || 0} ${label}</span>
             </div>`;
 
         // --- CORE FUNCTIONS ---
@@ -239,8 +239,12 @@
             for(let i=1;i<data.length;i++){
                 const r = data[i]; if(!r[1]) continue; ju++;
                 let k = (r[5]||"").trim(); if(rec[k]!==undefined) rec[k]++;
-                tm+=Number(r[7]); tk+=Number(r[9]); tl+=Number(r[10]); tu+=Number(r[12]); ti+=Number(r[14]); tf+=Number(r[16]); tka+=Number(r[18]);
-                sm+=Number(r[20]); sk+=Number(r[22]); sl+=Number(r[23]); su+=Number(r[25]); si+=Number(r[27]); sf+=Number(r[29]); ska+=Number(r[31]);
+                
+                // Perbaikan: Paksa nilai ke 0 jika Number() menghasilkan NaN
+                tm+=Number(r[7]) || 0; tk+=Number(r[9]) || 0; tl+=Number(r[10]) || 0; 
+                tu+=Number(r[12]) || 0; ti+=Number(r[14]) || 0; tf+=Number(r[16]) || 0; tka+=Number(r[18]) || 0;
+                sm+=Number(r[20]) || 0; sk+=Number(r[22]) || 0; sl+=Number(r[23]) || 0; 
+                su+=Number(r[25]) || 0; si+=Number(r[27]) || 0; sf+=Number(r[29]) || 0; ska+=Number(r[31]) || 0;
             }
             document.getElementById('statUpz').innerText = ju;
             document.getElementById('statZisUang').innerText = formatRp(tm+tu+ti+tf+tka);
@@ -268,6 +272,8 @@
                 const r = globalDataSheets[i]; if(!r[1]) continue;
                 if(kF!=='SEMUA' && r[5]!==kF) continue;
                 let hpWA = formatWA(r[4]);
+                
+                // Perbaikan: Gunakan (Number(r[x]) || 0) untuk mencegah NaN di tabel
                 tbody.innerHTML += `
                     <tr class="row-hover">
                         <td class="py-5 px-4 text-center font-bold text-slate-300 border-r bg-white sticky left-0 z-10">${n++}</td>
@@ -281,23 +287,23 @@
                         </td>
                         <td class="py-5 px-6 border-r text-[9px] font-black text-slate-500 uppercase text-center">${r[5]}<br><span class="text-blue-500 text-[8px]">${r[6]}</span></td>
                         
-                        <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(r[7]), r[8], 'Muzaki')}</td>
-                        <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatDesimal(r[9])+' Kg', r[11], 'Muzaki')}</td>
-                        <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatDesimal(r[10])+' Ltr', r[11], 'Muzaki')}</td>
-                        <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(r[12]), r[13], 'Muzaki')}</td>
-                        <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(r[14]), r[15], 'Munfiq')}</td>
+                        <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(Number(r[7])||0), r[8], 'Muzaki')}</td>
+                        <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatDesimal(Number(r[9])||0)+' Kg', r[11], 'Muzaki')}</td>
+                        <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatDesimal(Number(r[10])||0)+' Ltr', r[11], 'Muzaki')}</td>
+                        <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(Number(r[12])||0), r[13], 'Muzaki')}</td>
+                        <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(Number(r[14])||0), r[15], 'Munfiq')}</td>
                         
-                        <td class="py-5 px-4 border-r bg-blue-50/20">${selData(formatRp(r[16]), r[17], 'Munfiq')}</td>
-                        <td class="py-5 px-4 border-r bg-blue-50/20">${selData(formatRp(r[18]), r[19], 'Munfiq')}</td>
+                        <td class="py-5 px-4 border-r bg-blue-50/20">${selData(formatRp(Number(r[16])||0), r[17], 'Munfiq')}</td>
+                        <td class="py-5 px-4 border-r bg-blue-50/20">${selData(formatRp(Number(r[18])||0), r[19], 'Munfiq')}</td>
                         
-                        <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(r[20]), r[21], 'Mustahik')}</td>
-                        <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatDesimal(r[22])+' Kg', r[24], 'Mustahik')}</td>
-                        <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatDesimal(r[23])+' Ltr', r[24], 'Mustahik')}</td>
-                        <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(r[25]), r[26], 'Mustahik')}</td>
-                        <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(r[27]), r[28], 'Mustahik')}</td>
+                        <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(Number(r[20])||0), r[21], 'Mustahik')}</td>
+                        <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatDesimal(Number(r[22])||0)+' Kg', r[24], 'Mustahik')}</td>
+                        <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatDesimal(Number(r[23])||0)+' Ltr', r[24], 'Mustahik')}</td>
+                        <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(Number(r[25])||0), r[26], 'Mustahik')}</td>
+                        <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(Number(r[27])||0), r[28], 'Mustahik')}</td>
                         
-                        <td class="py-5 px-4 border-r bg-teal-50/20">${selData(formatRp(r[29]), r[30], 'Mustahik')}</td>
-                        <td class="py-5 px-4 border-r bg-teal-50/20">${selData(formatRp(r[31]), r[32], 'Mustahik')}</td>
+                        <td class="py-5 px-4 border-r bg-teal-50/20">${selData(formatRp(Number(r[29])||0), r[30], 'Mustahik')}</td>
+                        <td class="py-5 px-4 border-r bg-teal-50/20">${selData(formatRp(Number(r[31])||0), r[32], 'Mustahik')}</td>
                         
                         <td class="py-5 px-6 bg-white sticky right-0 z-30 shadow-md text-center">
                             <div class="flex gap-2 justify-center">
@@ -322,8 +328,8 @@
             }
             c.innerHTML = `
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Identitas', 'bg-blue-600', it('Nama UPZ', r[1]) + it('Wilayah', r[5]+' - '+r[6]) + it('Alamat', r[2]))}${card('PIC', 'bg-indigo-600', it('Nama PIC', r[3]) + it('No WhatsApp', r[4], "Konfirmasi Laporan", true))}</div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Pengumpulan ZIS', 'bg-green-600', it('Zakat Mal', formatRp(r[7]), r[8]+' Muzaki') + it('Fitrah Beras', formatDesimal(r[9])+' Kg / '+formatDesimal(r[10])+' Ltr', r[11]+' Muzaki') + it('Fitrah Uang', formatRp(r[12]), r[13]+' Muzaki') + it('Infaq Sedekah', formatRp(r[14]), r[15]+' Munfiq'))}${card('Pengumpulan DSKL', 'bg-teal-600', it('Fidyah', formatRp(r[16]), r[17]+' Munfiq') + it('Kafarat', formatRp(r[18]), r[19]+' Munfiq'))}</div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Penyaluran ZIS', 'bg-orange-600', it('Zakat Mal', formatRp(r[20]), r[21]+' Mustahik') + it('Zakat Fitrah (B)', formatDesimal(r[22])+' Kg / '+formatDesimal(r[23])+' Ltr', r[24]+' Mustahik') + it('Zakat Fitrah (U)', formatRp(r[25]), r[26]+' Mustahik') + it('Infaq Sedekah', formatRp(r[27]), r[28]+' Mustahik'))}${card('Penyaluran DSKL', 'bg-rose-600', it('Fidyah', formatRp(r[29]), r[30]+' Mustahik') + it('Kafarat', formatRp(r[31]), r[32]+' Mustahik'))}</div>`;
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Pengumpulan ZIS', 'bg-green-600', it('Zakat Mal', formatRp(Number(r[7])||0), (r[8]||0)+' Muzaki') + it('Fitrah Beras', formatDesimal(Number(r[9])||0)+' Kg / '+formatDesimal(Number(r[10])||0)+' Ltr', (r[11]||0)+' Muzaki') + it('Fitrah Uang', formatRp(Number(r[12])||0), (r[13]||0)+' Muzaki') + it('Infaq Sedekah', formatRp(Number(r[14])||0), (r[15]||0)+' Munfiq'))}${card('Pengumpulan DSKL', 'bg-teal-600', it('Fidyah', formatRp(Number(r[16])||0), (r[17]||0)+' Munfiq') + it('Kafarat', formatRp(Number(r[18])||0), (r[19]||0)+' Munfiq'))}</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Penyaluran ZIS', 'bg-orange-600', it('Zakat Mal', formatRp(Number(r[20])||0), (r[21]||0)+' Mustahik') + it('Zakat Fitrah (B)', formatDesimal(Number(r[22])||0)+' Kg / '+formatDesimal(Number(r[23])||0)+' Ltr', (r[24]||0)+' Mustahik') + it('Zakat Fitrah (U)', formatRp(Number(r[25])||0), (r[26]||0)+' Mustahik') + it('Infaq Sedekah', formatRp(Number(r[27])||0), (r[28]||0)+' Mustahik'))}${card('Penyaluran DSKL', 'bg-rose-600', it('Fidyah', formatRp(Number(r[29])||0), (r[30]||0)+' Mustahik') + it('Kafarat', formatRp(Number(r[31])||0), (r[32]||0)+' Mustahik'))}</div>`;
             document.getElementById('modalDetail').classList.remove('hidden'); 
             document.body.style.overflow = 'hidden';
         }
@@ -345,8 +351,8 @@
             
             const dataBody = rows.map((r, idx) => [
                 idx + 1, r[0], r[1], r[2], r[3], formatWA(r[4]), r[5], r[6], 
-                Number(r[7]), Number(r[9]), Number(r[10]), Number(r[12]), Number(r[14]), Number(r[16]), Number(r[18]), 
-                Number(r[20]), Number(r[22]), Number(r[23]), Number(r[25]), Number(r[27]), Number(r[29]), Number(r[31])
+                Number(r[7])||0, Number(r[9])||0, Number(r[10])||0, Number(r[12])||0, Number(r[14])||0, Number(r[16])||0, Number(r[18])||0, 
+                Number(r[20])||0, Number(r[22])||0, Number(r[23])||0, Number(r[25])||0, Number(r[27])||0, Number(r[29])||0, Number(r[31])||0
             ]);
 
             const ws = XLSX.utils.aoa_to_sheet([rowJudul, header1, header2, ...dataBody]);
