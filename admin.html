@@ -2,14 +2,14 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Admin Panel - Laporan ZIS & DSKL Salatiga</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
         .fade-in { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .tab-active { border-bottom-width: 4px; border-color: #059669; color: #059669; font-weight: 800; }
@@ -18,6 +18,51 @@
         .stat-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
         tr.row-hover:hover { background-color: #f0fdf4 !important; }
+
+        /* Optimasi Responsif Mobile */
+        @media (max-width: 768px) {
+            /* Navigasi Tab Bawah (App Style) */
+            .mobile-nav-container {
+                position: fixed; bottom: 0; left: 0; right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                border-top: 1px solid #e2e8f0;
+                padding: 0.6rem 1rem env(safe-area-inset-bottom);
+                z-index: 100;
+                display: flex; justify-content: space-around;
+                margin-bottom: 0 !important; border-bottom: none !important;
+            }
+            .mobile-nav-container button {
+                flex: 1; padding: 0.5rem !important;
+                font-size: 0.65rem !important; border-bottom: none !important;
+                border-radius: 12px; display: flex; flex-direction: column; align-items: center; gap: 4px;
+            }
+            .mobile-nav-container .tab-active { background-color: #ecfdf5; color: #059669; }
+            .mobile-nav-container svg { display: block !important; width: 20px; height: 20px; }
+
+            /* Grid Statistik 2 Kolom di Ringkasan */
+            .grid-stats-mobile { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 0.75rem !important; }
+            .stat-card { padding: 1.25rem !important; border-radius: 1.5rem !important; }
+            .stat-card .text-5xl { font-size: 1.75rem !important; }
+            .stat-card .text-3xl { font-size: 1.1rem !important; }
+            
+            /* Box Rincian List di HP */
+            .rincian-box { padding: 1.5rem !important; border-radius: 1.5rem !important; margin-bottom: 1rem !important; }
+            
+            /* Zakat Fitrah Grid */
+            .fitrah-grid { padding: 1.25rem !important; gap: 0.75rem !important; }
+            .fitrah-grid .text-xl { font-size: 0.95rem !important; }
+
+            /* Pagination Lebih Rapi */
+            .pagination-container { flex-direction: column !important; gap: 1rem; }
+            .pagination-buttons { width: 100%; display: grid !important; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .pagination-buttons button { padding: 0.75rem !important; width: 100%; }
+
+            main { padding-bottom: 7rem !important; padding-left: 1rem !important; padding-right: 1rem !important; }
+            footer { margin-bottom: 5rem !important; }
+            nav .max-w-7xl { padding: 0.75rem 1rem !important; }
+            nav h1 { font-size: 0.9rem !important; }
+        }
     </style>
 </head>
 <body class="bg-[#f8fafc] min-h-screen text-slate-900">
@@ -48,38 +93,45 @@
                     <div class="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-600/30">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
-                    <h1 class="text-lg font-extrabold text-slate-800">Rekap Laporan ZIS UPZ Salatiga</h1>
+                    <h1 class="text-lg font-extrabold text-slate-800 leading-tight">Rekap ZIS se-Kota Salatiga</span></h1>
                 </div>
-                <button onclick="prosesLogout()" class="text-red-600 font-bold text-sm px-4 py-2 hover:bg-red-50 rounded-xl transition">Keluar</button>
+                <button onclick="prosesLogout()" class="text-red-600 font-bold text-xs md:text-sm px-4 py-2 hover:bg-red-50 rounded-xl transition">Keluar</button>
             </div>
         </nav>
 
         <main class="flex-grow max-w-7xl mx-auto px-6 py-8 w-full">
-            <div class="flex space-x-10 border-b border-slate-200 mb-10">
-                <button onclick="gantiTab('tabUtama')" id="btnTabUtama" class="pb-4 px-2 tab-active uppercase tracking-widest text-xs">Ringkasan Data</button>
-                <button onclick="gantiTab('tabLaporan')" id="btnTabLaporan" class="pb-4 px-2 text-slate-400 font-bold uppercase tracking-widest text-xs transition-colors hover:text-slate-600">Database Laporan</button>
+            
+            <div class="mobile-nav-container flex space-x-10 border-b border-slate-200 mb-10 transition-all">
+                <button onclick="gantiTab('tabUtama')" id="btnTabUtama" class="pb-4 px-2 tab-active uppercase tracking-widest text-xs">
+                    <svg class="hidden w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    <span>Ringkasan</span>
+                </button>
+                <button onclick="gantiTab('tabLaporan')" id="btnTabLaporan" class="pb-4 px-2 text-slate-400 font-bold uppercase tracking-widest text-xs transition-colors hover:text-slate-600">
+                    <svg class="hidden w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg>
+                    <span>Database</span>
+                </button>
             </div>
 
             <div id="tabUtama" class="tab-content fade-in">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-10 bg-white p-6 rounded-[1.5rem] shadow-sm border border-slate-100 gap-6">
-                    <div>
+                    <div class="text-center md:text-left">
                         <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest">Status Sinkronisasi</p>
                         <p id="waktuSync" class="text-sm text-slate-700 font-bold italic">Memuat data...</p>
                     </div>
                     <button onclick="tarikDataGoogleSheets()" class="w-full md:w-auto bg-slate-900 text-white px-8 py-3.5 rounded-2xl font-bold text-sm hover:bg-slate-800 transition shadow-lg active:scale-95">Refresh Database</button>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-                    <div class="stat-card bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100">
-                        <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Total Yang Melapor</div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10 grid-stats-mobile">
+                    <div class="stat-card bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col justify-center">
+                        <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Total Lapor</div>
                         <div class="text-5xl font-black text-slate-800" id="statUpz">0</div>
                     </div>
                     <div class="stat-card bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 border-l-4 border-l-green-500">
-                        <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 text-green-600">Total Pengumpulan ZIS</div>
+                        <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 text-green-600">Pengumpulan</div>
                         <div class="text-3xl font-black text-green-600" id="statZisUang">Rp 0</div>
                     </div>
                     <div class="stat-card bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 border-l-4 border-l-orange-500">
-                        <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 text-orange-600">Total Penyaluran ZIS</div>
+                        <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 text-orange-600">Penyaluran</div>
                         <div class="text-3xl font-black text-orange-500" id="statSalurUang">Rp 0</div>
                     </div>
                 </div>
@@ -90,7 +142,7 @@
                             <div class="w-2 h-5 bg-yellow-400 rounded-full"></div>
                             <h3 class="font-extrabold text-slate-700 uppercase text-[10px] tracking-widest">Zakat Fitrah (Beras)</h3>
                         </div>
-                        <div class="p-8 grid grid-cols-2 gap-6">
+                        <div class="p-8 grid grid-cols-2 gap-6 fitrah-grid">
                             <div class="bg-green-50/50 p-5 rounded-2xl border border-green-100">
                                 <div class="text-[9px] font-black text-green-600 uppercase mb-1 tracking-wider">Pengumpulan</div>
                                 <div class="text-xl font-black text-green-700" id="statKumpulBerasKg">0.00 Kg</div>
@@ -108,7 +160,7 @@
                             <div class="w-2 h-5 bg-blue-400 rounded-full"></div>
                             <h3 class="font-extrabold text-slate-700 uppercase text-[10px] tracking-widest">Zakat Fitrah (Uang)</h3>
                         </div>
-                        <div class="p-8 grid grid-cols-2 gap-6">
+                        <div class="p-8 grid grid-cols-2 gap-6 fitrah-grid">
                             <div class="bg-green-50/50 p-5 rounded-2xl border border-green-100">
                                 <div class="text-[9px] font-black text-green-600 uppercase mb-1 tracking-wider">Pengumpulan</div>
                                 <div class="text-xl font-black text-green-700" id="statKumpulFitrahUang">Rp 0</div>
@@ -123,17 +175,17 @@
 
                 <div class="mb-10">
                     <h3 class="font-extrabold text-slate-700 uppercase text-xs tracking-widest ml-2 mb-6">Sebaran UPZ per Kecamatan</h3>
-                    <div id="sebaranKecamatan" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
+                    <div id="sebaranKecamatan" class="grid grid-cols-2 md:grid-cols-4 gap-6 grid-stats-mobile"></div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm mb-16">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm mb-16 rincian-box">
                     <div>
                         <h4 class="font-black text-green-600 uppercase text-xs tracking-widest mb-6 border-b-2 border-green-100 pb-2 flex items-center gap-2">
                             <span class="w-2 h-2 bg-green-500 rounded-full"></span> Rincian Pengumpulan
                         </h4>
                         <ul id="rincianKumpulTotal" class="space-y-4"></ul>
                     </div>
-                    <div>
+                    <div class="mt-10 lg:mt-0">
                         <h4 class="font-black text-orange-600 uppercase text-xs tracking-widest mb-6 border-b-2 border-orange-100 pb-2 flex items-center gap-2">
                             <span class="w-2 h-2 bg-orange-500 rounded-full"></span> Rincian Penyaluran
                         </h4>
@@ -188,13 +240,13 @@
                         </table>
                     </div>
                     
-                    <div class="px-8 py-4 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
-                        <span id="infoHalaman" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Menampilkan data ...</span>
-                        <div class="flex gap-2">
-                            <button onclick="halamanAwal()" id="btnFirst" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40 transition-all shadow-sm">Pertama</button>
-                            <button onclick="halamanPrev()" id="btnPrev" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40 transition-all shadow-sm">Sebelumnya</button>
-                            <button onclick="halamanNext()" id="btnNext" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40 transition-all shadow-sm">Berikutnya</button>
-                            <button onclick="halamanAkhir()" id="btnLast" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40 transition-all shadow-sm">Terakhir</button>
+                    <div class="pagination-container px-8 py-4 bg-slate-50 border-t border-slate-100 flex flex-row justify-between items-center gap-4">
+                        <span id="infoHalaman" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center md:text-left">Menampilkan data ...</span>
+                        <div class="pagination-buttons flex gap-2">
+                            <button onclick="halamanAwal()" id="btnFirst" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40 transition-all shadow-sm">Pertama</button>
+                            <button onclick="halamanPrev()" id="btnPrev" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40 transition-all shadow-sm">Kembali</button>
+                            <button onclick="halamanNext()" id="btnNext" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40 transition-all shadow-sm">Lanjut</button>
+                            <button onclick="halamanAkhir()" id="btnLast" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40 transition-all shadow-sm">Akhir</button>
                         </div>
                     </div>
                 </div>
@@ -220,15 +272,14 @@
             <div class="p-6 border-t bg-white flex flex-wrap justify-end gap-3">
                 <button id="btnDownloadGambar" class="bg-rose-600 text-white px-5 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-rose-700 flex items-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    Simpan Gambar
+                    Gambar
                 </button>
                 <button id="btnDownloadExcel" class="bg-blue-600 text-white px-5 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-blue-700 flex items-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    Export Excel
+                    Excel
                 </button>
-                <button id="btnKonfirmasiWA" class="bg-emerald-600 text-white px-5 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-emerald-700 flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    WhatsApp
+                <button id="btnKonfirmasiWA" class="bg-emerald-600 text-white px-5 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-emerald-700">
+                    WA
                 </button>
                 <button onclick="tutupModal()" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-slate-800">Tutup</button>
             </div>
@@ -313,7 +364,6 @@
             const li = (l, v) => `<li class="flex justify-between items-center border-b border-slate-50 pb-3 text-xs"><span class="text-slate-500 font-bold uppercase text-[10px] tracking-wider">${l}</span><span class="font-extrabold text-slate-800">${v}</span></li>`;
             const liTotal = (l, v, c) => `<li class="flex justify-between items-center pt-3 mt-1 text-xs"><span class="font-black ${c} uppercase text-[10px] tracking-widest">${l}</span><span class="font-black ${c} text-base">${v}</span></li>`;
             
-            // UPDATE: Menambahkan Total Muzaki & Munfiq kembali ke tampilan
             document.getElementById('rincianKumpulTotal').innerHTML = 
                 li('Zakat Mal', formatRp(tm)) + 
                 li('Zakat Fitrah (KG)', formatDesimal(tk) + ' Kg') + 
@@ -431,8 +481,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Pengumpulan ZIS', 'bg-green-600', it('Zakat Mal', formatRp(Number(r[7])||0), formatRibuan(r[8])+' Muzaki') + it('Fitrah Beras', formatDesimal(Number(r[9])||0)+' Kg / '+formatDesimal(Number(r[10])||0)+' Ltr', formatRibuan(r[11])+' Muzaki') + it('Fitrah Uang', formatRp(Number(r[12])||0), formatRibuan(r[13])+' Muzaki') + it('Infaq Sedekah', formatRp(Number(r[14])||0), formatRibuan(r[15])+' Munfiq'))}${card('Pengumpulan DSKL', 'bg-teal-600', it('Fidyah', formatRp(Number(r[16])||0), formatRibuan(r[17])+' Munfiq') + it('Kafarat', formatRp(Number(r[18])||0), formatRibuan(r[19])+' Munfiq'))}</div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Penyaluran ZIS', 'bg-orange-600', it('Zakat Mal', formatRp(Number(r[20])||0), formatRibuan(r[21])+' Mustahik') + it('Zakat Fitrah (B)', formatDesimal(Number(r[22])||0)+' Kg / '+formatDesimal(Number(r[23])||0)+' Ltr', formatRibuan(r[24])+' Mustahik') + it('Zakat Fitrah (U)', formatRp(Number(r[25])||0), formatRibuan(r[26])+' Mustahik') + it('Infaq Sedekah', formatRp(Number(r[27])||0), formatRibuan(r[28])+' Mustahik'))}${card('Penyaluran DSKL', 'bg-rose-600', it('Fidyah', formatRp(Number(r[29])||0), formatRibuan(r[30])+' Mustahik') + it('Kafarat', formatRp(Number(r[31])||0), formatRibuan(r[32])+' Mustahik'))}</div>`;
             
-            // Assign fungsi tombol di footer modal
-            document.getElementById('btnKonfirmasiWA').onclick = () => kirimPesanKonfirmasi(index);
+            // Pengaturan Tombol Konfirmasi WA dengan Ikon
+            const btnWA = document.getElementById('btnKonfirmasiWA');
+            btnWA.className = "bg-emerald-600 text-white px-5 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-emerald-700 flex items-center gap-2";
+            btnWA.innerHTML = `
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.659 1.432 5.634 1.432h.006c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                <span>WhatsApp</span>
+            `;
+            btnWA.onclick = () => kirimPesanKonfirmasi(index);
+
             document.getElementById('btnDownloadGambar').onclick = () => downloadGambarDetail(index);
             document.getElementById('btnDownloadExcel').onclick = () => exportSingleExcel(index);
 
