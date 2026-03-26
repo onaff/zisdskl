@@ -4,19 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Admin Panel - Laporan ZIS & DSKL Salatiga</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+        
         .fade-in { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
         .tab-active { border-bottom-width: 4px; border-color: #059669; color: #059669; font-weight: 800; }
+        
         .table-scroll::-webkit-scrollbar { height: 8px; width: 6px; }
         .table-scroll::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        
         .stat-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        
         tr.row-hover:hover { background-color: #f0fdf4 !important; }
 
         /* Optimasi Responsif Mobile */
@@ -38,21 +49,17 @@
             }
             .mobile-nav-container .tab-active { background-color: #ecfdf5; color: #059669; }
             .mobile-nav-container svg { display: block !important; width: 20px; height: 20px; }
-
             .grid-stats-mobile { 
                 display: grid !important;
                 grid-template-columns: repeat(2, minmax(0, 1fr)) !important; 
                 gap: 0.75rem !important; 
             }
-            
             .stat-card { padding: 1rem !important; border-radius: 1.5rem !important; }
             .stat-card .text-5xl, .stat-card .text-4xl { font-size: 1.75rem !important; }
             .stat-card .text-3xl, .stat-card .text-2xl { font-size: 1rem !important; }
-            
             .rincian-box { padding: 1.5rem !important; border-radius: 1.5rem !important; margin-bottom: 1rem !important; }
             .fitrah-grid { padding: 1.25rem !important; gap: 0.75rem !important; }
             .fitrah-grid .text-xl { font-size: 0.95rem !important; }
-
             main { padding-bottom: 7rem !important; padding-left: 1rem !important; padding-right: 1rem !important; }
             footer { margin-bottom: 5rem !important; }
         }
@@ -65,7 +72,9 @@
         <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl w-full max-w-md text-center fade-in relative z-10 border border-slate-100">
             <div class="mb-10 text-center">
                 <div class="inline-flex items-center justify-center w-20 h-20 bg-green-50 rounded-3xl mb-6 text-green-600 shadow-inner">
-                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
                 </div>
                 <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Admin Login</h2>
                 <p class="text-slate-500 mt-2 font-medium uppercase text-[10px] tracking-widest">BAZNAS KOTA SALATIGA</p>
@@ -84,7 +93,9 @@
             <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center gap-4">
                     <div class="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-600/30">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
                     <h1 class="text-lg font-extrabold text-slate-800 leading-tight">Rekap ZIS se-Kota Salatiga</h1>
                 </div>
@@ -93,7 +104,6 @@
         </nav>
 
         <main class="flex-grow max-w-7xl mx-auto px-6 py-8 w-full">
-            
             <div class="mobile-nav-container flex space-x-10 border-b border-slate-200 mb-10 transition-all">
                 <button onclick="gantiTab('tabUtama')" id="btnTabUtama" class="pb-4 px-2 tab-active uppercase tracking-widest text-xs">
                     <svg class="hidden w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
@@ -117,16 +127,12 @@
                 <div id="statistikUtama" class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10 grid-stats-mobile">
                     <div class="stat-card bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col justify-center border-t-4 border-t-red-500">
                         <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 text-red-600">Total Lapor</div>
-                        <div class="flex items-baseline gap-2">
-                            <div class="text-4xl md:text-5xl font-black text-red-600" id="statUpz">0</div>
-                        </div>
+                        <div class="text-4xl md:text-5xl font-black text-red-600" id="statUpz">0</div>
                     </div>
-					
-					<div class="stat-card bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col justify-center border-t-4 border-t-blue-500">
+                    
+                    <div class="stat-card bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col justify-center border-t-4 border-t-blue-500">
                         <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 text-blue-600">Progress Laporan</div>
-                        <div class="flex items-baseline gap-2">
-                            <div class="text-4xl md:text-5xl font-black text-blue-600" id="statPersen">0%</div>
-                        </div>
+                        <div class="text-4xl md:text-5xl font-black text-blue-600" id="statPersen">0%</div>
                         <div class="w-full bg-slate-100 h-1.5 rounded-full mt-3 overflow-hidden">
                             <div id="progressBar" class="bg-blue-500 h-full transition-all duration-1000" style="width: 0%"></div>
                         </div>
@@ -163,7 +169,7 @@
                             <div class="bg-orange-50/50 p-5 rounded-2xl border border-orange-100">
                                 <div class="text-[9px] font-black text-orange-600 uppercase mb-1 tracking-wider">Penyaluran</div>
                                 <div class="text-xl font-black text-orange-700" id="statSalurBerasKg">0.00 Kg</div>
-                                <div class="text-xl font-bold text-green-500/80" id="statSalurBerasLtr">0.00 Ltr</div>
+                                <div class="text-xl font-bold text-orange-500/80" id="statSalurBerasLtr">0.00 Ltr</div>
                             </div>
                         </div>
                     </div>
@@ -248,7 +254,7 @@
                     </div>
                     
                     <div class="pagination-container px-8 py-4 bg-slate-50 border-t border-slate-100 flex flex-row justify-between items-center gap-4">
-                        <span id="infoHalaman" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center md:text-left">Menampilkan data ...</span>
+                        <span id="infoHalaman" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Menampilkan data ...</span>
                         <div class="pagination-buttons flex gap-2">
                             <button onclick="halamanAwal()" id="btnFirst" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40 transition-all shadow-sm">Pertama</button>
                             <button onclick="halamanPrev()" id="btnPrev" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40 transition-all shadow-sm">Kembali</button>
@@ -301,10 +307,10 @@
         const itemPerHalaman = 10;
         let dataTersaring = [];
 
+        // Formatting Helpers
         const formatRp = (a) => new Intl.NumberFormat('id-ID', { style:'currency', currency:'IDR', minimumFractionDigits:0 }).format(a||0);
         const formatDesimal = (a) => new Intl.NumberFormat('id-ID', { minimumFractionDigits:2, maximumFractionDigits:2 }).format(a||0);
         const formatRibuan = (a) => new Intl.NumberFormat('id-ID').format(a||0);
-        
         const formatWA = (v) => {
             let hp = String(v || "").replace(/[^0-9]/g, '');
             if(hp.startsWith('0')) hp = '62' + hp.slice(1);
@@ -318,6 +324,7 @@
                 <span class="block text-[8px] text-slate-400 font-bold uppercase tracking-tighter">${formatRibuan(o)} ${label}</span>
             </div>`;
 
+        // Data Fetching
         function tarikDataGoogleSheets() {
             document.getElementById('waktuSync').textContent = 'Sinkronisasi Database...';
             fetch(SCRIPT_URL).then(r=>r.json()).then(res => {
@@ -329,6 +336,7 @@
             }).catch(e=>alert("Gagal Sinkronisasi."));
         }
 
+        // Statistik
         function kalkulasiStatistik(data) {
             let ju=0, tm=0, tk=0, tl=0, tu=0, ti=0, tf=0, tka=0, sm=0, sk=0, sl=0, su=0, si=0, sf=0, ska=0;
             let totMuzaki=0, totMunfiq=0, totMustahik=0;
@@ -351,14 +359,11 @@
                 ska+=Number(r[31])|| 0; totMustahik+=Number(r[32]) || 0;
             }
 
-            // PERHITUNGAN PERSENTASE (Target 174)
             const targetUPZ = 174;
             const persenMasuk = ((ju / targetUPZ) * 100).toFixed(1);
 
             document.getElementById('statUpz').innerText = formatRibuan(ju);
             document.getElementById('statPersen').innerText = persenMasuk + '%';
-            
-            // Animasi Progress Bar
             const pBar = document.getElementById('progressBar');
             if(pBar) pBar.style.width = Math.min(persenMasuk, 100) + '%';
 
@@ -380,6 +385,7 @@
             document.getElementById('rincianSalurTotal').innerHTML = li('Zakat Mal', formatRp(sm)) + li('Zakat Fitrah (KG)', formatDesimal(sk) + ' Kg') + li('Zakat Fitrah (LTR)', formatDesimal(sl) + ' Ltr') + li('Zakat Fitrah (RP)', formatRp(su)) + li('Infaq Sedekah', formatRp(si)) + li('Fidyah', formatRp(sf)) + li('Kafarat', formatRp(ska)) + `<div class="mt-4 pt-2 border-t-2 border-dashed border-slate-200">` + liTotal('TOTAL RUPIAH', formatRp(sm+su+si+sf+ska), 'text-orange-700') + liTotal('TOTAL MUSTAHIK', formatRibuan(totMustahik) + ' Jiwa', 'text-slate-700') + `</div>`;
         }
 
+        // Tabel & Paginasi
         function renderTabelPaginasi() {
             const tbody = document.getElementById('tabelData');
             tbody.innerHTML = '';
@@ -388,6 +394,7 @@
             const indexAwal = (halamanSaatIni - 1) * itemPerHalaman;
             const indexAkhir = Math.min(indexAwal + itemPerHalaman, totalData);
             const dataHalamanIni = dataTersaring.slice(indexAwal, indexAkhir);
+            
             if (dataHalamanIni.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="22" class="py-20 text-center font-bold text-slate-400 bg-slate-50/50">Tidak ada data ditemukan...</td></tr>`;
             } else {
@@ -408,6 +415,7 @@
         function halamanAkhir() { halamanSaatIni = Math.ceil(dataTersaring.length / itemPerHalaman) || 1; renderTabelPaginasi(); }
         function halamanNext() { halamanSaatIni++; renderTabelPaginasi(); }
         function halamanPrev() { halamanSaatIni--; renderTabelPaginasi(); }
+
         function ubahFilterKecamatan() {
             const kF = document.getElementById('filterKecamatan').value;
             const search = document.getElementById('searchInput').value.toLowerCase();
@@ -423,32 +431,36 @@
             halamanSaatIni = 1; renderTabelPaginasi();
         }
 
+        // Modal Logic
         function bukaDetail(index) {
             const r = globalDataSheets[index]; 
             const c = document.getElementById('isiDetail');
             let d = new Date(r[0]); 
             let tgl = isNaN(d.getTime()) ? r[0] : d.toLocaleDateString('id-ID', { weekday:'long', day:'numeric', month:'long', year:'numeric' }) + ' Jam ' + d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
             document.getElementById('detailJudulWaktu').innerText = "Waktu Lapor: " + tgl;
+            
             const card = (j, cl, html) => `<div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden"><div class="${cl} px-6 py-3 text-white font-black text-[10px] uppercase tracking-widest">${j}</div><div class="p-6 space-y-3 text-xs">${html}</div></div>`;
             const it = (l, v, s="", isWA=false) => {
                 let hp = formatWA(v);
                 return `<div class="flex justify-between items-start border-b border-slate-50 pb-3"><span class="text-slate-400 font-bold uppercase text-[9px] mt-1 tracking-wider">${l}</span><div class="text-right">${isWA && hp !== '' ? `<a href="https://wa.me/${hp}" target="_blank" class="text-green-600 font-black hover:underline tracking-tight">+${hp}</a>` : `<span class="font-extrabold text-slate-800 tracking-tight">${v||'-'}</span>`}${s ? `<div class="text-[9px] text-slate-400 font-bold mt-0.5">${s}</div>` : ''}</div></div>`;
             }
+
             c.innerHTML = `
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Identitas', 'bg-blue-600', it('Nama UPZ', r[1]) + it('Wilayah', r[5]+' - '+r[6]) + it('Alamat', r[2]))}${card('PIC', 'bg-indigo-600', it('Nama PIC', r[3]) + it('No WhatsApp', r[4], "Konfirmasi Laporan", true))}</div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Pengumpulan ZIS', 'bg-green-600', it('Zakat Mal', formatRp(Number(r[7])||0), formatRibuan(r[8])+' Muzaki') + it('Fitrah Beras', formatDesimal(Number(r[9])||0)+' Kg / '+formatDesimal(Number(r[10])||0)+' Ltr', formatRibuan(r[11])+' Muzaki') + it('Fitrah Uang', formatRp(Number(r[12])||0), formatRibuan(r[13])+' Muzaki') + it('Infaq Sedekah', formatRp(Number(r[14])||0), formatRibuan(r[15])+' Munfiq'))}${card('Pengumpulan DSKL', 'bg-teal-600', it('Fidyah', formatRp(Number(r[16])||0), formatRibuan(r[17])+' Munfiq') + it('Kafarat', formatRp(Number(r[18])||0), formatRibuan(r[19])+' Munfiq'))}</div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Penyaluran ZIS', 'bg-orange-600', it('Zakat Mal', formatRp(Number(r[20])||0), formatRibuan(r[21])+' Mustahik') + it('Zakat Fitrah (B)', formatDesimal(Number(r[22])||0)+' Kg / '+formatDesimal(Number(r[23])||0)+' Ltr', formatRibuan(r[24])+' Mustahik') + it('Zakat Fitrah (U)', formatRp(Number(r[25])||0), formatRibuan(r[26])+' Mustahik') + it('Infaq Sedekah', formatRp(Number(r[27])||0), formatRibuan(r[28])+' Mustahik'))}${card('Penyaluran DSKL', 'bg-rose-600', it('Fidyah', formatRp(Number(r[29])||0), formatRibuan(r[30])+' Mustahik') + it('Kafarat', formatRp(Number(r[31])||0), formatRibuan(r[32])+' Mustahik'))}</div>`;
+            
             document.getElementById('btnDownloadGambar').onclick = () => downloadGambarDetail(index);
             document.getElementById('btnDownloadExcel').onclick = () => exportSingleExcel(index);
-            const btnWA = document.getElementById('btnKonfirmasiWA');
-            btnWA.onclick = () => kirimPesanKonfirmasi(index);
+            document.getElementById('btnKonfirmasiWA').onclick = () => kirimPesanKonfirmasi(index);
+            
             document.getElementById('modalDetail').classList.remove('hidden'); 
             document.body.style.overflow = 'hidden';
         }
 
         function tutupModal() { document.getElementById('modalDetail').classList.add('hidden'); document.body.style.overflow = 'auto'; }
-        function prosesLogout() { sessionStorage.removeItem('adminLoggedIn'); location.reload(); }
 
+        // WhatsApp Sender
         function kirimPesanKonfirmasi(index) {
             const r = globalDataSheets[index];
             const waPic = formatWA(r[4]); if (!waPic) return alert("WhatsApp PIC tidak ditemukan!");
@@ -456,6 +468,7 @@
             window.open(`https://wa.me/${waPic}?text=${msg}`, '_blank');
         }
 
+        // Export Functions
         function downloadGambarDetail(index) {
             const r = globalDataSheets[index];
             const target = document.getElementById('canvasArea'), isiDetail = document.getElementById('isiDetail');
@@ -516,13 +529,25 @@
             XLSX.writeFile(wb, `${filename}.xlsx`);
         }
 
+        // Auth & Tab
         function prosesLogin(e) { 
             e.preventDefault(); 
             const u = document.getElementById('userInput').value, p = document.getElementById('passInput').value;
-            if (u === String(dataAuthSheet.user) && p === String(dataAuthSheet.pass)) { sessionStorage.setItem('adminLoggedIn', 'true'); tampilkanDashboard(); }
-            else { document.getElementById('errorMsg').classList.remove('hidden'); }
+            if (u === String(dataAuthSheet.user) && p === String(dataAuthSheet.pass)) { 
+                sessionStorage.setItem('adminLoggedIn', 'true'); 
+                tampilkanDashboard(); 
+            } else { 
+                document.getElementById('errorMsg').classList.remove('hidden'); 
+            }
         }
-        function tampilkanDashboard() { document.getElementById('loginPage').classList.add('hidden'); document.getElementById('dashboardPage').classList.remove('hidden'); }
+
+        function tampilkanDashboard() { 
+            document.getElementById('loginPage').classList.add('hidden'); 
+            document.getElementById('dashboardPage').classList.remove('hidden'); 
+        }
+
+        function prosesLogout() { sessionStorage.removeItem('adminLoggedIn'); location.reload(); }
+
         function gantiTab(t) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(t).classList.remove('hidden');
@@ -530,6 +555,7 @@
             document.getElementById('btnTabLaporan').className = t==='tabLaporan' ? 'pb-4 px-2 tab-active uppercase tracking-widest text-xs' : 'pb-4 px-2 text-slate-400 font-bold uppercase tracking-widest text-xs';
         }
 
+        // Init
         document.addEventListener('DOMContentLoaded', () => {
             tarikDataGoogleSheets();
             if (sessionStorage.getItem('adminLoggedIn') === 'true') tampilkanDashboard();
