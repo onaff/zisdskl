@@ -21,7 +21,6 @@
 
         /* Optimasi Responsif Mobile */
         @media (max-width: 768px) {
-            /* Navigasi Tab Bawah (App Style) */
             .mobile-nav-container {
                 position: fixed; bottom: 0; left: 0; right: 0;
                 background: rgba(255, 255, 255, 0.98);
@@ -40,20 +39,24 @@
             .mobile-nav-container .tab-active { background-color: #ecfdf5; color: #059669; }
             .mobile-nav-container svg { display: block !important; width: 20px; height: 20px; }
 
-            /* Grid Statistik 2 Kolom di Ringkasan */
-            .grid-stats-mobile { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 0.75rem !important; }
+            .grid-stats-mobile { 
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important; 
+                gap: 0.75rem !important; 
+            }
+            
+            #statistikUtama > div:first-child {
+                grid-column: span 2 / span 2 !important;
+            }
+
             .stat-card { padding: 1.25rem !important; border-radius: 1.5rem !important; }
-            .stat-card .text-5xl { font-size: 1.75rem !important; }
-            .stat-card .text-3xl { font-size: 1.1rem !important; }
+            .stat-card .text-5xl { font-size: 2.25rem !important; }
+            .stat-card .text-3xl { font-size: 1rem !important; }
             
-            /* Box Rincian List di HP */
             .rincian-box { padding: 1.5rem !important; border-radius: 1.5rem !important; margin-bottom: 1rem !important; }
-            
-            /* Zakat Fitrah Grid */
             .fitrah-grid { padding: 1.25rem !important; gap: 0.75rem !important; }
             .fitrah-grid .text-xl { font-size: 0.95rem !important; }
 
-            /* Pagination Lebih Rapi */
             .pagination-container { flex-direction: column !important; gap: 1rem; }
             .pagination-buttons { width: 100%; display: grid !important; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
             .pagination-buttons button { padding: 0.75rem !important; width: 100%; }
@@ -93,7 +96,7 @@
                     <div class="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-600/30">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
-                    <h1 class="text-lg font-extrabold text-slate-800 leading-tight">Rekap ZIS se-Kota Salatiga</span></h1>
+                    <h1 class="text-lg font-extrabold text-slate-800 leading-tight">Rekap ZIS se-Kota Salatiga</h1>
                 </div>
                 <button onclick="prosesLogout()" class="text-red-600 font-bold text-xs md:text-sm px-4 py-2 hover:bg-red-50 rounded-xl transition">Keluar</button>
             </div>
@@ -121,7 +124,7 @@
                     <button onclick="tarikDataGoogleSheets()" class="w-full md:w-auto bg-slate-900 text-white px-8 py-3.5 rounded-2xl font-bold text-sm hover:bg-slate-800 transition shadow-lg active:scale-95">Refresh Database</button>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10 grid-stats-mobile">
+                <div id="statistikUtama" class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10 grid-stats-mobile">
                     <div class="stat-card bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col justify-center">
                         <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Total Lapor</div>
                         <div class="text-5xl font-black text-slate-800" id="statUpz">0</div>
@@ -134,6 +137,11 @@
                         <div class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 text-orange-600">Penyaluran</div>
                         <div class="text-3xl font-black text-orange-500" id="statSalurUang">Rp 0</div>
                     </div>
+                </div>
+
+                <div class="mb-10">
+                    <h3 class="font-extrabold text-slate-700 uppercase text-xs tracking-widest ml-2 mb-6">Sebaran UPZ per Kecamatan</h3>
+                    <div id="sebaranKecamatan" class="grid grid-cols-2 md:grid-cols-4 gap-6 grid-stats-mobile"></div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
@@ -171,11 +179,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="mb-10">
-                    <h3 class="font-extrabold text-slate-700 uppercase text-xs tracking-widest ml-2 mb-6">Sebaran UPZ per Kecamatan</h3>
-                    <div id="sebaranKecamatan" class="grid grid-cols-2 md:grid-cols-4 gap-6 grid-stats-mobile"></div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm mb-16 rincian-box">
@@ -232,7 +235,7 @@
                                 <tr class="text-[8px] tracking-tight">
                                     <th class="py-2 border-b border-r text-center">Mal</th><th class="py-2 border-b border-r text-center">Fitah (KG)</th><th class="py-2 border-b border-r text-center">Fitrah (LTR)</th><th class="py-2 border-b border-r text-center">Fitrah (RP)</th><th class="py-2 border-b border-r text-center">Infaq</th>
                                     <th class="py-2 border-b border-r text-center">Fidyah</th><th class="py-2 border-b border-r text-center">Kafarat</th>
-                                    <th class="py-2 border-b border-r text-center">Mal</th><th class="py-2 border-b border-r text-center">Fitrah (KG)</th><th class="py-2 border-b border-r text-center">Fitrah (LTR)</th><th class="py-2 border-b border-r text-center">Fitrah (RP)</th><th class="py-2 border-b border-r text-center">Infaq</th>
+                                    <th class="py-2 border-b border-r text-center">Mal</th><th class="py-2 border-b border-r text-center">Fitah (KG)</th><th class="py-2 border-b border-r text-center">Fitrah (LTR)</th><th class="py-2 border-b border-r text-center">Fitrah (RP)</th><th class="py-2 border-b border-r text-center">Infaq</th>
                                     <th class="py-2 border-b border-r text-center">Fidyah</th><th class="py-2 border-b text-center">Kafarat</th>
                                 </tr>
                             </thead>
@@ -269,19 +272,19 @@
             </div>
             <div id="isiDetail" class="p-8 overflow-y-auto flex-grow bg-slate-50 space-y-8"></div>
             
-            <div class="p-6 border-t bg-white flex flex-wrap justify-end gap-3">
-                <button id="btnDownloadGambar" class="bg-rose-600 text-white px-5 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-rose-700 flex items-center gap-2">
+            <div class="p-6 border-t bg-white grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <button id="btnDownloadGambar" class="w-full bg-rose-600 text-white py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-rose-700 flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    Gambar
+                    <span>Gambar</span>
                 </button>
-                <button id="btnDownloadExcel" class="bg-blue-600 text-white px-5 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-blue-700 flex items-center gap-2">
+                <button id="btnDownloadExcel" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-blue-700 flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    Excel
+                    <span>Excel</span>
                 </button>
-                <button id="btnKonfirmasiWA" class="bg-emerald-600 text-white px-5 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-emerald-700">
-                    WA
+                <button id="btnKonfirmasiWA" class="w-full bg-emerald-600 text-white py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-emerald-700 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.659 1.432 5.634 1.432h.006c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    <span>WhatsApp</span>
                 </button>
-                <button onclick="tutupModal()" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-slate-800">Tutup</button>
             </div>
         </div>
     </div>
@@ -330,16 +333,12 @@
             for(let i=1; i<data.length; i++){
                 const r = data[i]; if(!r[1]) continue; ju++;
                 let k = (r[5]||"").trim(); if(rec[k]!==undefined) rec[k]++;
-                
-                // PENGUMPULAN
                 tm+=Number(r[7]) || 0; totMuzaki+=Number(r[8]) || 0;
                 tk+=Number(r[9]) || 0; tl+=Number(r[10]) || 0; totMuzaki+=Number(r[11]) || 0;
                 tu+=Number(r[12]) || 0; totMuzaki+=Number(r[13]) || 0;
                 ti+=Number(r[14]) || 0; totMunfiq+=Number(r[15]) || 0;
                 tf+=Number(r[16]) || 0; totMunfiq+=Number(r[17]) || 0;
                 tka+=Number(r[18])|| 0; totMunfiq+=Number(r[19]) || 0;
-
-                // PENYALURAN
                 sm+=Number(r[20]) || 0; totMustahik+=Number(r[21]) || 0;
                 sk+=Number(r[22]) || 0; sl+=Number(r[23]) || 0; totMustahik+=Number(r[24]) || 0;
                 su+=Number(r[25]) || 0; totMustahik+=Number(r[26]) || 0;
@@ -347,7 +346,6 @@
                 sf+=Number(r[29]) || 0; totMustahik+=Number(r[30]) || 0;
                 ska+=Number(r[31])|| 0; totMustahik+=Number(r[32]) || 0;
             }
-
             document.getElementById('statUpz').innerText = formatRibuan(ju);
             document.getElementById('statZisUang').innerText = formatRp(tm+tu+ti+tf+tka);
             document.getElementById('statSalurUang').innerText = formatRp(sm+su+si+sf+ska);
@@ -363,33 +361,8 @@
 
             const li = (l, v) => `<li class="flex justify-between items-center border-b border-slate-50 pb-3 text-xs"><span class="text-slate-500 font-bold uppercase text-[10px] tracking-wider">${l}</span><span class="font-extrabold text-slate-800">${v}</span></li>`;
             const liTotal = (l, v, c) => `<li class="flex justify-between items-center pt-3 mt-1 text-xs"><span class="font-black ${c} uppercase text-[10px] tracking-widest">${l}</span><span class="font-black ${c} text-base">${v}</span></li>`;
-            
-            document.getElementById('rincianKumpulTotal').innerHTML = 
-                li('Zakat Mal', formatRp(tm)) + 
-                li('Zakat Fitrah (KG)', formatDesimal(tk) + ' Kg') + 
-                li('Zakat Fitrah (LTR)', formatDesimal(tl) + ' Ltr') + 
-                li('Zakat Fitrah (RP)', formatRp(tu)) + 
-                li('Infaq Sedekah', formatRp(ti)) + 
-                li('Fidyah', formatRp(tf)) + 
-                li('Kafarat', formatRp(tka)) + 
-                `<div class="mt-4 pt-2 border-t-2 border-dashed border-slate-200">` + 
-                liTotal('TOTAL RUPIAH', formatRp(tm+tu+ti+tf+tka), 'text-green-700') + 
-                liTotal('TOTAL MUZAKI', formatRibuan(totMuzaki) + ' Jiwa', 'text-blue-700') + 
-                liTotal('TOTAL MUNFIQ', formatRibuan(totMunfiq) + ' Jiwa', 'text-indigo-700') + 
-                `</div>`;
-
-            document.getElementById('rincianSalurTotal').innerHTML = 
-                li('Zakat Mal', formatRp(sm)) + 
-                li('Zakat Fitrah (KG)', formatDesimal(sk) + ' Kg') + 
-                li('Zakat Fitrah (LTR)', formatDesimal(sl) + ' Ltr') + 
-                li('Zakat Fitrah (RP)', formatRp(su)) + 
-                li('Infaq Sedekah', formatRp(si)) + 
-                li('Fidyah', formatRp(sf)) + 
-                li('Kafarat', formatRp(ska)) + 
-                `<div class="mt-4 pt-2 border-t-2 border-dashed border-slate-200">` + 
-                liTotal('TOTAL RUPIAH', formatRp(sm+su+si+sf+ska), 'text-orange-700') + 
-                liTotal('TOTAL MUSTAHIK', formatRibuan(totMustahik) + ' Jiwa', 'text-slate-700') + 
-                `</div>`;
+            document.getElementById('rincianKumpulTotal').innerHTML = li('Zakat Mal', formatRp(tm)) + li('Zakat Fitrah (KG)', formatDesimal(tk) + ' Kg') + li('Zakat Fitrah (LTR)', formatDesimal(tl) + ' Ltr') + li('Zakat Fitrah (RP)', formatRp(tu)) + li('Infaq Sedekah', formatRp(ti)) + li('Fidyah', formatRp(tf)) + li('Kafarat', formatRp(tka)) + `<div class="mt-4 pt-2 border-t-2 border-dashed border-slate-200">` + liTotal('TOTAL RUPIAH', formatRp(tm+tu+ti+tf+tka), 'text-green-700') + liTotal('TOTAL MUZAKI', formatRibuan(totMuzaki) + ' Jiwa', 'text-blue-700') + liTotal('TOTAL MUNFIQ', formatRibuan(totMunfiq) + ' Jiwa', 'text-indigo-700') + `</div>`;
+            document.getElementById('rincianSalurTotal').innerHTML = li('Zakat Mal', formatRp(sm)) + li('Zakat Fitrah (KG)', formatDesimal(sk) + ' Kg') + li('Zakat Fitrah (LTR)', formatDesimal(sl) + ' Ltr') + li('Zakat Fitrah (RP)', formatRp(su)) + li('Infaq Sedekah', formatRp(si)) + li('Fidyah', formatRp(sf)) + li('Kafarat', formatRp(ska)) + `<div class="mt-4 pt-2 border-t-2 border-dashed border-slate-200">` + liTotal('TOTAL RUPIAH', formatRp(sm+su+si+sf+ska), 'text-orange-700') + liTotal('TOTAL MUSTAHIK', formatRibuan(totMustahik) + ' Jiwa', 'text-slate-700') + `</div>`;
         }
 
         function renderTabelPaginasi() {
@@ -400,40 +373,13 @@
             const indexAwal = (halamanSaatIni - 1) * itemPerHalaman;
             const indexAkhir = Math.min(indexAwal + itemPerHalaman, totalData);
             const dataHalamanIni = dataTersaring.slice(indexAwal, indexAkhir);
-            
             if (dataHalamanIni.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="22" class="py-20 text-center font-bold text-slate-400 bg-slate-50/50">Tidak ada data ditemukan...</td></tr>`;
             } else {
                 dataHalamanIni.forEach((item, idx) => {
                     const r = item.data;
                     const indexAsli = item.originalIndex;
-                    tbody.innerHTML += `
-                        <tr class="row-hover">
-                            <td class="py-5 px-4 text-center font-bold text-slate-300 border-r bg-white sticky left-0 z-10">${indexAwal + idx + 1}</td>
-                            <td class="py-5 px-6 border-r bg-white sticky left-12 z-10 shadow-sm"><span class="block font-black text-slate-800 uppercase tracking-tight">${r[1]}</span><span class="block text-[8px] text-slate-400 font-bold mt-1">${r[2]||'-'}</span></td>
-                            <td class="py-5 px-6 border-r text-center"><span class="block font-bold text-slate-700 text-[10px]">${r[3]||'-'}</span><span class="text-green-600 font-black text-[11px]">+${formatWA(r[4])}</span></td>
-                            <td class="py-5 px-6 border-r text-[9px] font-black text-slate-500 uppercase text-center">${r[5]}<br><span class="text-blue-500 text-[8px]">${r[6]}</span></td>
-                            <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(Number(r[7])||0), r[8], 'Muzaki')}</td>
-                            <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatDesimal(Number(r[9])||0)+' Kg', r[11], 'Muzaki')}</td>
-                            <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatDesimal(Number(r[10])||0)+' Ltr', r[11], 'Muzaki')}</td>
-                            <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(Number(r[12])||0), r[13], 'Muzaki')}</td>
-                            <td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(Number(r[14])||0), r[15], 'Munfiq')}</td>
-                            <td class="py-5 px-4 border-r bg-blue-50/20">${selData(formatRp(Number(r[16])||0), r[17], 'Munfiq')}</td>
-                            <td class="py-5 px-4 border-r bg-blue-50/20">${selData(formatRp(Number(r[18])||0), r[19], 'Munfiq')}</td>
-                            <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(Number(r[20])||0), r[21], 'Mustahik')}</td>
-                            <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatDesimal(Number(r[22])||0)+' Kg', r[24], 'Mustahik')}</td>
-                            <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatDesimal(Number(r[23])||0)+' Ltr', r[24], 'Mustahik')}</td>
-                            <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(Number(r[25])||0), r[26], 'Mustahik')}</td>
-                            <td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(Number(r[27])||0), r[28], 'Mustahik')}</td>
-                            <td class="py-5 px-4 border-r bg-teal-50/20">${selData(formatRp(Number(r[29])||0), r[30], 'Mustahik')}</td>
-                            <td class="py-5 px-4 border-r bg-teal-50/20">${selData(formatRp(Number(r[31])||0), r[32], 'Mustahik')}</td>
-                            <td class="py-5 px-6 bg-white sticky right-0 z-30 shadow-md text-center">
-                                <button onclick="bukaDetail(${indexAsli})" class="bg-blue-600 text-white px-4 py-2 rounded-xl shadow font-bold text-[10px] hover:bg-blue-700 transition active:scale-90 flex items-center gap-1">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                    Detail
-                                </button>
-                            </td>
-                        </tr>`;
+                    tbody.innerHTML += `<tr class="row-hover"><td class="py-5 px-4 text-center font-bold text-slate-300 border-r bg-white sticky left-0 z-10">${indexAwal + idx + 1}</td><td class="py-5 px-6 border-r bg-white sticky left-12 z-10 shadow-sm"><span class="block font-black text-slate-800 uppercase tracking-tight">${r[1]}</span><span class="block text-[8px] text-slate-400 font-bold mt-1">${r[2]||'-'}</span></td><td class="py-5 px-6 border-r text-center"><span class="block font-bold text-slate-700 text-[10px]">${r[3]||'-'}</span><span class="text-green-600 font-black text-[11px]">+${formatWA(r[4])}</span></td><td class="py-5 px-6 border-r text-[9px] font-black text-slate-500 uppercase text-center">${r[5]}<br><span class="text-blue-500 text-[8px]">${r[6]}</span></td><td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(Number(r[7])||0), r[8], 'Muzaki')}</td><td class="py-5 px-4 border-r bg-green-50/20">${selData(formatDesimal(Number(r[9])||0)+' Kg', r[11], 'Muzaki')}</td><td class="py-5 px-4 border-r bg-green-50/20">${selData(formatDesimal(Number(r[10])||0)+' Ltr', r[11], 'Muzaki')}</td><td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(Number(r[12])||0), r[13], 'Muzaki')}</td><td class="py-5 px-4 border-r bg-green-50/20">${selData(formatRp(Number(r[14])||0), r[15], 'Munfiq')}</td><td class="py-5 px-4 border-r bg-blue-50/20">${selData(formatRp(Number(r[16])||0), r[17], 'Munfiq')}</td><td class="py-5 px-4 border-r bg-blue-50/20">${selData(formatRp(Number(r[18])||0), r[19], 'Munfiq')}</td><td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(Number(r[20])||0), r[21], 'Mustahik')}</td><td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatDesimal(Number(r[22])||0)+' Kg', r[24], 'Mustahik')}</td><td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatDesimal(Number(r[23])||0)+' Ltr', r[24], 'Mustahik')}</td><td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(Number(r[25])||0), r[26], 'Mustahik')}</td><td class="py-5 px-4 border-r bg-orange-50/20">${selData(formatRp(Number(r[27])||0), r[28], 'Mustahik')}</td><td class="py-5 px-4 border-r bg-teal-50/20">${selData(formatRp(Number(r[29])||0), r[30], 'Mustahik')}</td><td class="py-5 px-4 border-r bg-teal-50/20">${selData(formatRp(Number(r[31])||0), r[32], 'Mustahik')}</td><td class="py-5 px-6 bg-white sticky right-0 z-30 shadow-md text-center"><button onclick="bukaDetail(${indexAsli})" class="bg-blue-600 text-white px-4 py-2 rounded-xl shadow font-bold text-[10px] hover:bg-blue-700 transition active:scale-90 flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>Detail</button></td></tr>`;
                 });
             }
             document.getElementById('infoHalaman').innerText = `Halaman ${halamanSaatIni} dari ${totalHalaman} (${formatRibuan(totalData)} Laporan)`;
@@ -447,7 +393,6 @@
         function halamanAkhir() { halamanSaatIni = Math.ceil(dataTersaring.length / itemPerHalaman) || 1; renderTabelPaginasi(); }
         function halamanNext() { halamanSaatIni++; renderTabelPaginasi(); }
         function halamanPrev() { halamanSaatIni--; renderTabelPaginasi(); }
-        
         function ubahFilterKecamatan() {
             const kF = document.getElementById('filterKecamatan').value;
             const search = document.getElementById('searchInput').value.toLowerCase();
@@ -469,35 +414,25 @@
             let d = new Date(r[0]); 
             let tgl = isNaN(d.getTime()) ? r[0] : d.toLocaleDateString('id-ID', { weekday:'long', day:'numeric', month:'long', year:'numeric' }) + ' Jam ' + d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
             document.getElementById('detailJudulWaktu').innerText = "Waktu Lapor: " + tgl;
-            
             const card = (j, cl, html) => `<div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden"><div class="${cl} px-6 py-3 text-white font-black text-[10px] uppercase tracking-widest">${j}</div><div class="p-6 space-y-3 text-xs">${html}</div></div>`;
             const it = (l, v, s="", isWA=false) => {
                 let hp = formatWA(v);
                 return `<div class="flex justify-between items-start border-b border-slate-50 pb-3"><span class="text-slate-400 font-bold uppercase text-[9px] mt-1 tracking-wider">${l}</span><div class="text-right">${isWA && hp !== '' ? `<a href="https://wa.me/${hp}" target="_blank" class="text-green-600 font-black hover:underline tracking-tight">+${hp}</a>` : `<span class="font-extrabold text-slate-800 tracking-tight">${v||'-'}</span>`}${s ? `<div class="text-[9px] text-slate-400 font-bold mt-0.5">${s}</div>` : ''}</div></div>`;
             }
-            
             c.innerHTML = `
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Identitas', 'bg-blue-600', it('Nama UPZ', r[1]) + it('Wilayah', r[5]+' - '+r[6]) + it('Alamat', r[2]))}${card('PIC', 'bg-indigo-600', it('Nama PIC', r[3]) + it('No WhatsApp', r[4], "Konfirmasi Laporan", true))}</div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Pengumpulan ZIS', 'bg-green-600', it('Zakat Mal', formatRp(Number(r[7])||0), formatRibuan(r[8])+' Muzaki') + it('Fitrah Beras', formatDesimal(Number(r[9])||0)+' Kg / '+formatDesimal(Number(r[10])||0)+' Ltr', formatRibuan(r[11])+' Muzaki') + it('Fitrah Uang', formatRp(Number(r[12])||0), formatRibuan(r[13])+' Muzaki') + it('Infaq Sedekah', formatRp(Number(r[14])||0), formatRibuan(r[15])+' Munfiq'))}${card('Pengumpulan DSKL', 'bg-teal-600', it('Fidyah', formatRp(Number(r[16])||0), formatRibuan(r[17])+' Munfiq') + it('Kafarat', formatRp(Number(r[18])||0), formatRibuan(r[19])+' Munfiq'))}</div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${card('Penyaluran ZIS', 'bg-orange-600', it('Zakat Mal', formatRp(Number(r[20])||0), formatRibuan(r[21])+' Mustahik') + it('Zakat Fitrah (B)', formatDesimal(Number(r[22])||0)+' Kg / '+formatDesimal(Number(r[23])||0)+' Ltr', formatRibuan(r[24])+' Mustahik') + it('Zakat Fitrah (U)', formatRp(Number(r[25])||0), formatRibuan(r[26])+' Mustahik') + it('Infaq Sedekah', formatRp(Number(r[27])||0), formatRibuan(r[28])+' Mustahik'))}${card('Penyaluran DSKL', 'bg-rose-600', it('Fidyah', formatRp(Number(r[29])||0), formatRibuan(r[30])+' Mustahik') + it('Kafarat', formatRp(Number(r[31])||0), formatRibuan(r[32])+' Mustahik'))}</div>`;
-            
-            // Pengaturan Tombol Konfirmasi WA dengan Ikon
-            const btnWA = document.getElementById('btnKonfirmasiWA');
-            btnWA.className = "bg-emerald-600 text-white px-5 py-4 rounded-2xl font-bold shadow-lg text-sm active:scale-95 hover:bg-emerald-700 flex items-center gap-2";
-            btnWA.innerHTML = `
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.659 1.432 5.634 1.432h.006c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
-                <span>WhatsApp</span>
-            `;
-            btnWA.onclick = () => kirimPesanKonfirmasi(index);
-
             document.getElementById('btnDownloadGambar').onclick = () => downloadGambarDetail(index);
             document.getElementById('btnDownloadExcel').onclick = () => exportSingleExcel(index);
-
+            const btnWA = document.getElementById('btnKonfirmasiWA');
+            btnWA.onclick = () => kirimPesanKonfirmasi(index);
             document.getElementById('modalDetail').classList.remove('hidden'); 
             document.body.style.overflow = 'hidden';
         }
+
+        function tutupModal() { document.getElementById('modalDetail').classList.add('hidden'); document.body.style.overflow = 'auto'; }
+        function prosesLogout() { sessionStorage.removeItem('adminLoggedIn'); location.reload(); }
 
         function kirimPesanKonfirmasi(index) {
             const r = globalDataSheets[index];
@@ -525,9 +460,8 @@
         function exportGlobalExcel() { 
             let kF = document.getElementById('filterKecamatan').value;
             let label = kF === 'SEMUA' ? 'KOTA SALATIGA' : 'KECAMATAN ' + kF.toUpperCase();
-            let fileName = kF === 'SEMUA' ? 'REKAP_GLOBAL_ZIS_SALATIGA_2026' : `REKAP_ZIS_${kF.toUpperCase()}_2026`;
             let rowsToExport = dataTersaring.map(x => x.data);
-            generateRapiExcel(rowsToExport, fileName, `LAPORAN REKAPITULASI ZIS & DSKL ${label} - RAMADAN 2026`); 
+            generateRapiExcel(rowsToExport, kF === 'SEMUA' ? 'REKAP_GLOBAL_ZIS_SALATIGA_2026' : `REKAP_ZIS_${kF.toUpperCase()}_2026`, `LAPORAN REKAPITULASI ZIS & DSKL ${label} - RAMADAN 2026`); 
         }
         
         function exportSingleExcel(index) { 
@@ -580,8 +514,6 @@
             document.getElementById('btnTabUtama').className = t==='tabUtama' ? 'pb-4 px-2 tab-active uppercase tracking-widest text-xs' : 'pb-4 px-2 text-slate-400 font-bold uppercase tracking-widest text-xs';
             document.getElementById('btnTabLaporan').className = t==='tabLaporan' ? 'pb-4 px-2 tab-active uppercase tracking-widest text-xs' : 'pb-4 px-2 text-slate-400 font-bold uppercase tracking-widest text-xs';
         }
-        function tutupModal() { document.getElementById('modalDetail').classList.add('hidden'); document.body.style.overflow = 'auto'; }
-        function prosesLogout() { sessionStorage.removeItem('adminLoggedIn'); location.reload(); }
 
         document.addEventListener('DOMContentLoaded', () => {
             tarikDataGoogleSheets();
